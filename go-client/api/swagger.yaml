@@ -1,0 +1,2050 @@
+---
+swagger: "2.0"
+info:
+  description: "Deepfence Runtime API provides programmatic control over Deepfence\
+    \ microservice securing your container and cloud deployments. The API abstracts\
+    \ away underlying infrastructure details like cloud provider, container distros,\
+    \ container orchestrator and type of deployment. This is one uniform API to manage\
+    \ and control security alerts, policies and response to alerts for microservices\
+    \ running anywhere i.e. managed pure greenfield container deployments or a mix\
+    \ of containers, VMs and serverless paradigms like AWS Fargate."
+  version: "1.3"
+  title: "Deepfence Runtime API v1.3"
+tags:
+- name: "Authentication"
+- name: "Enumerate"
+- name: "Node Control"
+- name: "Alert Management"
+- name: "Vulnerability Management"
+- name: "Network Protection Policy"
+- name: "Network Protection Policy Logs"
+- name: "Quarantine Protection Policy"
+- name: "Quarantine Protection Policy Logs"
+- name: "Workload Protection Policy"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /deepfence/v1.3/alerts:
+    post:
+      tags:
+      - "Alert Management"
+      summary: "Get/Delete alerts by filter"
+      description: "Get/Delete alerts by filter"
+      operationId: "findAlerts"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options to get or delete alerts"
+        required: false
+        schema:
+          $ref: "#/definitions/Options"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/alerts/{alert_id}:
+    get:
+      tags:
+      - "Alert Management"
+      summary: "Get alert by given alert_id"
+      operationId: "getAlert"
+      parameters:
+      - name: "alert_id"
+        in: "path"
+        description: "Alert ID"
+        required: true
+        type: "string"
+        x-exportParamName: "AlertId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - "Alert Management"
+      summary: "Delete an alert by alert_id"
+      operationId: "deleteAlert"
+      parameters:
+      - name: "alert_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AlertId"
+      responses:
+        204:
+          description: "Alert deleted successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/data:
+    post:
+      tags:
+      - "Enumerate"
+      summary: "Data API"
+      description: "Get data of a previous request by status_id"
+      operationId: "dataApi"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_1"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/enumerate:
+    post:
+      tags:
+      - "Enumerate"
+      summary: "Enumerate API"
+      description: "Enumerate nodes (hosts, containers, images, processes) with optional\
+        \ filters"
+      operationId: "enumerateNodes"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options to enumerate nodes"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_2"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node-severities:
+    get:
+      tags:
+      - "Alert Management"
+      summary: "Get the severity of all nodes"
+      operationId: "getNodeSeverity"
+      parameters: []
+      responses:
+        200:
+          description: "Valid response"
+        400:
+          description: "Bad request (like missing text data)"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}:
+    get:
+      tags:
+      - "Node Control"
+      summary: "Node Details API"
+      description: "Get full details of a node (hosts, containers, images, processes)\
+        \ by node_id"
+      operationId: "nodeDetails"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/cve_scan_start:
+    post:
+      tags:
+      - "Vulnerability Management"
+      summary: "Node Control API - Start CVE"
+      description: "Start CVE on a node (Applicable node type - `host`, `container`)"
+      operationId: "startCVE"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (If applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/cve_scan_status:
+    get:
+      tags:
+      - "Vulnerability Management"
+      summary: "Node Control API - CVE Status"
+      description: "CVE Status for a node (Applicable node type - `host`, `container`)"
+      operationId: "cveStatus"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/cve_scan_stop:
+    post:
+      tags:
+      - "Vulnerability Management"
+      summary: "Node Control API - Stop CVE"
+      description: "Stop CVE on a node (Applicable node type - `host`, `container`)"
+      operationId: "stopCVE"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (If applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/packet_capture_start:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control - Start Packet Capture"
+      description: "Start Packet Capture on a node (Applicable node type - `host`)"
+      operationId: "startPacketCapture"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options to start packet capture"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_3"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/packet_capture_status:
+    get:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Packet Capture Status"
+      description: "Packet Capture Status for a node (Applicable node type - `host`)"
+      operationId: "packetCaptureStatus"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/packet_capture_stop:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Stop Packet Capture"
+      description: "Stop Packet Capture on a node (Applicable node type - `host`)"
+      operationId: "stopPacketCapture"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (if applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/pause:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Pause Node"
+      description: "Pause a node (Applicable node type - `container`)"
+      operationId: "pauseNode"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (if applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/restart:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Restart Node"
+      description: "Restart a node (Applicable node type - `container`)"
+      operationId: "restartNode"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (if applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/start:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Start Node"
+      description: "Start a node (Applicable node type - `container`)"
+      operationId: "startNode"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (if applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/stop:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Stop Node"
+      description: "Stop a node (Applicable node type - `container`)"
+      operationId: "stopNode"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (if applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/unpause:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Unpause Node"
+      description: "Unpause a node (Applicable node type - `container`)"
+      operationId: "unpauseNode"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options (if applicable)"
+        required: false
+        schema:
+          type: "object"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/status:
+    post:
+      tags:
+      - "Enumerate"
+      summary: "Status API"
+      description: "Get status of a previous request by status_id"
+      operationId: "statusApi"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_4"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/auth:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Authentication for API access"
+      operationId: "authenticateApi"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON parameters."
+        required: false
+        schema:
+          $ref: "#/definitions/body"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "Authentication successful."
+          examples:
+            application/json: "{\n  \"data\": {\n    \"access_token\": \"\",\n   \
+              \ \"refresh_token\": \"\",\n  },\n  \"error\": null,\n  \"success\"\
+              : true\n}"
+        400:
+          description: "Bad request."
+          examples:
+            application/json: "{\n  \"data\": null,\n  \"error\": {\n    \"message\"\
+              : \"api_key is required\"\n  },\n  \"success\": false\n}"
+        404:
+          description: "API key not found."
+          examples:
+            application/json: "{\n  \"data\": null,\n  \"error\": {\n    \"message\"\
+              : \"user with api_key aaaaa not found\"\n  },\n  \"success\": false\n\
+              }"
+  /deepfence/v1.3/users/me:
+    get:
+      tags:
+      - "Authentication"
+      summary: "User details."
+      description: "\nPermission: ALL\n"
+      operationId: "getUserDetails"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Request success."
+          schema:
+            $ref: "#/definitions/inline_response_200"
+        400:
+          description: "Bad request."
+        404:
+          description: "User not found."
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/network_protection_policy:
+    get:
+      tags:
+      - "Network Protection Policy"
+      summary: "Get all network policies created by the user."
+      operationId: "getNetworkProtectionPolicy"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "Network Protection Policy"
+      summary: "Add a network protection policy."
+      description: "\n"
+      operationId: "addNetworkProtectionPolicy"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON parameters."
+        required: false
+        schema:
+          $ref: "#/definitions/body_1"
+        x-exportParamName: "Body"
+      responses:
+        201:
+          description: "Policy added successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/network_protection_policy/{policy_id}:
+    delete:
+      tags:
+      - "Network Protection Policy"
+      summary: "Delete a network policy"
+      description: "\n"
+      operationId: "deleteNetworkProtectionPolicy"
+      parameters:
+      - name: "policy_id"
+        in: "path"
+        required: true
+        type: "integer"
+        x-exportParamName: "PolicyId"
+      responses:
+        204:
+          description: "Policy removed successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/network_protection_policy_log:
+    post:
+      tags:
+      - "Network Protection Policy Logs"
+      summary: "Get/Delete network protection policy logs by filter"
+      description: "Get/Delete network protection policy logs by filter"
+      operationId: "findNetworkProtectionPolicyLogs"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options to get or delete policy logs"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_5"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/network_protection_policy_log/{policy_log_id}:
+    get:
+      tags:
+      - "Network Protection Policy Logs"
+      summary: "Get network protection policy log by given policy_log_id"
+      operationId: "getNetworkProtectionPolicyLog"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "policy_log_id"
+        in: "path"
+        description: "Policy log ID"
+        required: true
+        type: "string"
+        x-exportParamName: "PolicyLogId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - "Network Protection Policy Logs"
+      summary: "Delete network protection policy log by policy_log_id"
+      operationId: "deleteNetworkProtectionPolicyLog"
+      parameters:
+      - name: "policy_log_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "PolicyLogId"
+      responses:
+        204:
+          description: "Policy log deleted successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/node_network_protection_policy:
+    get:
+      tags:
+      - "Workload Protection Policy"
+      summary: "Get all node network protection policies created by the user."
+      operationId: "getWorkloadProtectionPolicy"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "node_policy_type"
+        in: "query"
+        description: "Policy type - whitelist or blacklist"
+        required: true
+        type: "string"
+        enum:
+        - "blacklist"
+        - "whitelist"
+        x-exportParamName: "NodePolicyType"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "Workload Protection Policy"
+      summary: "Add a node network protection policy."
+      operationId: "addWorkloadProtectionPolicy"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON parameters."
+        required: false
+        schema:
+          $ref: "#/definitions/body_2"
+        x-exportParamName: "Body"
+      responses:
+        201:
+          description: "Policy added successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - "Workload Protection Policy"
+      summary: "Delete multiple node network protection policies"
+      operationId: "bulkDeleteWorkloadProtectionPolicy"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON parameters."
+        required: false
+        schema:
+          $ref: "#/definitions/body_3"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "Policies deleted successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/node_network_protection_policy/{policy_id}:
+    delete:
+      tags:
+      - "Workload Protection Policy"
+      summary: "Delete a node network protection policy"
+      description: "\n"
+      operationId: "deleteWorkloadProtectionPolicy"
+      parameters:
+      - name: "policy_id"
+        in: "path"
+        required: true
+        type: "integer"
+        x-exportParamName: "PolicyId"
+      responses:
+        204:
+          description: "Policy removed successfully."
+        400:
+          description: "Bad request."
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/quarantine_protection_policy:
+    get:
+      tags:
+      - "Quarantine Protection Policy"
+      summary: "Get all quarantine policies created by the user."
+      description: "\n"
+      operationId: "getQuarantineProtectionPolicy"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "Quarantine Protection Policy"
+      summary: "Add a quarantine protection policy."
+      description: "\n"
+      operationId: "addQuarantineProtectionPolicy"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON parameters."
+        required: false
+        schema:
+          $ref: "#/definitions/body_4"
+        x-exportParamName: "Body"
+      responses:
+        201:
+          description: "Policy added successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/quarantine_protection_policy/{policy_id}:
+    delete:
+      tags:
+      - "Quarantine Protection Policy"
+      summary: "Delete a quarantine policy"
+      description: "\n"
+      operationId: "deleteQuarantineProtectionPolicy"
+      parameters:
+      - name: "policy_id"
+        in: "path"
+        required: true
+        type: "integer"
+        x-exportParamName: "PolicyId"
+      responses:
+        204:
+          description: "Policy removed successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/quarantine_protection_policy_log:
+    post:
+      tags:
+      - "Quarantine Protection Policy Logs"
+      summary: "Get/Delete quarantine protection policy logs by filter"
+      description: "Get/Delete quarantine protection policy logs by filter"
+      operationId: "findQuarantineProtectionPolicyLogs"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options to get or delete policy logs"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_6"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/quarantine_protection_policy_log/{policy_log_id}:
+    get:
+      tags:
+      - "Quarantine Protection Policy Logs"
+      summary: "Get quarantine protection policy log by given policy_log_id"
+      operationId: "getQuarantineProtectionPolicyLog"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "policy_log_id"
+        in: "path"
+        description: "Policy log ID"
+        required: true
+        type: "string"
+        x-exportParamName: "PolicyLogId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - "Quarantine Protection Policy Logs"
+      summary: "Delete quarantine protection policy log by policy_log_id"
+      operationId: "deleteQuarantineProtectionPolicyLog"
+      parameters:
+      - name: "policy_log_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "PolicyLogId"
+      responses:
+        204:
+          description: "Policy log deleted successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/refresh/token:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Generate a new access token using refresh token"
+      description: "Generate a new access token using refresh token. Usage (In header):\
+        \ Authorization: Bearer <refresh_token>"
+      operationId: "refreshJwtToken"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Login successful."
+          examples:
+            application/json: "{\n  \"data\": {\n    \"access_token\": \"\"\n  },\n\
+              \  \"error\": null,\n  \"success\": true\n}"
+        400:
+          description: "Bad request"
+        404:
+          description: "User not found"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/users/reset-api-key:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Reset API Key"
+      description: "\nPermission: ALL\n"
+      operationId: "resetApiKey"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Reset successful"
+        400:
+          description: "Bad request."
+        404:
+          description: "User not found."
+      security:
+      - Bearer: []
+  /deepfence/v1.3/vulnerability:
+    post:
+      tags:
+      - "Vulnerability Management"
+      summary: "Get/Delete vulnerabilities by filter"
+      description: "Get/Delete vulnerabilities by filter"
+      operationId: "findVulnerability"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options to get or delete vulnerabilities"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_7"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/vulnerability/{vulnerability_id}:
+    get:
+      tags:
+      - "Vulnerability Management"
+      summary: "Get vulnerability by given vulnerability_id"
+      operationId: "getVulnerability"
+      parameters:
+      - name: "vulnerability_id"
+        in: "path"
+        description: "Vulnerability ID"
+        required: true
+        type: "string"
+        x-exportParamName: "VulnerabilityId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+    delete:
+      tags:
+      - "Vulnerability Management"
+      summary: "Delete a vulnerability doc by vulnerability_id"
+      operationId: "deleteVulnerability"
+      parameters:
+      - name: "vulnerability_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "VulnerabilityId"
+      responses:
+        204:
+          description: "Vulnerability deleted successfully."
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  deepfencev1.3alerts_filters:
+    properties:
+      alert_id:
+        type: "array"
+        example:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        description: "Alert ids"
+        uniqueItems: true
+        items:
+          type: "string"
+      anomaly:
+        type: "array"
+        example:
+        - "network_anomaly"
+        description: "Anomaly types"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "network_anomaly"
+          - "behavioral_anomaly"
+          - "system_audit"
+          - "syscall_anomaly"
+      container_image:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Container image names"
+        uniqueItems: true
+        items:
+          type: "string"
+      container_name:
+        type: "array"
+        example:
+        - "container-1"
+        - "container-2"
+        description: "Container names"
+        uniqueItems: true
+        items:
+          type: "string"
+      host_name:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Host names"
+        uniqueItems: true
+        items:
+          type: "string"
+      resource_type:
+        type: "array"
+        example:
+        - "processes"
+        description: "Resource types"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "processes"
+          - "files"
+          - "network"
+      severity:
+        type: "array"
+        example:
+        - "critical"
+        description: "Alert severity"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "critical"
+          - "high"
+          - "medium"
+          - "low"
+    description: "Filter alerts by various fields (key value pairs)"
+    example:
+      severity:
+      - "critical"
+      anomaly:
+      - "network_anomaly"
+      container_name:
+      - "container-1"
+      - "container-2"
+      alert_id:
+      - "ewqvfewqk"
+      - "ewokwlkevf"
+      resource_type:
+      - "processes"
+      container_image:
+      - "dev-1"
+      - "dev-2"
+      host_name:
+      - "dev-1"
+      - "dev-2"
+  Options:
+    type: "object"
+    properties:
+      action:
+        type: "string"
+        description: "Action to perform - `get` or `delete`"
+        enum:
+        - "get"
+        - "delete"
+        default: "get"
+      detailed:
+        type: "boolean"
+        description: "Detailed alert (includes all fields) or simple alert"
+        default: false
+      filters:
+        $ref: "#/definitions/deepfencev1.3alerts_filters"
+      size:
+        type: "integer"
+        example: 10
+        description: "The numbers of alerts to return"
+        minimum: 1
+        maximum: 10000
+      start_index:
+        type: "integer"
+        example: 0
+        description: "The number of items to skip before starting to collect the result\
+          \ set"
+        minimum: 0
+        maximum: 9999
+    example:
+      size: 10
+      start_index: 0
+      detailed: false
+      action: "get"
+      filters:
+        severity:
+        - "critical"
+        anomaly:
+        - "network_anomaly"
+        container_name:
+        - "container-1"
+        - "container-2"
+        alert_id:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        resource_type:
+        - "processes"
+        container_image:
+        - "dev-1"
+        - "dev-2"
+        host_name:
+        - "dev-1"
+        - "dev-2"
+  Options_1:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "qwkfjwqfkwqkf"
+        description: "Status ID which was sent in previous status api. If a particular\
+          \ request takes longer, api call will reply a status id. This id should\
+          \ be used to query the status of that particular request. It status is success,\
+          \ it will respond data url where data will be available."
+    example:
+      id: "qwkfjwqfkwqkf"
+  deepfencev1.3enumerate_filters:
+    properties:
+      container_name:
+        type: "array"
+        example:
+        - "redis"
+        - "mysql"
+        description: "Container name (for type `container`, `container_image`)"
+        uniqueItems: true
+        items:
+          type: "string"
+      host_name:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Host names"
+        uniqueItems: true
+        items:
+          type: "string"
+      image_name:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Container image names (for type `container`, `container_image`)"
+        uniqueItems: true
+        items:
+          type: "string"
+      interfaceNames:
+        type: "array"
+        example:
+        - "lo"
+        - "docker0"
+        - "eth0"
+        description: "Interface names (for type `host`)"
+        uniqueItems: true
+        items:
+          type: "string"
+      kernel_version:
+        type: "array"
+        example:
+        - "4.13.0-1019-gcp #23-Ubuntu SMP Thu May 31 16:13:34 UTC 2018"
+        description: "Kernel version (for type `host`)"
+        uniqueItems: true
+        items:
+          type: "string"
+      local_networks:
+        type: "array"
+        example:
+        - "127.0.0.1/8"
+        - "172.17.0.1/16"
+        description: "Local networks in CIDR format (for type `host`)"
+        uniqueItems: true
+        items:
+          type: "string"
+      os:
+        type: "array"
+        example:
+        - "linux"
+        description: "Operating system (for type `host`)"
+        uniqueItems: true
+        items:
+          type: "string"
+      packet_capture:
+        type: "array"
+        example:
+        - "running"
+        description: "Packet capture state (for type `host`)"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "running"
+          - "not_running"
+      pid:
+        type: "integer"
+        example: 1225
+        description: "Process ID (for type `process`)"
+        minimum: 1
+      ppid:
+        type: "integer"
+        example: 1225
+        description: "Parent process ID (for type `process`)"
+        minimum: 1
+      pseudo:
+        type: "array"
+        example:
+        - false
+        description: "Pseudo node or not"
+        uniqueItems: true
+        items:
+          type: "boolean"
+      publicIpAddress:
+        type: "array"
+        example:
+        - "1.2.3.4"
+        description: "Public IP of host (for type `host`)"
+        uniqueItems: true
+        items:
+          type: "string"
+      type:
+        type: "array"
+        example:
+        - "host"
+        description: "Types of node"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "host"
+          - "container"
+          - "container_image"
+          - "container_by_name"
+          - "process"
+          - "process_by_name"
+    description: "Filter vulnerabilities by various fields (key value pairs)"
+    example:
+      os:
+      - "linux"
+      publicIpAddress:
+      - "1.2.3.4"
+      pid: 1225
+      interfaceNames:
+      - "lo"
+      - "docker0"
+      - "eth0"
+      type:
+      - "host"
+      ppid: 1225
+      image_name:
+      - "dev-1"
+      - "dev-2"
+      container_name:
+      - "redis"
+      - "mysql"
+      kernel_version:
+      - "4.13.0-1019-gcp #23-Ubuntu SMP Thu May 31 16:13:34 UTC 2018"
+      packet_capture:
+      - "running"
+      pseudo:
+      - false
+      host_name:
+      - "dev-1"
+      - "dev-2"
+      local_networks:
+      - "127.0.0.1/8"
+      - "172.17.0.1/16"
+  Options_2:
+    type: "object"
+    properties:
+      filters:
+        $ref: "#/definitions/deepfencev1.3enumerate_filters"
+      size:
+        type: "integer"
+        example: 10
+        description: "The numbers of vulnerabilities to return"
+        minimum: 1
+        maximum: 100000
+      start_index:
+        type: "integer"
+        example: 0
+        description: "The number of items to skip before starting to collect the result\
+          \ set"
+        minimum: 0
+        maximum: 99999
+    example:
+      size: 10
+      start_index: 0
+      filters:
+        os:
+        - "linux"
+        publicIpAddress:
+        - "1.2.3.4"
+        pid: 1225
+        interfaceNames:
+        - "lo"
+        - "docker0"
+        - "eth0"
+        type:
+        - "host"
+        ppid: 1225
+        image_name:
+        - "dev-1"
+        - "dev-2"
+        container_name:
+        - "redis"
+        - "mysql"
+        kernel_version:
+        - "4.13.0-1019-gcp #23-Ubuntu SMP Thu May 31 16:13:34 UTC 2018"
+        packet_capture:
+        - "running"
+        pseudo:
+        - false
+        host_name:
+        - "dev-1"
+        - "dev-2"
+        local_networks:
+        - "127.0.0.1/8"
+        - "172.17.0.1/16"
+  Options_3:
+    type: "object"
+    properties:
+      capture_percentage:
+        type: "integer"
+        example: 100
+        description: "The percentage of traffic to capture"
+        minimum: 20
+        maximum: 100
+      interface_name:
+        type: "string"
+        example: "eth0"
+        description: "The interface to start packet capture (refer node details api\
+          \ / enumerate api for available interfaces for a node). To start on all\
+          \ interfaces, use 'All'"
+        default: "All"
+      port_list:
+        type: "array"
+        example:
+        - 80
+        - 8080
+        - 8081
+        description: "Ports to start packet capture"
+        uniqueItems: true
+        items:
+          type: "integer"
+          example: 80
+          minimum: 1
+          maximum: 65535
+      snap_length:
+        type: "integer"
+        example: 65535
+        description: "Packet header length"
+        minimum: 20
+        maximum: 65535
+    example:
+      snap_length: 65535
+      port_list:
+      - 80
+      - 8080
+      - 8081
+      interface_name: "eth0"
+      capture_percentage: 100
+  Options_4:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "qwkfjwqfkwqkf"
+        description: "Status ID which was sent in previous request. If a particular\
+          \ request takes longer, api call will reply a status id. This id should\
+          \ be used to query the status of that particular request. It status is success,\
+          \ it will respond data url where data will be available."
+    example:
+      id: "qwkfjwqfkwqkf"
+  body:
+    properties:
+      api_key:
+        type: "string"
+        example: "qwjefwqkjfqkbvfq"
+        description: "api_key"
+  inline_response_200:
+    properties:
+      data:
+        type: "object"
+        description: "User details"
+        properties: {}
+      error:
+        type: "string"
+        description: "Error message, if any. Otherwise `null`"
+      success:
+        type: "boolean"
+        description: "Success status"
+    example:
+      data: "{}"
+      success: true
+      error: "error"
+  body_1:
+    properties:
+      action:
+        type: "string"
+        example: "block"
+        description: "action to take, when a policy is enforced"
+        enum:
+        - "block"
+        - "ignore"
+        default: "block"
+      alert_count_threshold:
+        type: "integer"
+        example: 1
+        description: "When number of alerts (threshold) is this, policy will be executed"
+        minimum: 1
+        maximum: 999999999
+      alert_from_time:
+        type: "integer"
+        example: 0
+        description: "Only check in the past 'n' seconds, if ip address reached threshold"
+        minimum: 0
+        maximum: 999999999
+      alert_level:
+        type: "string"
+        example: "critical"
+        description: "Alert level"
+        enum:
+        - "critical"
+        - "high"
+        - "medium"
+        - "low"
+      block_duration:
+        type: "integer"
+        example: 3600
+        description: "Number of seconds to block the ip address"
+        minimum: 1
+        maximum: 999999999
+      node_type:
+        type: "string"
+        example: "host"
+        description: "Node type"
+        enum:
+        - "host"
+  deepfencev1.3usersnetwork_protection_policy_log_filters:
+    properties:
+      action:
+        type: "array"
+        example:
+        - "block"
+        description: "What policy action was performed"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "block"
+          - "ignore"
+      alert_count_threshold:
+        type: "integer"
+        example: 1
+        description: "Policy was executed when number of alerts (threshold) was this"
+        minimum: 1
+        maximum: 999999999
+      alert_id:
+        type: "array"
+        example:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        description: "Alert id for which the policies got executed"
+        uniqueItems: true
+        items:
+          type: "string"
+      block_duration:
+        type: "integer"
+        example: 3600
+        description: "Number of seconds ip address was blocked"
+        minimum: 1
+        maximum: 999999999
+      block_ip:
+        type: "array"
+        example:
+        - "111.222.333.444"
+        description: "IP address which got blocked or ignored"
+        uniqueItems: true
+        items:
+          type: "string"
+      host_name:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Host names"
+        uniqueItems: true
+        items:
+          type: "string"
+      node_type:
+        type: "array"
+        example:
+        - "host"
+        description: "Node type"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "host"
+      policy_created_by:
+        type: "array"
+        example:
+        - "demo@deepfence.io"
+        description: "Email address of user who created this network protection policy"
+        uniqueItems: true
+        items:
+          type: "string"
+      severity:
+        type: "array"
+        example:
+        - "critical"
+        description: "Severity set in network protection policy"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "critical"
+          - "high"
+          - "medium"
+          - "low"
+    description: "Filter policy logs by various fields (key value pairs)"
+    example:
+      severity:
+      - "critical"
+      node_type:
+      - "host"
+      policy_created_by:
+      - "demo@deepfence.io"
+      alert_id:
+      - "ewqvfewqk"
+      - "ewokwlkevf"
+      block_duration: 3600
+      action:
+      - "block"
+      block_ip:
+      - "111.222.333.444"
+      alert_count_threshold: 1
+      host_name:
+      - "dev-1"
+      - "dev-2"
+  Options_5:
+    type: "object"
+    properties:
+      action:
+        type: "string"
+        description: "Action to perform - `get` or `delete`"
+        enum:
+        - "get"
+        - "delete"
+        default: "get"
+      filters:
+        $ref: "#/definitions/deepfencev1.3usersnetwork_protection_policy_log_filters"
+      size:
+        type: "integer"
+        example: 10
+        description: "The numbers of policy logs to return"
+        minimum: 1
+        maximum: 10000
+      start_index:
+        type: "integer"
+        example: 0
+        description: "The number of items to skip before starting to collect the result\
+          \ set"
+        minimum: 0
+        maximum: 9999
+    example:
+      size: 10
+      start_index: 0
+      action: "get"
+      filters:
+        severity:
+        - "critical"
+        node_type:
+        - "host"
+        policy_created_by:
+        - "demo@deepfence.io"
+        alert_id:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        block_duration: 3600
+        action:
+        - "block"
+        block_ip:
+        - "111.222.333.444"
+        alert_count_threshold: 1
+        host_name:
+        - "dev-1"
+        - "dev-2"
+  body_2:
+    properties:
+      action:
+        type: "string"
+        example: "block"
+        description: "action to take, when a policy is enforced"
+        enum:
+        - "block"
+        - "unblock"
+      block_duration:
+        type: "integer"
+        example: 3600
+        description: "Number of seconds to block/allow the ip address"
+        minimum: 1
+        maximum: 999999999
+      host_name:
+        type: "string"
+        example: "dev-1"
+        description: "Host name"
+        enum:
+        - "inbound"
+        - "outbound"
+      ip_address_list:
+        type: "array"
+        example:
+        - "1.2.3.4"
+        description: "List of IP addresses"
+        uniqueItems: true
+        items:
+          type: "string"
+      node_policy_type:
+        type: "string"
+        example: "blacklist"
+        description: "Policy type - whitelist or blacklist"
+        enum:
+        - "blacklist"
+        - "whitelist"
+      packet_direction:
+        type: "string"
+        example: "inbound"
+        description: "Packet direction - inbound or outbound"
+        enum:
+        - "inbound"
+        - "outbound"
+      port_list:
+        type: "array"
+        example:
+        - "8080"
+        - "8081"
+        description: "List of ports"
+        uniqueItems: true
+        items:
+          type: "string"
+  body_3:
+    properties:
+      policy_id_list:
+        type: "array"
+        example:
+        - 1
+        - 3
+        - 5
+        description: "List of policy ids"
+        uniqueItems: true
+        items:
+          type: "integer"
+  body_4:
+    properties:
+      action:
+        type: "string"
+        example: "pause"
+        description: "action to take, when a policy is enforced"
+        enum:
+        - "pause"
+        - "stop"
+        - "restart"
+      alert_count_threshold:
+        type: "integer"
+        example: 1
+        description: "When number of alerts (threshold) is this, policy will be executed"
+        minimum: 1
+        maximum: 999999999
+      alert_level:
+        type: "string"
+        example: "critical"
+        description: "Alert level"
+        enum:
+        - "critical"
+        - "high"
+        - "medium"
+        - "low"
+      node_type:
+        type: "string"
+        example: "container"
+        description: "Node type"
+        enum:
+        - "container"
+        - "host"
+  deepfencev1.3usersquarantine_protection_policy_log_filters:
+    properties:
+      action:
+        type: "array"
+        example:
+        - "restart"
+        description: "What policy action was performed"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "pause"
+          - "stop"
+          - "restart"
+      alert_count_threshold:
+        type: "integer"
+        example: 1
+        description: "Policy was executed when number of alerts (threshold) was this"
+        minimum: 1
+        maximum: 999999999
+      alert_id:
+        type: "array"
+        example:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        description: "Alert id for which the policies got executed"
+        uniqueItems: true
+        items:
+          type: "string"
+      host_name:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Host names"
+        uniqueItems: true
+        items:
+          type: "string"
+      node_type:
+        type: "array"
+        example:
+        - "host"
+        description: "Node type"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "host"
+          - "container"
+      policy_created_by:
+        type: "array"
+        example:
+        - "demo@deepfence.io"
+        description: "Email address of user who created this quarantine protection\
+          \ policy"
+        uniqueItems: true
+        items:
+          type: "string"
+      severity:
+        type: "array"
+        example:
+        - "critical"
+        description: "Severity set in quarantine protection policy"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "critical"
+          - "high"
+          - "medium"
+          - "low"
+    description: "Filter policy logs by various fields (key value pairs)"
+    example:
+      severity:
+      - "critical"
+      node_type:
+      - "host"
+      policy_created_by:
+      - "demo@deepfence.io"
+      alert_id:
+      - "ewqvfewqk"
+      - "ewokwlkevf"
+      action:
+      - "restart"
+      alert_count_threshold: 1
+      host_name:
+      - "dev-1"
+      - "dev-2"
+  Options_6:
+    type: "object"
+    properties:
+      action:
+        type: "string"
+        description: "Action to perform - `get` or `delete`"
+        enum:
+        - "get"
+        - "delete"
+        default: "get"
+      filters:
+        $ref: "#/definitions/deepfencev1.3usersquarantine_protection_policy_log_filters"
+      size:
+        type: "integer"
+        example: 10
+        description: "The numbers of policy logs to return"
+        minimum: 1
+        maximum: 10000
+      start_index:
+        type: "integer"
+        example: 0
+        description: "The number of items to skip before starting to collect the result\
+          \ set"
+        minimum: 0
+        maximum: 9999
+    example:
+      size: 10
+      start_index: 0
+      action: "get"
+      filters:
+        severity:
+        - "critical"
+        node_type:
+        - "host"
+        policy_created_by:
+        - "demo@deepfence.io"
+        alert_id:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        action:
+        - "restart"
+        alert_count_threshold: 1
+        host_name:
+        - "dev-1"
+        - "dev-2"
+  deepfencev1.3vulnerability_filters:
+    properties:
+      container_name:
+        type: "array"
+        example:
+        - "container-1"
+        - "container-2"
+        description: "Container names"
+        uniqueItems: true
+        items:
+          type: "string"
+      cve_container_image:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Container image names"
+        uniqueItems: true
+        items:
+          type: "string"
+      cve_container_image_id:
+        type: "array"
+        example:
+        - "ewqlkfn"
+        description: "Container image ids"
+        uniqueItems: true
+        items:
+          type: "string"
+      cve_id:
+        type: "array"
+        example:
+        - "CVE-2018-9234"
+        description: "CVE Id"
+        uniqueItems: true
+        items:
+          type: "string"
+      cve_severity:
+        type: "array"
+        example:
+        - "critical"
+        description: "CVE severity"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "critical"
+          - "high"
+          - "medium"
+          - "low"
+      host_name:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Host names"
+        uniqueItems: true
+        items:
+          type: "string"
+      vulnerability_id:
+        type: "array"
+        example:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        description: "Vulnerability ids"
+        uniqueItems: true
+        items:
+          type: "string"
+    description: "Filter vulnerabilities by various fields (key value pairs)"
+    example:
+      cve_container_image_id:
+      - "ewqlkfn"
+      cve_severity:
+      - "critical"
+      container_name:
+      - "container-1"
+      - "container-2"
+      vulnerability_id:
+      - "ewqvfewqk"
+      - "ewokwlkevf"
+      cve_id:
+      - "CVE-2018-9234"
+      cve_container_image:
+      - "dev-1"
+      - "dev-2"
+      host_name:
+      - "dev-1"
+      - "dev-2"
+  Options_7:
+    type: "object"
+    properties:
+      action:
+        type: "string"
+        description: "Action to perform - `get` or `delete`"
+        enum:
+        - "get"
+        - "delete"
+        default: "get"
+      filters:
+        $ref: "#/definitions/deepfencev1.3vulnerability_filters"
+      size:
+        type: "integer"
+        example: 10
+        description: "The numbers of vulnerabilities to return"
+        minimum: 1
+        maximum: 10000
+      start_index:
+        type: "integer"
+        example: 0
+        description: "The number of items to skip before starting to collect the result\
+          \ set"
+        minimum: 0
+        maximum: 9999
+    example:
+      size: 10
+      start_index: 0
+      action: "get"
+      filters:
+        cve_container_image_id:
+        - "ewqlkfn"
+        cve_severity:
+        - "critical"
+        container_name:
+        - "container-1"
+        - "container-2"
+        vulnerability_id:
+        - "ewqvfewqk"
+        - "ewokwlkevf"
+        cve_id:
+        - "CVE-2018-9234"
+        cve_container_image:
+        - "dev-1"
+        - "dev-2"
+        host_name:
+        - "dev-1"
+        - "dev-2"
