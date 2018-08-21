@@ -297,11 +297,26 @@ class DeepfenceAPITest(object):
     def policy_management(self):
         quar_policy = "Quarantine Protection Policy"
         net_policy = "Network Protection Policy"
-        policy_type_choices = [quar_policy, net_policy]
+        node_blacklist_policy = "Node Blacklist Policy"
+        node_whitelist_policy = "Node Whitelist Policy"
+        policy_type_choices = [quar_policy, net_policy, node_blacklist_policy, node_whitelist_policy]
+        policy_type_api_path = ["quarantine_protection_policy", "network_protection_policy",
+                                "blacklist_node_network_protection_policy", "whitelist_node_network_protection_policy"]
         user_policy_type_choice = self.__get_user_input(policy_type_choices)
-        policy_type = policy_type_choices[user_policy_type_choice].lower().replace(" ", "_")
+        policy_type = policy_type_api_path[user_policy_type_choice]
         policy_choices = ["Add", "List", "Delete", "List Policy Logs", "Delete Policy Logs"]
         user_policy_choice = policy_choices[self.__get_user_input(policy_choices)]
+        node_policy_type = ""
+        api_url = "{0}/users/{1}".format(self.api_url, policy_type)
+        if policy_type.startswith("blacklist_"):
+            node_policy_type = "blacklist"
+            api_url = "{0}/users/{1}?node_policy_type=blacklist".format(self.api_url,
+                                                                        policy_type.replace("blacklist_", ""))
+        elif policy_type.startswith("whitelist_"):
+            node_policy_type = "whitelist"
+            api_url = "{0}/users/{1}?node_policy_type=whitelist".format(self.api_url,
+                                                                        policy_type.replace("whitelist_", ""))
+        policy_type = policy_type.replace("blacklist_", "").replace("whitelist_", "")
         if user_policy_choice == "Add":
             # Add policy
             if policy_type == "quarantine_protection_policy":
@@ -310,21 +325,35 @@ class DeepfenceAPITest(object):
             elif policy_type == "network_protection_policy":
                 payload = {"alert_level": "high", "action": "block", "node_type": "host", "block_duration": 216000,
                            "alert_from_time": 216000, "alert_count_threshold": "2"}
+            elif node_policy_type == "blacklist":
+                hosts, success = self.__enumerate_helper(["host"])
+                host_name = hosts[-1]["host_name"]
+                payload = {"action": "block", "host_name": host_name, "block_duration": 216000,
+                           "node_policy_type": node_policy_type, "packet_direction": "inbound",
+                           "ip_address_list": ["1.2.3.4"], "port_list": ["8080"]}
+            elif node_policy_type == "whitelist":
+                hosts, success = self.__enumerate_helper(["host"])
+                host_name = hosts[-1]["host_name"]
+                payload = {"action": "block", "host_name": host_name, "block_duration": 216000,
+                           "node_policy_type": node_policy_type, "packet_direction": "inbound",
+                           "ip_address_list": ["1.2.3.4"], "port_list": ["8080"]}
             else:
                 return
-            resp = requests.post("{0}/users/{1}".format(self.api_url, policy_type), headers=self.headers,
-                                 verify=False, json=payload).json()
+            resp = requests.post(api_url, headers=self.headers, verify=False, json=payload).json()
             print(json.dumps(resp, indent=4))
         elif user_policy_choice == "List":
             # List policies
-            resp = requests.get("{0}/users/{1}".format(self.api_url, policy_type), headers=self.headers,
-                                verify=False).json()["data"][policy_type.replace("policy", "policies")]
-            self.__list_print_helper(resp)
+            resp = requests.get(api_url, headers=self.headers, verify=False).json()
+            if not resp["data"]:
+                print("No policies")
+            else:
+                resp = resp["data"][policy_type.replace("policy", "policies")]
+                self.__list_print_helper(resp)
         elif user_policy_choice == "Delete":
             # Delete policy
             print("Enter policy id to delete")
-            resp = requests.get("{0}/users/{1}".format(self.api_url, policy_type), headers=self.headers,
-                                verify=False).json()["data"][policy_type.replace("policy", "policies")]
+            resp = requests.get(api_url, headers=self.headers, verify=False).json()["data"][
+                policy_type.replace("policy", "policies")]
             if not resp:
                 print("No policies set")
                 return
