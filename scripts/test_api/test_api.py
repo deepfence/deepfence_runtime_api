@@ -10,7 +10,9 @@ from sys import argv
 from time import sleep
 import json
 import signal
+from copy import deepcopy
 from socketio_client_deepfence.manager import Manager
+from collections import defaultdict
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 try:
@@ -107,11 +109,42 @@ class DeepfenceAPITest(object):
                      params={"api_key": self.api_key})
         socketio = io.socket('/websockets')
 
+        print_keys = ["host_name", "container_name", "pid", "image_name", "process", "name", "adjacency",
+                      "publicIpAddress", "docker_container_ips", "id"]
+        nodes_data = {}
+
+        def format_node(node, parse_adjacencies=False):
+            if not node:
+                return {}
+            if "adjacency" in node:
+                if parse_adjacencies:
+                    adjacencies = []
+                    for adj_node_id in deepcopy(node["adjacency"]):
+                        formatted_adj_data = format_node(nodes_data.get(adj_node_id, {}), parse_adjacencies=False)
+                        if formatted_adj_data:
+                            adjacencies.append(formatted_adj_data)
+                    node["adjacency"] = adjacencies
+                else:
+                    node["adjacency"] = []
+            return {k: v for k, v in node.items() if k in print_keys and v}
+
         @socketio.on(node_type)
         def on_node_data(*args, **kwargs):
-            print(node_type)
-            print("Received ", node_type)
-            print(args)
+            print("\nReceived ", node_type)
+            if not args:
+                return
+            if args[0]["add"]:
+                print("New nodes")
+                for node in args[0]["add"]:
+                    nodes_data[node["id"]] = node
+                    print(json.dumps(format_node(node, parse_adjacencies=True), indent=4))
+                    # print(format_node(node, parse_adjacencies=True))
+            if args[0]["update"]:
+                print("Updated nodes")
+                for node in args[0]["update"]:
+                    nodes_data[node["id"]] = node
+                    print(json.dumps(format_node(node, parse_adjacencies=True), indent=4))
+                    # print(format_node(node, parse_adjacencies=True))
 
         @socketio.on_connect()
         def on_connect():
@@ -273,26 +306,23 @@ class DeepfenceAPITest(object):
         print(json.dumps(resp, indent=4))
 
     def alert_management(self):
-        print("\n--------------------------------------------------------------------")
-        print("Alerts: Print count of low severity system audits, delete one, print count again")
+        print("\nAlerts by host/container\n")
+        host_alerts = defaultdict(dict)
         resp = requests.post("{0}/alerts".format(self.api_url),
-                             json={"filter": {"severity": "low", "anomaly": "system_audit"}, "action": "get",
-                                   "start_index": 0, "size": 10000},
+                             json={"filter": {}, "action": "get", "start_index": 0, "size": 10000},
                              headers=self.headers, verify=False).json()
-        self.__print_resp_data_count(resp)
-        self.__dump_resp_to_file("alert_1", resp)
-        resp = requests.post("{0}/alerts".format(self.api_url),
-                             json={"filter": {"severity": "low", "anomaly": "system_audit"}, "action": "delete",
-                                   "start_index": 0, "size": 1},
-                             headers=self.headers, verify=False).json()
-        self.__print_resp(resp, print_all=True)
-        self.__dump_resp_to_file("alert_2", resp)
-        resp = requests.post("{0}/alerts".format(self.api_url),
-                             json={"filter": {"severity": "low", "anomaly": "system_audit"}, "action": "get",
-                                   "start_index": 0, "size": 10000},
-                             headers=self.headers, verify=False).json()
-        self.__print_resp_data_count(resp)
-        self.__dump_resp_to_file("alert_3", resp)
+        if resp["data"]:
+            for alert in resp["data"]:
+                c_host_name = alert["host_name"] + "/" + alert["container_name"]
+                if alert["severity"] in host_alerts[c_host_name]:
+                    host_alerts[c_host_name][alert["severity"]] += 1
+                else:
+                    host_alerts[c_host_name][alert["severity"]] = 1
+            print(json.dumps(dict(host_alerts), indent=4))
+            print("\nSample alert\n")
+            print(json.dumps(resp["data"][0], indent=4))
+        else:
+            print("No alerts")
 
     def policy_management(self):
         quar_policy = "Quarantine Protection Policy"
@@ -305,6 +335,8 @@ class DeepfenceAPITest(object):
         user_policy_type_choice = self.__get_user_input(policy_type_choices)
         policy_type = policy_type_api_path[user_policy_type_choice]
         policy_choices = ["Add", "List", "Delete", "List Policy Logs", "Delete Policy Logs"]
+        if policy_type.startswith("blacklist_") or policy_type.startswith("whitelist_"):
+            policy_choices = policy_choices[:3]
         user_policy_choice = policy_choices[self.__get_user_input(policy_choices)]
         node_policy_type = ""
         api_url = "{0}/users/{1}".format(self.api_url, policy_type)
@@ -318,6 +350,13 @@ class DeepfenceAPITest(object):
                                                                         policy_type.replace("whitelist_", ""))
         policy_type = policy_type.replace("blacklist_", "").replace("whitelist_", "")
         if user_policy_choice == "Add":
+            user_choice_host = 0
+            hosts_data = []
+            if node_policy_type:
+                hosts_data, success = self.__enumerate_helper(["host"])
+                hosts_data = [i["host_name"] for i in hosts_data]
+                print("On which host to add the policy?")
+                user_choice_host = self.__get_user_input(hosts_data)
             # Add policy
             if policy_type == "quarantine_protection_policy":
                 payload = {"alert_level": "critical", "action": "restart", "node_type": "container",
@@ -326,15 +365,11 @@ class DeepfenceAPITest(object):
                 payload = {"alert_level": "high", "action": "block", "node_type": "host", "block_duration": 216000,
                            "alert_from_time": 216000, "alert_count_threshold": "2"}
             elif node_policy_type == "blacklist":
-                hosts, success = self.__enumerate_helper(["host"])
-                host_name = hosts[-1]["host_name"]
-                payload = {"action": "block", "host_name": host_name, "block_duration": 216000,
+                payload = {"action": "block", "host_name": hosts_data[user_choice_host], "block_duration": 216000,
                            "node_policy_type": node_policy_type, "packet_direction": "inbound",
                            "ip_address_list": ["1.2.3.4"], "port_list": ["8080"]}
             elif node_policy_type == "whitelist":
-                hosts, success = self.__enumerate_helper(["host"])
-                host_name = hosts[-1]["host_name"]
-                payload = {"action": "block", "host_name": host_name, "block_duration": 216000,
+                payload = {"action": "block", "host_name": hosts_data[user_choice_host], "block_duration": 216000,
                            "node_policy_type": node_policy_type, "packet_direction": "inbound",
                            "ip_address_list": ["1.2.3.4"], "port_list": ["8080"]}
             else:
@@ -348,20 +383,26 @@ class DeepfenceAPITest(object):
                 print("No policies")
             else:
                 resp = resp["data"][policy_type.replace("policy", "policies")]
+                if not resp:
+                    print("No policies")
                 self.__list_print_helper(resp)
         elif user_policy_choice == "Delete":
             # Delete policy
             print("Enter policy id to delete")
-            resp = requests.get(api_url, headers=self.headers, verify=False).json()["data"][
-                policy_type.replace("policy", "policies")]
-            if not resp:
-                print("No policies set")
+            resp = requests.get(api_url, headers=self.headers, verify=False).json()
+            if not resp["data"]:
+                print("No policies")
                 return
-            user_policy_del = self.__get_user_input(resp)
-            policy_id = resp[user_policy_del]["id"]
-            requests.delete("{0}/users/{1}/{2}".format(self.api_url, policy_type, policy_id),
-                            headers=self.headers, verify=False)
-            print("Successfully deleted")
+            else:
+                resp = resp["data"][policy_type.replace("policy", "policies")]
+                if not resp:
+                    print("No policies")
+                    return
+                user_policy_del = self.__get_user_input(resp)
+                policy_id = resp[user_policy_del]["id"]
+                requests.delete("{0}/users/{1}/{2}".format(self.api_url, policy_type, policy_id),
+                                headers=self.headers, verify=False)
+                print("Successfully deleted")
         elif user_policy_choice == "List Policy Logs":
             # List policy log
             payload = {"size": 20, "start_index": 0, "action": "get"}
