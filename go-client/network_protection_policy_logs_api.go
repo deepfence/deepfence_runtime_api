@@ -100,7 +100,7 @@ func (a *NetworkProtectionPolicyLogsApiService) DeleteNetworkProtectionPolicyLog
  Get/Delete network protection policy logs by filter
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "options" (Options5) Options to get or delete policy logs
+     @param "options" (Options7) Options to get or delete policy logs
  @return */
 func (a *NetworkProtectionPolicyLogsApiService) FindNetworkProtectionPolicyLogs(ctx context.Context, localVarOptionals map[string]interface{}) ( *http.Response, error) {
 	var (
@@ -138,7 +138,7 @@ func (a *NetworkProtectionPolicyLogsApiService) FindNetworkProtectionPolicyLogs(
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options5); localVarOk {
+	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options7); localVarOk {
 		localVarPostBody = &localVarTempParam
 	}
 	if ctx != nil {

@@ -140,7 +140,7 @@ class NetworkProtectionPolicyLogsApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options5 options: Options to get or delete policy logs
+        :param Options7 options: Options to get or delete policy logs
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -162,7 +162,7 @@ class NetworkProtectionPolicyLogsApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options5 options: Options to get or delete policy logs
+        :param Options7 options: Options to get or delete policy logs
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.

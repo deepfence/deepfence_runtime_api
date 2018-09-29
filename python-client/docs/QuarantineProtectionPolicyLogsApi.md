@@ -83,7 +83,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepfence_runtime_api.QuarantineProtectionPolicyLogsApi(deepfence_runtime_api.ApiClient(configuration))
-options = deepfence_runtime_api.Options6() # Options6 | Options to get or delete policy logs (optional)
+options = deepfence_runtime_api.Options8() # Options8 | Options to get or delete policy logs (optional)
 
 try:
     # Get/Delete quarantine protection policy logs by filter
@@ -96,7 +96,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options6**](Options6.md)| Options to get or delete policy logs | [optional] 
+ **options** | [**Options8**](Options8.md)| Options to get or delete policy logs | [optional] 
 
 ### Return type
 

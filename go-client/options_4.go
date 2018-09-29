@@ -11,6 +11,15 @@ package deepfence_runtime_api
 
 type Options4 struct {
 
-	// Status ID which was sent in previous request. If a particular request takes longer, api call will reply a status id. This id should be used to query the status of that particular request. It status is success, it will respond data url where data will be available.
-	Id string `json:"id,omitempty"`
+	// The percentage of traffic to capture
+	CapturePercentage int32 `json:"capture_percentage,omitempty"`
+
+	// The interface to start packet capture (refer node details api / enumerate api for available interfaces for a node). To start on all interfaces, use 'All'
+	InterfaceName string `json:"interface_name,omitempty"`
+
+	// Ports to start packet capture
+	PortList []int32 `json:"port_list,omitempty"`
+
+	// Packet header length
+	SnapLength int32 `json:"snap_length,omitempty"`
 }

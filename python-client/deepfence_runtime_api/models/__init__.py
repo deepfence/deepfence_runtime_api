@@ -21,6 +21,7 @@ from deepfence_runtime_api.models.body_2 import Body2
 from deepfence_runtime_api.models.body_3 import Body3
 from deepfence_runtime_api.models.body_4 import Body4
 from deepfence_runtime_api.models.deepfencev1_3alerts_filters import Deepfencev13alertsFilters
+from deepfence_runtime_api.models.deepfencev1_3compliancescan_results_filters import Deepfencev13compliancescanResultsFilters
 from deepfence_runtime_api.models.deepfencev1_3enumerate_filters import Deepfencev13enumerateFilters
 from deepfence_runtime_api.models.deepfencev1_3usersnetwork_protection_policy_log_filters import Deepfencev13usersnetworkProtectionPolicyLogFilters
 from deepfence_runtime_api.models.deepfencev1_3usersquarantine_protection_policy_log_filters import Deepfencev13usersquarantineProtectionPolicyLogFilters
@@ -34,3 +35,5 @@ from deepfence_runtime_api.models.options_4 import Options4
 from deepfence_runtime_api.models.options_5 import Options5
 from deepfence_runtime_api.models.options_6 import Options6
 from deepfence_runtime_api.models.options_7 import Options7
+from deepfence_runtime_api.models.options_8 import Options8
+from deepfence_runtime_api.models.options_9 import Options9

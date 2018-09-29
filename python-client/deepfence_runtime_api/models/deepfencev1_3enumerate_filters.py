@@ -36,6 +36,8 @@ class Deepfencev13enumerateFilters(object):
         'image_name': 'list[str]',
         'interface_names': 'list[str]',
         'kernel_version': 'list[str]',
+        'kubernetes_namespace': 'list[str]',
+        'kubernetes_node_type': 'list[str]',
         'local_networks': 'list[str]',
         'os': 'list[str]',
         'packet_capture': 'list[str]',
@@ -52,6 +54,8 @@ class Deepfencev13enumerateFilters(object):
         'image_name': 'image_name',
         'interface_names': 'interfaceNames',
         'kernel_version': 'kernel_version',
+        'kubernetes_namespace': 'kubernetes_namespace',
+        'kubernetes_node_type': 'kubernetes_node_type',
         'local_networks': 'local_networks',
         'os': 'os',
         'packet_capture': 'packet_capture',
@@ -62,7 +66,7 @@ class Deepfencev13enumerateFilters(object):
         'type': 'type'
     }
 
-    def __init__(self, container_name=None, host_name=None, image_name=None, interface_names=None, kernel_version=None, local_networks=None, os=None, packet_capture=None, pid=None, ppid=None, pseudo=None, public_ip_address=None, type=None):  # noqa: E501
+    def __init__(self, container_name=None, host_name=None, image_name=None, interface_names=None, kernel_version=None, kubernetes_namespace=None, kubernetes_node_type=None, local_networks=None, os=None, packet_capture=None, pid=None, ppid=None, pseudo=None, public_ip_address=None, type=None):  # noqa: E501
         """Deepfencev13enumerateFilters - a model defined in Swagger"""  # noqa: E501
 
         self._container_name = None
@@ -70,6 +74,8 @@ class Deepfencev13enumerateFilters(object):
         self._image_name = None
         self._interface_names = None
         self._kernel_version = None
+        self._kubernetes_namespace = None
+        self._kubernetes_node_type = None
         self._local_networks = None
         self._os = None
         self._packet_capture = None
@@ -90,6 +96,10 @@ class Deepfencev13enumerateFilters(object):
             self.interface_names = interface_names
         if kernel_version is not None:
             self.kernel_version = kernel_version
+        if kubernetes_namespace is not None:
+            self.kubernetes_namespace = kubernetes_namespace
+        if kubernetes_node_type is not None:
+            self.kubernetes_node_type = kubernetes_node_type
         if local_networks is not None:
             self.local_networks = local_networks
         if os is not None:
@@ -221,6 +231,66 @@ class Deepfencev13enumerateFilters(object):
         """
 
         self._kernel_version = kernel_version
+
+    @property
+    def kubernetes_namespace(self):
+        """Gets the kubernetes_namespace of this Deepfencev13enumerateFilters.  # noqa: E501
+
+        kubernetes namespace (for type `pod`, `kube_controller`, `kube_service`). Empty means all.  # noqa: E501
+
+        :return: The kubernetes_namespace of this Deepfencev13enumerateFilters.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._kubernetes_namespace
+
+    @kubernetes_namespace.setter
+    def kubernetes_namespace(self, kubernetes_namespace):
+        """Sets the kubernetes_namespace of this Deepfencev13enumerateFilters.
+
+        kubernetes namespace (for type `pod`, `kube_controller`, `kube_service`). Empty means all.  # noqa: E501
+
+        :param kubernetes_namespace: The kubernetes_namespace of this Deepfencev13enumerateFilters.  # noqa: E501
+        :type: list[str]
+        """
+        allowed_values = ["default", "", "kube-public", "kube-system"]  # noqa: E501
+        if not set(kubernetes_namespace).issubset(set(allowed_values)):
+            raise ValueError(
+                "Invalid values for `kubernetes_namespace` [{0}], must be a subset of [{1}]"  # noqa: E501
+                .format(", ".join(map(str, set(kubernetes_namespace) - set(allowed_values))),  # noqa: E501
+                        ", ".join(map(str, allowed_values)))
+            )
+
+        self._kubernetes_namespace = kubernetes_namespace
+
+    @property
+    def kubernetes_node_type(self):
+        """Gets the kubernetes_node_type of this Deepfencev13enumerateFilters.  # noqa: E501
+
+        kubernetes node type (for type `kube_controller`)  # noqa: E501
+
+        :return: The kubernetes_node_type of this Deepfencev13enumerateFilters.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._kubernetes_node_type
+
+    @kubernetes_node_type.setter
+    def kubernetes_node_type(self, kubernetes_node_type):
+        """Sets the kubernetes_node_type of this Deepfencev13enumerateFilters.
+
+        kubernetes node type (for type `kube_controller`)  # noqa: E501
+
+        :param kubernetes_node_type: The kubernetes_node_type of this Deepfencev13enumerateFilters.  # noqa: E501
+        :type: list[str]
+        """
+        allowed_values = ["Deployment", "DaemonSet", "ReplicaSet", "CronJob", "StatefulSet"]  # noqa: E501
+        if not set(kubernetes_node_type).issubset(set(allowed_values)):
+            raise ValueError(
+                "Invalid values for `kubernetes_node_type` [{0}], must be a subset of [{1}]"  # noqa: E501
+                .format(", ".join(map(str, set(kubernetes_node_type) - set(allowed_values))),  # noqa: E501
+                        ", ".join(map(str, allowed_values)))
+            )
+
+        self._kubernetes_node_type = kubernetes_node_type
 
     @property
     def local_networks(self):

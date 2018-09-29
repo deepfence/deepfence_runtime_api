@@ -11,15 +11,11 @@ package deepfence_runtime_api
 
 type Options3 struct {
 
-	// The percentage of traffic to capture
-	CapturePercentage int32 `json:"capture_percentage,omitempty"`
+	Filters *Deepfencev13enumerateFilters `json:"filters,omitempty"`
 
-	// The interface to start packet capture (refer node details api / enumerate api for available interfaces for a node). To start on all interfaces, use 'All'
-	InterfaceName string `json:"interface_name,omitempty"`
+	// The numbers of vulnerabilities to return
+	Size int32 `json:"size,omitempty"`
 
-	// Ports to start packet capture
-	PortList []int32 `json:"port_list,omitempty"`
-
-	// Packet header length
-	SnapLength int32 `json:"snap_length,omitempty"`
+	// The number of items to skip before starting to collect the result set
+	StartIndex int32 `json:"start_index,omitempty"`
 }

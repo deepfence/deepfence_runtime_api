@@ -29,7 +29,7 @@ type EnumerateApiService service
  Get data of a previous request by status_id
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "options" (Options1) Options
+     @param "options" (Options2) Options
  @return */
 func (a *EnumerateApiService) DataApi(ctx context.Context, localVarOptionals map[string]interface{}) ( *http.Response, error) {
 	var (
@@ -41,81 +41,6 @@ func (a *EnumerateApiService) DataApi(ctx context.Context, localVarOptionals map
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/deepfence/v1.3/data"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-		}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options1); localVarOk {
-		localVarPostBody = &localVarTempParam
-	}
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["Authorization"] = key
-		}
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
-	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
-	}
-
-	return localVarHttpResponse, err
-}
-
-/* EnumerateApiService Enumerate API
- Enumerate nodes (hosts, containers, images, processes) with optional filters
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "options" (Options2) Options to enumerate nodes
- @return */
-func (a *EnumerateApiService) EnumerateNodes(ctx context.Context, localVarOptionals map[string]interface{}) ( *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/deepfence/v1.3/enumerate"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -175,11 +100,86 @@ func (a *EnumerateApiService) EnumerateNodes(ctx context.Context, localVarOption
 	return localVarHttpResponse, err
 }
 
+/* EnumerateApiService Enumerate API
+ Enumerate nodes (hosts, containers, images, processes) with optional filters
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "options" (Options3) Options to enumerate nodes
+ @return */
+func (a *EnumerateApiService) EnumerateNodes(ctx context.Context, localVarOptionals map[string]interface{}) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/deepfence/v1.3/enumerate"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options3); localVarOk {
+		localVarPostBody = &localVarTempParam
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+
 /* EnumerateApiService Status API
  Get status of a previous request by status_id
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "options" (Options4) Options
+     @param "options" (Options6) Options
  @return */
 func (a *EnumerateApiService) StatusApi(ctx context.Context, localVarOptionals map[string]interface{}) ( *http.Response, error) {
 	var (
@@ -217,7 +217,7 @@ func (a *EnumerateApiService) StatusApi(ctx context.Context, localVarOptionals m
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options4); localVarOk {
+	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options6); localVarOk {
 		localVarPostBody = &localVarTempParam
 	}
 	if ctx != nil {

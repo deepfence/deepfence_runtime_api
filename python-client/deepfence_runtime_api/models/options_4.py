@@ -31,44 +31,136 @@ class Options4(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'str'
+        'capture_percentage': 'int',
+        'interface_name': 'str',
+        'port_list': 'list[int]',
+        'snap_length': 'int'
     }
 
     attribute_map = {
-        'id': 'id'
+        'capture_percentage': 'capture_percentage',
+        'interface_name': 'interface_name',
+        'port_list': 'port_list',
+        'snap_length': 'snap_length'
     }
 
-    def __init__(self, id=None):  # noqa: E501
+    def __init__(self, capture_percentage=None, interface_name='All', port_list=None, snap_length=None):  # noqa: E501
         """Options4 - a model defined in Swagger"""  # noqa: E501
 
-        self._id = None
+        self._capture_percentage = None
+        self._interface_name = None
+        self._port_list = None
+        self._snap_length = None
         self.discriminator = None
 
-        if id is not None:
-            self.id = id
+        if capture_percentage is not None:
+            self.capture_percentage = capture_percentage
+        if interface_name is not None:
+            self.interface_name = interface_name
+        if port_list is not None:
+            self.port_list = port_list
+        if snap_length is not None:
+            self.snap_length = snap_length
 
     @property
-    def id(self):
-        """Gets the id of this Options4.  # noqa: E501
+    def capture_percentage(self):
+        """Gets the capture_percentage of this Options4.  # noqa: E501
 
-        Status ID which was sent in previous request. If a particular request takes longer, api call will reply a status id. This id should be used to query the status of that particular request. It status is success, it will respond data url where data will be available.  # noqa: E501
+        The percentage of traffic to capture  # noqa: E501
 
-        :return: The id of this Options4.  # noqa: E501
+        :return: The capture_percentage of this Options4.  # noqa: E501
+        :rtype: int
+        """
+        return self._capture_percentage
+
+    @capture_percentage.setter
+    def capture_percentage(self, capture_percentage):
+        """Sets the capture_percentage of this Options4.
+
+        The percentage of traffic to capture  # noqa: E501
+
+        :param capture_percentage: The capture_percentage of this Options4.  # noqa: E501
+        :type: int
+        """
+        if capture_percentage is not None and capture_percentage > 100:  # noqa: E501
+            raise ValueError("Invalid value for `capture_percentage`, must be a value less than or equal to `100`")  # noqa: E501
+        if capture_percentage is not None and capture_percentage < 20:  # noqa: E501
+            raise ValueError("Invalid value for `capture_percentage`, must be a value greater than or equal to `20`")  # noqa: E501
+
+        self._capture_percentage = capture_percentage
+
+    @property
+    def interface_name(self):
+        """Gets the interface_name of this Options4.  # noqa: E501
+
+        The interface to start packet capture (refer node details api / enumerate api for available interfaces for a node). To start on all interfaces, use 'All'  # noqa: E501
+
+        :return: The interface_name of this Options4.  # noqa: E501
         :rtype: str
         """
-        return self._id
+        return self._interface_name
 
-    @id.setter
-    def id(self, id):
-        """Sets the id of this Options4.
+    @interface_name.setter
+    def interface_name(self, interface_name):
+        """Sets the interface_name of this Options4.
 
-        Status ID which was sent in previous request. If a particular request takes longer, api call will reply a status id. This id should be used to query the status of that particular request. It status is success, it will respond data url where data will be available.  # noqa: E501
+        The interface to start packet capture (refer node details api / enumerate api for available interfaces for a node). To start on all interfaces, use 'All'  # noqa: E501
 
-        :param id: The id of this Options4.  # noqa: E501
+        :param interface_name: The interface_name of this Options4.  # noqa: E501
         :type: str
         """
 
-        self._id = id
+        self._interface_name = interface_name
+
+    @property
+    def port_list(self):
+        """Gets the port_list of this Options4.  # noqa: E501
+
+        Ports to start packet capture  # noqa: E501
+
+        :return: The port_list of this Options4.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._port_list
+
+    @port_list.setter
+    def port_list(self, port_list):
+        """Sets the port_list of this Options4.
+
+        Ports to start packet capture  # noqa: E501
+
+        :param port_list: The port_list of this Options4.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._port_list = port_list
+
+    @property
+    def snap_length(self):
+        """Gets the snap_length of this Options4.  # noqa: E501
+
+        Packet header length  # noqa: E501
+
+        :return: The snap_length of this Options4.  # noqa: E501
+        :rtype: int
+        """
+        return self._snap_length
+
+    @snap_length.setter
+    def snap_length(self, snap_length):
+        """Sets the snap_length of this Options4.
+
+        Packet header length  # noqa: E501
+
+        :param snap_length: The snap_length of this Options4.  # noqa: E501
+        :type: int
+        """
+        if snap_length is not None and snap_length > 65535:  # noqa: E501
+            raise ValueError("Invalid value for `snap_length`, must be a value less than or equal to `65535`")  # noqa: E501
+        if snap_length is not None and snap_length < 20:  # noqa: E501
+            raise ValueError("Invalid value for `snap_length`, must be a value greater than or equal to `20`")  # noqa: E501
+
+        self._snap_length = snap_length
 
     def to_dict(self):
         """Returns the model properties as a dict"""

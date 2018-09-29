@@ -19,6 +19,7 @@ __Version__ : 1.3
 * <<_node_control_resource,Node Control>>
 * <<_alert_management_resource,Alert Management>>
 * <<_vulnerability_management_resource,Vulnerability Management>>
+* <<_compliance_resource,Compliance>>
 * <<_network_protection_policy_resource,Network Protection Policy>>
 * <<_network_protection_policy_logs_resource,Network Protection Policy Logs>>
 * <<_quarantine_protection_policy_resource,Quarantine Protection Policy>>
@@ -281,7 +282,7 @@ Get data of a previous request by status_id
 |===
 |Type|Name|Description|Schema
 |**Body**|**Options** +
-__optional__|Options|<<_options_1,Options_1>>
+__optional__|Options|<<_options_2,Options_2>>
 |===
 
 
@@ -333,7 +334,7 @@ Enumerate nodes (hosts, containers, images, processes) with optional filters
 |===
 |Type|Name|Description|Schema
 |**Body**|**Options** +
-__optional__|Options to enumerate nodes|<<_options_2,Options_2>>
+__optional__|Options to enumerate nodes|<<_options_3,Options_3>>
 |===
 
 
@@ -371,8 +372,10 @@ __optional__|Options to enumerate nodes|<<_options_2,Options_2>>
     "pid" : 1225,
     "interfaceNames" : [ "lo", "docker0", "eth0" ],
     "type" : [ "host" ],
+    "kubernetes_node_type" : [ "running" ],
     "ppid" : 1225,
     "image_name" : [ "dev-1", "dev-2" ],
+    "kubernetes_namespace" : [ "default" ],
     "container_name" : [ "redis", "mysql" ],
     "kernel_version" : [ "4.13.0-1019-gcp #23-Ubuntu SMP Thu May 31 16:13:34 UTC 2018" ],
     "packet_capture" : [ "running" ],
@@ -401,7 +404,7 @@ Get status of a previous request by status_id
 |===
 |Type|Name|Description|Schema
 |**Body**|**Options** +
-__optional__|Options|<<_options_4,Options_4>>
+__optional__|Options|<<_options_6,Options_6>>
 |===
 
 
@@ -480,6 +483,88 @@ __required__|Node ID (refer enumerate api)|string
 |===
 
 
+[[_scaledown]]
+==== Node Control API - Scale Down
+....
+POST /deepfence/v1.3/node/{node_id}/kubernetes_scale_down
+....
+
+
+===== Description
+Scale down kubernetes deployments (Applicable node type - `kube_controllers` with kubernetes_node_type is Deployment or ReplicaSet)
+
+
+===== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**node_id** +
+__required__|Node ID (refer enumerate api)|string
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|Request success|No Content
+|**400**|Bad request|No Content
+|**401**|Unauthorized|No Content
+|===
+
+
+===== Security
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Type|Name
+|**apiKey**|**<<_bearer,Bearer>>**
+|===
+
+
+[[_scaleup]]
+==== Node Control API - Scale Up
+....
+POST /deepfence/v1.3/node/{node_id}/kubernetes_scale_up
+....
+
+
+===== Description
+Scale up kubernetes deployments (Applicable node type - `kube_controllers` with kubernetes_node_type is Deployment or ReplicaSet)
+
+
+===== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**node_id** +
+__required__|Node ID (refer enumerate api)|string
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|Request success|No Content
+|**400**|Bad request|No Content
+|**401**|Unauthorized|No Content
+|===
+
+
+===== Security
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Type|Name
+|**apiKey**|**<<_bearer,Bearer>>**
+|===
+
+
 [[_startpacketcapture]]
 ==== Node Control - Start Packet Capture
 ....
@@ -499,7 +584,7 @@ Start Packet Capture on a node (Applicable node type - `host`)
 |**Path**|**node_id** +
 __required__|Node ID (refer enumerate api)|string
 |**Body**|**Options** +
-__optional__|Options to start packet capture|<<_options_3,Options_3>>
+__optional__|Options to start packet capture|<<_options_4,Options_4>>
 |===
 
 
@@ -1151,7 +1236,7 @@ Get/Delete vulnerabilities by filter
 |===
 |Type|Name|Description|Schema
 |**Body**|**Options** +
-__optional__|Options to get or delete vulnerabilities|<<_options_7,Options_7>>
+__optional__|Options to get or delete vulnerabilities|<<_options_9,Options_9>>
 |===
 
 
@@ -1269,6 +1354,207 @@ __required__|string
 |Type|Name
 |**apiKey**|**<<_bearer,Bearer>>**
 |===
+
+
+[[_compliance_resource]]
+=== Compliance
+
+[[_findcompliancescanresults]]
+==== Compliance API - Get/Delete Compliance Scan Results with filters
+....
+POST /deepfence/v1.3/compliance/scan_results
+....
+
+
+===== Description
+Get/Delete compliance scan results with filters for node_id, compliance_check_type, etc
+
+
+===== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**Options** +
+__optional__|Options to get or delete compliance scan results|<<_options_1,Options_1>>
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|Request success|No Content
+|**400**|Bad request|No Content
+|**401**|Unauthorized|No Content
+|===
+
+
+===== Security
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Type|Name
+|**apiKey**|**<<_bearer,Bearer>>**
+|===
+
+
+===== Example HTTP request
+
+====== Request body
+[source,json]
+----
+{
+  "size" : 10,
+  "start_index" : 0,
+  "action" : "get",
+  "filters" : {
+    "host_name" : [ "dev-1", "dev-2" ],
+    "compliance_check_type" : [ "pcidss" ],
+    "node_id" : [ "wekgfewgj" ],
+    "status" : [ "pass", "fail" ]
+  }
+}
+----
+
+
+[[_checkcompliancescanstatus]]
+==== Compliance API - Check Compliance Scan Status
+....
+GET /deepfence/v1.3/compliance/{node_id}/{compliance_check_type}/scan_status
+....
+
+
+===== Description
+Check status of compliance scan on this node (Applicable node type - `host`, `container`)
+
+
+===== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**compliance_check_type** +
+__required__|Compliance check type. Not all options are available. Check applicable compliance scans first.|enum (cis, nist, pcidss, hipaa, standard)
+|**Path**|**node_id** +
+__required__|Node ID (refer enumerate api)|string
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|Request success|No Content
+|**400**|Bad request|No Content
+|**401**|Unauthorized|No Content
+|===
+
+
+===== Security
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Type|Name
+|**apiKey**|**<<_bearer,Bearer>>**
+|===
+
+
+[[_applicablecompliancescans]]
+==== Compliance API - Get Applicable Compliance Scans
+....
+GET /deepfence/v1.3/node/{node_id}/applicable_compliance_scans
+....
+
+
+===== Description
+Get list of applicable compliance scans for this node (Applicable node type - `host`, `container`)
+
+
+===== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**node_id** +
+__required__|Node ID (refer enumerate api)|string
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|Request success|No Content
+|**400**|Bad request|No Content
+|**401**|Unauthorized|No Content
+|===
+
+
+===== Security
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Type|Name
+|**apiKey**|**<<_bearer,Bearer>>**
+|===
+
+
+[[_startcompliancescan]]
+==== Compliance API - Start Compliance Scan
+....
+POST /deepfence/v1.3/node/{node_id}/start_compliance_scan
+....
+
+
+===== Description
+Start compliance scan on this node (Applicable node type - `host`, `container`)
+
+
+===== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**node_id** +
+__required__|Node ID (refer enumerate api)|string
+|**Body**|**Options** +
+__optional__|Options to start compliance scan|<<_options_5,Options_5>>
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|Request success|No Content
+|**400**|Bad request|No Content
+|**401**|Unauthorized|No Content
+|===
+
+
+===== Security
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Type|Name
+|**apiKey**|**<<_bearer,Bearer>>**
+|===
+
+
+===== Example HTTP request
+
+====== Request body
+[source,json]
+----
+{
+  "compliance_check_type" : "pcidss"
+}
+----
 
 
 [[_network_protection_policy_resource]]
@@ -1405,7 +1691,7 @@ Get/Delete network protection policy logs by filter
 |===
 |Type|Name|Description|Schema
 |**Body**|**Options** +
-__optional__|Options to get or delete policy logs|<<_options_5,Options_5>>
+__optional__|Options to get or delete policy logs|<<_options_7,Options_7>>
 |===
 
 
@@ -1671,7 +1957,7 @@ Get/Delete quarantine protection policy logs by filter
 |===
 |Type|Name|Description|Schema
 |**Body**|**Options** +
-__optional__|Options to get or delete policy logs|<<_options_6,Options_6>>
+__optional__|Options to get or delete policy logs|<<_options_8,Options_8>>
 |===
 
 
@@ -1994,14 +2280,38 @@ __optional__|The number of items to skip before starting to collect the result s
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
 |Name|Description|Schema
+|**action** +
+__optional__|Action to perform - `get` or `delete` +
+**Default** : `"get"`|enum (get, delete)
+|**filters** +
+__optional__||<<_deepfencev1_3compliancescan_results_filters,deepfencev1.3compliancescan_results_filters>>
+|**size** +
+__optional__|The numbers of scan results to return +
+**Minimum value** : `1` +
+**Maximum value** : `10000` +
+**Example** : `10`|integer
+|**start_index** +
+__optional__|The number of items to skip before starting to collect the result set +
+**Minimum value** : `0` +
+**Maximum value** : `9999` +
+**Example** : `0`|integer
+|===
+
+
+[[_options_2]]
+=== Options_2
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
 |**id** +
 __optional__|Status ID which was sent in previous status api. If a particular request takes longer, api call will reply a status id. This id should be used to query the status of that particular request. It status is success, it will respond data url where data will be available. +
 **Example** : `"qwkfjwqfkwqkf"`|string
 |===
 
 
-[[_options_2]]
-=== Options_2
+[[_options_3]]
+=== Options_3
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -2021,8 +2331,8 @@ __optional__|The number of items to skip before starting to collect the result s
 |===
 
 
-[[_options_3]]
-=== Options_3
+[[_options_4]]
+=== Options_4
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -2047,8 +2357,20 @@ __optional__|Packet header length +
 |===
 
 
-[[_options_4]]
-=== Options_4
+[[_options_5]]
+=== Options_5
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**compliance_check_type** +
+__optional__|Compliance check type. Not all options are available. Check applicable compliance scans first. +
+**Example** : `"pcidss"`|enum (cis, nist, pcidss, hipaa, standard)
+|===
+
+
+[[_options_6]]
+=== Options_6
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -2059,8 +2381,8 @@ __optional__|Status ID which was sent in previous request. If a particular reque
 |===
 
 
-[[_options_5]]
-=== Options_5
+[[_options_7]]
+=== Options_7
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -2083,8 +2405,8 @@ __optional__|The number of items to skip before starting to collect the result s
 |===
 
 
-[[_options_6]]
-=== Options_6
+[[_options_8]]
+=== Options_8
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -2107,8 +2429,8 @@ __optional__|The number of items to skip before starting to collect the result s
 |===
 
 
-[[_options_7]]
-=== Options_7
+[[_options_9]]
+=== Options_9
 
 [options="header", cols=".^3a,.^11a,.^4a"]
 |===
@@ -2240,7 +2562,7 @@ __optional__|Alert level +
 **Example** : `"critical"`|enum (critical, high, medium, low)
 |**node_type** +
 __optional__|Node type +
-**Example** : `"container"`|enum (container, host)
+**Example** : `"container"`|enum (container, host, pod)
 |===
 
 
@@ -2276,6 +2598,29 @@ __optional__|Alert severity +
 |===
 
 
+[[_deepfencev1_3compliancescan_results_filters]]
+=== deepfencev1.3compliancescan_results_filters
+Filter compliance scan results by various fields (key value pairs)
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**compliance_check_type** +
+__optional__|Compliance check type. Not all options are available. Check applicable compliance scans first. +
+**Example** : `[ "pcidss" ]`|< enum (cis, nist, pcidss, hipaa, standard) > array
+|**host_name** +
+__optional__|Host names +
+**Example** : `[ "dev-1", "dev-2" ]`|< string > array
+|**node_id** +
+__optional__|Node ID (refer enumerate api) +
+**Example** : `[ "wekgfewgj" ]`|< string > array
+|**status** +
+__optional__|Test status +
+**Example** : `[ "pass", "fail" ]`|< string > array
+|===
+
+
 [[_deepfencev1_3enumerate_filters]]
 === deepfencev1.3enumerate_filters
 Filter vulnerabilities by various fields (key value pairs)
@@ -2299,6 +2644,12 @@ __optional__|Interface names (for type `host`) +
 |**kernel_version** +
 __optional__|Kernel version (for type `host`) +
 **Example** : `[ "4.13.0-1019-gcp #23-Ubuntu SMP Thu May 31 16:13:34 UTC 2018" ]`|< string > array
+|**kubernetes_namespace** +
+__optional__|kubernetes namespace (for type `pod`, `kube_controller`, `kube_service`). Empty means all. +
+**Example** : `[ "default" ]`|< enum (default, , kube-public, kube-system) > array
+|**kubernetes_node_type** +
+__optional__|kubernetes node type (for type `kube_controller`) +
+**Example** : `[ "running" ]`|< enum (Deployment, DaemonSet, ReplicaSet, CronJob, StatefulSet) > array
 |**local_networks** +
 __optional__|Local networks in CIDR format (for type `host`) +
 **Example** : `[ "127.0.0.1/8", "172.17.0.1/16" ]`|< string > array
@@ -2459,7 +2810,7 @@ __optional__|Success status|boolean
 [[_bearer]]
 === Bearer
 [%hardbreaks]
-__Type__ : access_token
+__Type__ : apiKey
 __Name__ : Authorization
 __In__ : HEADER
 

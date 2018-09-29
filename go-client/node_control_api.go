@@ -322,6 +322,148 @@ func (a *NodeControlApiService) RestartNode(ctx context.Context, nodeId string, 
 	return localVarHttpResponse, err
 }
 
+/* NodeControlApiService Node Control API - Scale Down
+ Scale down kubernetes deployments (Applicable node type - &#x60;kube_controllers&#x60; with kubernetes_node_type is Deployment or ReplicaSet)
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param nodeId Node ID (refer enumerate api)
+ @return */
+func (a *NodeControlApiService) ScaleDown(ctx context.Context, nodeId string) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/deepfence/v1.3/node/{node_id}/kubernetes_scale_down"
+	localVarPath = strings.Replace(localVarPath, "{"+"node_id"+"}", fmt.Sprintf("%v", nodeId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+
+/* NodeControlApiService Node Control API - Scale Up
+ Scale up kubernetes deployments (Applicable node type - &#x60;kube_controllers&#x60; with kubernetes_node_type is Deployment or ReplicaSet)
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param nodeId Node ID (refer enumerate api)
+ @return */
+func (a *NodeControlApiService) ScaleUp(ctx context.Context, nodeId string) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/deepfence/v1.3/node/{node_id}/kubernetes_scale_up"
+	localVarPath = strings.Replace(localVarPath, "{"+"node_id"+"}", fmt.Sprintf("%v", nodeId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+
 /* NodeControlApiService Node Control API - Start Node
  Start a node (Applicable node type - &#x60;container&#x60;)
  * @param ctx context.Context for authentication, logging, tracing, etc.
@@ -404,7 +546,7 @@ func (a *NodeControlApiService) StartNode(ctx context.Context, nodeId string, lo
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param nodeId Node ID (refer enumerate api)
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "options" (Options3) Options to start packet capture
+     @param "options" (Options4) Options to start packet capture
  @return */
 func (a *NodeControlApiService) StartPacketCapture(ctx context.Context, nodeId string, localVarOptionals map[string]interface{}) ( *http.Response, error) {
 	var (
@@ -443,7 +585,7 @@ func (a *NodeControlApiService) StartPacketCapture(ctx context.Context, nodeId s
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options3); localVarOk {
+	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options4); localVarOk {
 		localVarPostBody = &localVarTempParam
 	}
 	if ctx != nil {

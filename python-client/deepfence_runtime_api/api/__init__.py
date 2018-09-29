@@ -5,6 +5,7 @@ from __future__ import absolute_import
 # import apis into api package
 from deepfence_runtime_api.api.alert_management_api import AlertManagementApi
 from deepfence_runtime_api.api.authentication_api import AuthenticationApi
+from deepfence_runtime_api.api.compliance_api import ComplianceApi
 from deepfence_runtime_api.api.enumerate_api import EnumerateApi
 from deepfence_runtime_api.api.network_protection_policy_api import NetworkProtectionPolicyApi
 from deepfence_runtime_api.api.network_protection_policy_logs_api import NetworkProtectionPolicyLogsApi

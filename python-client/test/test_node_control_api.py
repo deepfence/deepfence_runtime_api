@@ -57,6 +57,20 @@ class TestNodeControlApi(unittest.TestCase):
         """
         pass
 
+    def test_scale_down(self):
+        """Test case for scale_down
+
+        Node Control API - Scale Down  # noqa: E501
+        """
+        pass
+
+    def test_scale_up(self):
+        """Test case for scale_up
+
+        Node Control API - Scale Up  # noqa: E501
+        """
+        pass
+
     def test_start_node(self):
         """Test case for start_node
 

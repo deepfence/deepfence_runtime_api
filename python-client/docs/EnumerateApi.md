@@ -32,7 +32,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepfence_runtime_api.EnumerateApi(deepfence_runtime_api.ApiClient(configuration))
-options = deepfence_runtime_api.Options1() # Options1 | Options (optional)
+options = deepfence_runtime_api.Options2() # Options2 | Options (optional)
 
 try:
     # Data API
@@ -45,7 +45,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options1**](Options1.md)| Options | [optional] 
+ **options** | [**Options2**](Options2.md)| Options | [optional] 
 
 ### Return type
 
@@ -85,7 +85,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepfence_runtime_api.EnumerateApi(deepfence_runtime_api.ApiClient(configuration))
-options = deepfence_runtime_api.Options2() # Options2 | Options to enumerate nodes (optional)
+options = deepfence_runtime_api.Options3() # Options3 | Options to enumerate nodes (optional)
 
 try:
     # Enumerate API
@@ -98,7 +98,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options2**](Options2.md)| Options to enumerate nodes | [optional] 
+ **options** | [**Options3**](Options3.md)| Options to enumerate nodes | [optional] 
 
 ### Return type
 
@@ -138,7 +138,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepfence_runtime_api.EnumerateApi(deepfence_runtime_api.ApiClient(configuration))
-options = deepfence_runtime_api.Options4() # Options4 | Options (optional)
+options = deepfence_runtime_api.Options6() # Options6 | Options (optional)
 
 try:
     # Status API
@@ -151,7 +151,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options4**](Options4.md)| Options | [optional] 
+ **options** | [**Options6**](Options6.md)| Options | [optional] 
 
 ### Return type
 

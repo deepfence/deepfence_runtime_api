@@ -11,11 +11,6 @@ package deepfence_runtime_api
 
 type Options2 struct {
 
-	Filters *Deepfencev13enumerateFilters `json:"filters,omitempty"`
-
-	// The numbers of vulnerabilities to return
-	Size int32 `json:"size,omitempty"`
-
-	// The number of items to skip before starting to collect the result set
-	StartIndex int32 `json:"start_index,omitempty"`
+	// Status ID which was sent in previous status api. If a particular request takes longer, api call will reply a status id. This id should be used to query the status of that particular request. It status is success, it will respond data url where data will be available.
+	Id string `json:"id,omitempty"`
 }

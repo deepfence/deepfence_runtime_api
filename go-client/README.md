@@ -29,6 +29,10 @@ Class | Method | HTTP request | Description
 *AuthenticationApi* | [**GetUserDetails**](docs/AuthenticationApi.md#getuserdetails) | **Get** /deepfence/v1.3/users/me | User details.
 *AuthenticationApi* | [**RefreshJwtToken**](docs/AuthenticationApi.md#refreshjwttoken) | **Post** /deepfence/v1.3/users/refresh/token | Generate a new access token using refresh token
 *AuthenticationApi* | [**ResetApiKey**](docs/AuthenticationApi.md#resetapikey) | **Post** /deepfence/v1.3/users/reset-api-key | Reset API Key
+*ComplianceApi* | [**ApplicableComplianceScans**](docs/ComplianceApi.md#applicablecompliancescans) | **Get** /deepfence/v1.3/node/{node_id}/applicable_compliance_scans | Compliance API - Get Applicable Compliance Scans
+*ComplianceApi* | [**CheckComplianceScanStatus**](docs/ComplianceApi.md#checkcompliancescanstatus) | **Get** /deepfence/v1.3/compliance/{node_id}/{compliance_check_type}/scan_status | Compliance API - Check Compliance Scan Status
+*ComplianceApi* | [**FindComplianceScanResults**](docs/ComplianceApi.md#findcompliancescanresults) | **Post** /deepfence/v1.3/compliance/scan_results | Compliance API - Get/Delete Compliance Scan Results with filters
+*ComplianceApi* | [**StartComplianceScan**](docs/ComplianceApi.md#startcompliancescan) | **Post** /deepfence/v1.3/node/{node_id}/start_compliance_scan | Compliance API - Start Compliance Scan
 *EnumerateApi* | [**DataApi**](docs/EnumerateApi.md#dataapi) | **Post** /deepfence/v1.3/data | Data API
 *EnumerateApi* | [**EnumerateNodes**](docs/EnumerateApi.md#enumeratenodes) | **Post** /deepfence/v1.3/enumerate | Enumerate API
 *EnumerateApi* | [**StatusApi**](docs/EnumerateApi.md#statusapi) | **Post** /deepfence/v1.3/status | Status API
@@ -42,6 +46,8 @@ Class | Method | HTTP request | Description
 *NodeControlApi* | [**PacketCaptureStatus**](docs/NodeControlApi.md#packetcapturestatus) | **Get** /deepfence/v1.3/node/{node_id}/packet_capture_status | Node Control API - Packet Capture Status
 *NodeControlApi* | [**PauseNode**](docs/NodeControlApi.md#pausenode) | **Post** /deepfence/v1.3/node/{node_id}/pause | Node Control API - Pause Node
 *NodeControlApi* | [**RestartNode**](docs/NodeControlApi.md#restartnode) | **Post** /deepfence/v1.3/node/{node_id}/restart | Node Control API - Restart Node
+*NodeControlApi* | [**ScaleDown**](docs/NodeControlApi.md#scaledown) | **Post** /deepfence/v1.3/node/{node_id}/kubernetes_scale_down | Node Control API - Scale Down
+*NodeControlApi* | [**ScaleUp**](docs/NodeControlApi.md#scaleup) | **Post** /deepfence/v1.3/node/{node_id}/kubernetes_scale_up | Node Control API - Scale Up
 *NodeControlApi* | [**StartNode**](docs/NodeControlApi.md#startnode) | **Post** /deepfence/v1.3/node/{node_id}/start | Node Control API - Start Node
 *NodeControlApi* | [**StartPacketCapture**](docs/NodeControlApi.md#startpacketcapture) | **Post** /deepfence/v1.3/node/{node_id}/packet_capture_start | Node Control - Start Packet Capture
 *NodeControlApi* | [**StopNode**](docs/NodeControlApi.md#stopnode) | **Post** /deepfence/v1.3/node/{node_id}/stop | Node Control API - Stop Node
@@ -73,6 +79,7 @@ Class | Method | HTTP request | Description
  - [Body3](docs/Body3.md)
  - [Body4](docs/Body4.md)
  - [Deepfencev13alertsFilters](docs/Deepfencev13alertsFilters.md)
+ - [Deepfencev13compliancescanResultsFilters](docs/Deepfencev13compliancescanResultsFilters.md)
  - [Deepfencev13enumerateFilters](docs/Deepfencev13enumerateFilters.md)
  - [Deepfencev13usersnetworkProtectionPolicyLogFilters](docs/Deepfencev13usersnetworkProtectionPolicyLogFilters.md)
  - [Deepfencev13usersquarantineProtectionPolicyLogFilters](docs/Deepfencev13usersquarantineProtectionPolicyLogFilters.md)
@@ -86,6 +93,8 @@ Class | Method | HTTP request | Description
  - [Options5](docs/Options5.md)
  - [Options6](docs/Options6.md)
  - [Options7](docs/Options7.md)
+ - [Options8](docs/Options8.md)
+ - [Options9](docs/Options9.md)
 
 
 ## Documentation For Authorization

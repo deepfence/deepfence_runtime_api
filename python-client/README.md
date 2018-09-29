@@ -81,6 +81,10 @@ Class | Method | HTTP request | Description
 *AuthenticationApi* | [**get_user_details**](docs/AuthenticationApi.md#get_user_details) | **GET** /deepfence/v1.3/users/me | User details.
 *AuthenticationApi* | [**refresh_jwt_token**](docs/AuthenticationApi.md#refresh_jwt_token) | **POST** /deepfence/v1.3/users/refresh/token | Generate a new access token using refresh token
 *AuthenticationApi* | [**reset_api_key**](docs/AuthenticationApi.md#reset_api_key) | **POST** /deepfence/v1.3/users/reset-api-key | Reset API Key
+*ComplianceApi* | [**applicable_compliance_scans**](docs/ComplianceApi.md#applicable_compliance_scans) | **GET** /deepfence/v1.3/node/{node_id}/applicable_compliance_scans | Compliance API - Get Applicable Compliance Scans
+*ComplianceApi* | [**check_compliance_scan_status**](docs/ComplianceApi.md#check_compliance_scan_status) | **GET** /deepfence/v1.3/compliance/{node_id}/{compliance_check_type}/scan_status | Compliance API - Check Compliance Scan Status
+*ComplianceApi* | [**find_compliance_scan_results**](docs/ComplianceApi.md#find_compliance_scan_results) | **POST** /deepfence/v1.3/compliance/scan_results | Compliance API - Get/Delete Compliance Scan Results with filters
+*ComplianceApi* | [**start_compliance_scan**](docs/ComplianceApi.md#start_compliance_scan) | **POST** /deepfence/v1.3/node/{node_id}/start_compliance_scan | Compliance API - Start Compliance Scan
 *EnumerateApi* | [**data_api**](docs/EnumerateApi.md#data_api) | **POST** /deepfence/v1.3/data | Data API
 *EnumerateApi* | [**enumerate_nodes**](docs/EnumerateApi.md#enumerate_nodes) | **POST** /deepfence/v1.3/enumerate | Enumerate API
 *EnumerateApi* | [**status_api**](docs/EnumerateApi.md#status_api) | **POST** /deepfence/v1.3/status | Status API
@@ -94,6 +98,8 @@ Class | Method | HTTP request | Description
 *NodeControlApi* | [**packet_capture_status**](docs/NodeControlApi.md#packet_capture_status) | **GET** /deepfence/v1.3/node/{node_id}/packet_capture_status | Node Control API - Packet Capture Status
 *NodeControlApi* | [**pause_node**](docs/NodeControlApi.md#pause_node) | **POST** /deepfence/v1.3/node/{node_id}/pause | Node Control API - Pause Node
 *NodeControlApi* | [**restart_node**](docs/NodeControlApi.md#restart_node) | **POST** /deepfence/v1.3/node/{node_id}/restart | Node Control API - Restart Node
+*NodeControlApi* | [**scale_down**](docs/NodeControlApi.md#scale_down) | **POST** /deepfence/v1.3/node/{node_id}/kubernetes_scale_down | Node Control API - Scale Down
+*NodeControlApi* | [**scale_up**](docs/NodeControlApi.md#scale_up) | **POST** /deepfence/v1.3/node/{node_id}/kubernetes_scale_up | Node Control API - Scale Up
 *NodeControlApi* | [**start_node**](docs/NodeControlApi.md#start_node) | **POST** /deepfence/v1.3/node/{node_id}/start | Node Control API - Start Node
 *NodeControlApi* | [**start_packet_capture**](docs/NodeControlApi.md#start_packet_capture) | **POST** /deepfence/v1.3/node/{node_id}/packet_capture_start | Node Control - Start Packet Capture
 *NodeControlApi* | [**stop_node**](docs/NodeControlApi.md#stop_node) | **POST** /deepfence/v1.3/node/{node_id}/stop | Node Control API - Stop Node
@@ -116,7 +122,6 @@ Class | Method | HTTP request | Description
 *WorkloadProtectionPolicyApi* | [**delete_workload_protection_policy**](docs/WorkloadProtectionPolicyApi.md#delete_workload_protection_policy) | **DELETE** /deepfence/v1.3/users/node_network_protection_policy/{policy_id} | Delete a node network protection policy
 *WorkloadProtectionPolicyApi* | [**get_workload_protection_policy**](docs/WorkloadProtectionPolicyApi.md#get_workload_protection_policy) | **GET** /deepfence/v1.3/users/node_network_protection_policy | Get all node network protection policies created by the user.
 
--   [Streaming API](docs/StreamingAPI.md)
 
 ## Documentation For Models
 
@@ -126,6 +131,7 @@ Class | Method | HTTP request | Description
  - [Body3](docs/Body3.md)
  - [Body4](docs/Body4.md)
  - [Deepfencev13alertsFilters](docs/Deepfencev13alertsFilters.md)
+ - [Deepfencev13compliancescanResultsFilters](docs/Deepfencev13compliancescanResultsFilters.md)
  - [Deepfencev13enumerateFilters](docs/Deepfencev13enumerateFilters.md)
  - [Deepfencev13usersnetworkProtectionPolicyLogFilters](docs/Deepfencev13usersnetworkProtectionPolicyLogFilters.md)
  - [Deepfencev13usersquarantineProtectionPolicyLogFilters](docs/Deepfencev13usersquarantineProtectionPolicyLogFilters.md)
@@ -139,6 +145,8 @@ Class | Method | HTTP request | Description
  - [Options5](docs/Options5.md)
  - [Options6](docs/Options6.md)
  - [Options7](docs/Options7.md)
+ - [Options8](docs/Options8.md)
+ - [Options9](docs/Options9.md)
 
 
 ## Documentation For Authorization

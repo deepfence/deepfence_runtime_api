@@ -27,6 +27,12 @@ type Deepfencev13enumerateFilters struct {
 	// Kernel version (for type `host`)
 	KernelVersion []string `json:"kernel_version,omitempty"`
 
+	// kubernetes namespace (for type `pod`, `kube_controller`, `kube_service`). Empty means all.
+	KubernetesNamespace []string `json:"kubernetes_namespace,omitempty"`
+
+	// kubernetes node type (for type `kube_controller`)
+	KubernetesNodeType []string `json:"kubernetes_node_type,omitempty"`
+
 	// Local networks in CIDR format (for type `host`)
 	LocalNetworks []string `json:"local_networks,omitempty"`
 

@@ -53,7 +53,7 @@ Optional parameters are passed through a map[string]interface{}.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options6**](Options6.md)| Options to get or delete policy logs | 
+ **options** | [**Options8**](Options8.md)| Options to get or delete policy logs | 
 
 ### Return type
 

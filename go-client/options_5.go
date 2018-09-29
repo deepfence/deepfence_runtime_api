@@ -11,14 +11,6 @@ package deepfence_runtime_api
 
 type Options5 struct {
 
-	// Action to perform - `get` or `delete`
-	Action string `json:"action,omitempty"`
-
-	Filters *Deepfencev13usersnetworkProtectionPolicyLogFilters `json:"filters,omitempty"`
-
-	// The numbers of policy logs to return
-	Size int32 `json:"size,omitempty"`
-
-	// The number of items to skip before starting to collect the result set
-	StartIndex int32 `json:"start_index,omitempty"`
+	// Compliance check type. Not all options are available. Check applicable compliance scans first.
+	ComplianceCheckType string `json:"compliance_check_type,omitempty"`
 }

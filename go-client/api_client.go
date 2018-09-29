@@ -45,6 +45,7 @@ type APIClient struct {
 	 // API Services
 	AlertManagementApi	*AlertManagementApiService
 	AuthenticationApi	*AuthenticationApiService
+	ComplianceApi	*ComplianceApiService
 	EnumerateApi	*EnumerateApiService
 	NetworkProtectionPolicyApi	*NetworkProtectionPolicyApiService
 	NetworkProtectionPolicyLogsApi	*NetworkProtectionPolicyLogsApiService
@@ -73,6 +74,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	// API Services
 	c.AlertManagementApi = (*AlertManagementApiService)(&c.common)
 	c.AuthenticationApi = (*AuthenticationApiService)(&c.common)
+	c.ComplianceApi = (*ComplianceApiService)(&c.common)
 	c.EnumerateApi = (*EnumerateApiService)(&c.common)
 	c.NetworkProtectionPolicyApi = (*NetworkProtectionPolicyApiService)(&c.common)
 	c.NetworkProtectionPolicyLogsApi = (*NetworkProtectionPolicyLogsApiService)(&c.common)

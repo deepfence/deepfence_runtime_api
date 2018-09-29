@@ -16,6 +16,7 @@ tags:
 - name: "Node Control"
 - name: "Alert Management"
 - name: "Vulnerability Management"
+- name: "Compliance"
 - name: "Network Protection Policy"
 - name: "Network Protection Policy Logs"
 - name: "Quarantine Protection Policy"
@@ -92,6 +93,68 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
+  /deepfence/v1.3/compliance/scan_results:
+    post:
+      tags:
+      - "Compliance"
+      summary: "Compliance API - Get/Delete Compliance Scan Results with filters"
+      description: "Get/Delete compliance scan results with filters for node_id, compliance_check_type,\
+        \ etc"
+      operationId: "findComplianceScanResults"
+      parameters:
+      - in: "body"
+        name: "Options"
+        description: "Options to get or delete compliance scan results"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_1"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/compliance/{node_id}/{compliance_check_type}/scan_status:
+    get:
+      tags:
+      - "Compliance"
+      summary: "Compliance API - Check Compliance Scan Status"
+      description: "Check status of compliance scan on this node (Applicable node\
+        \ type - `host`, `container`)"
+      operationId: "checkComplianceScanStatus"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - name: "compliance_check_type"
+        in: "path"
+        description: "Compliance check type. Not all options are available. Check\
+          \ applicable compliance scans first."
+        required: true
+        type: "string"
+        enum:
+        - "cis"
+        - "nist"
+        - "pcidss"
+        - "hipaa"
+        - "standard"
+        x-exportParamName: "ComplianceCheckType"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
   /deepfence/v1.3/data:
     post:
       tags:
@@ -105,7 +168,7 @@ paths:
         description: "Options"
         required: false
         schema:
-          $ref: "#/definitions/Options_1"
+          $ref: "#/definitions/Options_2"
         x-exportParamName: "Options"
       responses:
         200:
@@ -130,7 +193,7 @@ paths:
         description: "Options to enumerate nodes"
         required: false
         schema:
-          $ref: "#/definitions/Options_2"
+          $ref: "#/definitions/Options_3"
         x-exportParamName: "Options"
       responses:
         200:
@@ -165,6 +228,30 @@ paths:
       description: "Get full details of a node (hosts, containers, images, processes)\
         \ by node_id"
       operationId: "nodeDetails"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/applicable_compliance_scans:
+    get:
+      tags:
+      - "Compliance"
+      summary: "Compliance API - Get Applicable Compliance Scans"
+      description: "Get list of applicable compliance scans for this node (Applicable\
+        \ node type - `host`, `container`)"
+      operationId: "applicableComplianceScans"
       parameters:
       - name: "node_id"
         in: "path"
@@ -264,6 +351,54 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
+  /deepfence/v1.3/node/{node_id}/kubernetes_scale_down:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Scale Down"
+      description: "Scale down kubernetes deployments (Applicable node type - `kube_controllers`\
+        \ with kubernetes_node_type is Deployment or ReplicaSet)"
+      operationId: "scaleDown"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
+  /deepfence/v1.3/node/{node_id}/kubernetes_scale_up:
+    post:
+      tags:
+      - "Node Control"
+      summary: "Node Control API - Scale Up"
+      description: "Scale up kubernetes deployments (Applicable node type - `kube_controllers`\
+        \ with kubernetes_node_type is Deployment or ReplicaSet)"
+      operationId: "scaleUp"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
   /deepfence/v1.3/node/{node_id}/packet_capture_start:
     post:
       tags:
@@ -283,7 +418,7 @@ paths:
         description: "Options to start packet capture"
         required: false
         schema:
-          $ref: "#/definitions/Options_3"
+          $ref: "#/definitions/Options_4"
         x-exportParamName: "Options"
       responses:
         200:
@@ -437,6 +572,37 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
+  /deepfence/v1.3/node/{node_id}/start_compliance_scan:
+    post:
+      tags:
+      - "Compliance"
+      summary: "Compliance API - Start Compliance Scan"
+      description: "Start compliance scan on this node (Applicable node type - `host`,\
+        \ `container`)"
+      operationId: "startComplianceScan"
+      parameters:
+      - name: "node_id"
+        in: "path"
+        description: "Node ID (refer enumerate api)"
+        required: true
+        type: "string"
+        x-exportParamName: "NodeId"
+      - in: "body"
+        name: "Options"
+        description: "Options to start compliance scan"
+        required: false
+        schema:
+          $ref: "#/definitions/Options_5"
+        x-exportParamName: "Options"
+      responses:
+        200:
+          description: "Request success"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+      security:
+      - Bearer: []
   /deepfence/v1.3/node/{node_id}/stop:
     post:
       tags:
@@ -510,7 +676,7 @@ paths:
         description: "Options"
         required: false
         schema:
-          $ref: "#/definitions/Options_4"
+          $ref: "#/definitions/Options_6"
         x-exportParamName: "Options"
       responses:
         200:
@@ -656,7 +822,7 @@ paths:
         description: "Options to get or delete policy logs"
         required: false
         schema:
-          $ref: "#/definitions/Options_5"
+          $ref: "#/definitions/Options_7"
         x-exportParamName: "Options"
       responses:
         200:
@@ -883,7 +1049,7 @@ paths:
         description: "Options to get or delete policy logs"
         required: false
         schema:
-          $ref: "#/definitions/Options_6"
+          $ref: "#/definitions/Options_8"
         x-exportParamName: "Options"
       responses:
         200:
@@ -993,7 +1159,7 @@ paths:
         description: "Options to get or delete vulnerabilities"
         required: false
         schema:
-          $ref: "#/definitions/Options_7"
+          $ref: "#/definitions/Options_9"
         x-exportParamName: "Options"
       responses:
         200:
@@ -1201,7 +1367,102 @@ definitions:
         host_name:
         - "dev-1"
         - "dev-2"
+  deepfencev1.3compliancescan_results_filters:
+    properties:
+      compliance_check_type:
+        type: "array"
+        example:
+        - "pcidss"
+        description: "Compliance check type. Not all options are available. Check\
+          \ applicable compliance scans first."
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "cis"
+          - "nist"
+          - "pcidss"
+          - "hipaa"
+          - "standard"
+      host_name:
+        type: "array"
+        example:
+        - "dev-1"
+        - "dev-2"
+        description: "Host names"
+        uniqueItems: true
+        items:
+          type: "string"
+      node_id:
+        type: "array"
+        example:
+        - "wekgfewgj"
+        description: "Node ID (refer enumerate api)"
+        uniqueItems: true
+        items:
+          type: "string"
+      status:
+        type: "array"
+        example:
+        - "pass"
+        - "fail"
+        description: "Test status"
+        uniqueItems: true
+        items:
+          type: "string"
+    description: "Filter compliance scan results by various fields (key value pairs)"
+    example:
+      host_name:
+      - "dev-1"
+      - "dev-2"
+      compliance_check_type:
+      - "pcidss"
+      node_id:
+      - "wekgfewgj"
+      status:
+      - "pass"
+      - "fail"
   Options_1:
+    type: "object"
+    properties:
+      action:
+        type: "string"
+        description: "Action to perform - `get` or `delete`"
+        enum:
+        - "get"
+        - "delete"
+        default: "get"
+      filters:
+        $ref: "#/definitions/deepfencev1.3compliancescan_results_filters"
+      size:
+        type: "integer"
+        example: 10
+        description: "The numbers of scan results to return"
+        minimum: 1
+        maximum: 10000
+      start_index:
+        type: "integer"
+        example: 0
+        description: "The number of items to skip before starting to collect the result\
+          \ set"
+        minimum: 0
+        maximum: 9999
+    example:
+      size: 10
+      start_index: 0
+      action: "get"
+      filters:
+        host_name:
+        - "dev-1"
+        - "dev-2"
+        compliance_check_type:
+        - "pcidss"
+        node_id:
+        - "wekgfewgj"
+        status:
+        - "pass"
+        - "fail"
+  Options_2:
     type: "object"
     properties:
       id:
@@ -1260,6 +1521,34 @@ definitions:
         uniqueItems: true
         items:
           type: "string"
+      kubernetes_namespace:
+        type: "array"
+        example:
+        - "default"
+        description: "kubernetes namespace (for type `pod`, `kube_controller`, `kube_service`).\
+          \ Empty means all."
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "default"
+          - ""
+          - "kube-public"
+          - "kube-system"
+      kubernetes_node_type:
+        type: "array"
+        example:
+        - "running"
+        description: "kubernetes node type (for type `kube_controller`)"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "Deployment"
+          - "DaemonSet"
+          - "ReplicaSet"
+          - "CronJob"
+          - "StatefulSet"
       local_networks:
         type: "array"
         example:
@@ -1342,10 +1631,14 @@ definitions:
       - "eth0"
       type:
       - "host"
+      kubernetes_node_type:
+      - "running"
       ppid: 1225
       image_name:
       - "dev-1"
       - "dev-2"
+      kubernetes_namespace:
+      - "default"
       container_name:
       - "redis"
       - "mysql"
@@ -1361,7 +1654,7 @@ definitions:
       local_networks:
       - "127.0.0.1/8"
       - "172.17.0.1/16"
-  Options_2:
+  Options_3:
     type: "object"
     properties:
       filters:
@@ -1394,10 +1687,14 @@ definitions:
         - "eth0"
         type:
         - "host"
+        kubernetes_node_type:
+        - "running"
         ppid: 1225
         image_name:
         - "dev-1"
         - "dev-2"
+        kubernetes_namespace:
+        - "default"
         container_name:
         - "redis"
         - "mysql"
@@ -1413,7 +1710,7 @@ definitions:
         local_networks:
         - "127.0.0.1/8"
         - "172.17.0.1/16"
-  Options_3:
+  Options_4:
     type: "object"
     properties:
       capture_percentage:
@@ -1456,7 +1753,23 @@ definitions:
       - 8081
       interface_name: "eth0"
       capture_percentage: 100
-  Options_4:
+  Options_5:
+    type: "object"
+    properties:
+      compliance_check_type:
+        type: "string"
+        example: "pcidss"
+        description: "Compliance check type. Not all options are available. Check\
+          \ applicable compliance scans first."
+        enum:
+        - "cis"
+        - "nist"
+        - "pcidss"
+        - "hipaa"
+        - "standard"
+    example:
+      compliance_check_type: "pcidss"
+  Options_6:
     type: "object"
     properties:
       id:
@@ -1635,7 +1948,7 @@ definitions:
       host_name:
       - "dev-1"
       - "dev-2"
-  Options_5:
+  Options_7:
     type: "object"
     properties:
       action:
@@ -1780,6 +2093,7 @@ definitions:
         enum:
         - "container"
         - "host"
+        - "pod"
   deepfencev1.3usersquarantine_protection_policy_log_filters:
     properties:
       action:
@@ -1868,7 +2182,7 @@ definitions:
       host_name:
       - "dev-1"
       - "dev-2"
-  Options_6:
+  Options_8:
     type: "object"
     properties:
       action:
@@ -2000,7 +2314,7 @@ definitions:
       host_name:
       - "dev-1"
       - "dev-2"
-  Options_7:
+  Options_9:
     type: "object"
     properties:
       action:

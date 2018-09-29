@@ -167,7 +167,7 @@ class Body4(object):
         :param node_type: The node_type of this Body4.  # noqa: E501
         :type: str
         """
-        allowed_values = ["container", "host"]  # noqa: E501
+        allowed_values = ["container", "host", "pod"]  # noqa: E501
         if node_type not in allowed_values:
             raise ValueError(
                 "Invalid value for `node_type` ({0}), must be one of {1}"  # noqa: E501

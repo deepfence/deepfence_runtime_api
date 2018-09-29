@@ -43,7 +43,7 @@ class EnumerateApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options1 options: Options
+        :param Options2 options: Options
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -65,7 +65,7 @@ class EnumerateApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options1 options: Options
+        :param Options2 options: Options
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -138,7 +138,7 @@ class EnumerateApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options2 options: Options to enumerate nodes
+        :param Options3 options: Options to enumerate nodes
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -160,7 +160,7 @@ class EnumerateApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options2 options: Options to enumerate nodes
+        :param Options3 options: Options to enumerate nodes
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -233,7 +233,7 @@ class EnumerateApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options4 options: Options
+        :param Options6 options: Options
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -255,7 +255,7 @@ class EnumerateApi(object):
         >>> result = thread.get()
 
         :param async bool
-        :param Options4 options: Options
+        :param Options6 options: Options
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.

@@ -8,6 +8,8 @@ Method | HTTP request | Description
 [**PacketCaptureStatus**](NodeControlApi.md#PacketCaptureStatus) | **Get** /deepfence/v1.3/node/{node_id}/packet_capture_status | Node Control API - Packet Capture Status
 [**PauseNode**](NodeControlApi.md#PauseNode) | **Post** /deepfence/v1.3/node/{node_id}/pause | Node Control API - Pause Node
 [**RestartNode**](NodeControlApi.md#RestartNode) | **Post** /deepfence/v1.3/node/{node_id}/restart | Node Control API - Restart Node
+[**ScaleDown**](NodeControlApi.md#ScaleDown) | **Post** /deepfence/v1.3/node/{node_id}/kubernetes_scale_down | Node Control API - Scale Down
+[**ScaleUp**](NodeControlApi.md#ScaleUp) | **Post** /deepfence/v1.3/node/{node_id}/kubernetes_scale_up | Node Control API - Scale Up
 [**StartNode**](NodeControlApi.md#StartNode) | **Post** /deepfence/v1.3/node/{node_id}/start | Node Control API - Start Node
 [**StartPacketCapture**](NodeControlApi.md#StartPacketCapture) | **Post** /deepfence/v1.3/node/{node_id}/packet_capture_start | Node Control - Start Packet Capture
 [**StopNode**](NodeControlApi.md#StopNode) | **Post** /deepfence/v1.3/node/{node_id}/stop | Node Control API - Stop Node
@@ -145,6 +147,62 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **ScaleDown**
+> ScaleDown(ctx, nodeId)
+Node Control API - Scale Down
+
+Scale down kubernetes deployments (Applicable node type - `kube_controllers` with kubernetes_node_type is Deployment or ReplicaSet)
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **nodeId** | **string**| Node ID (refer enumerate api) | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **ScaleUp**
+> ScaleUp(ctx, nodeId)
+Node Control API - Scale Up
+
+Scale up kubernetes deployments (Applicable node type - `kube_controllers` with kubernetes_node_type is Deployment or ReplicaSet)
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **nodeId** | **string**| Node ID (refer enumerate api) | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **StartNode**
 > StartNode(ctx, nodeId, optional)
 Node Control API - Start Node
@@ -202,7 +260,7 @@ Optional parameters are passed through a map[string]interface{}.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **nodeId** | **string**| Node ID (refer enumerate api) | 
- **options** | [**Options3**](Options3.md)| Options to start packet capture | 
+ **options** | [**Options4**](Options4.md)| Options to start packet capture | 
 
 ### Return type
 

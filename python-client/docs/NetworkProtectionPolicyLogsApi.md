@@ -83,7 +83,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = deepfence_runtime_api.NetworkProtectionPolicyLogsApi(deepfence_runtime_api.ApiClient(configuration))
-options = deepfence_runtime_api.Options5() # Options5 | Options to get or delete policy logs (optional)
+options = deepfence_runtime_api.Options7() # Options7 | Options to get or delete policy logs (optional)
 
 try:
     # Get/Delete network protection policy logs by filter
@@ -96,7 +96,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options5**](Options5.md)| Options to get or delete policy logs | [optional] 
+ **options** | [**Options7**](Options7.md)| Options to get or delete policy logs | [optional] 
 
 ### Return type
 

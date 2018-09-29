@@ -14,9 +14,9 @@ type Options7 struct {
 	// Action to perform - `get` or `delete`
 	Action string `json:"action,omitempty"`
 
-	Filters *Deepfencev13vulnerabilityFilters `json:"filters,omitempty"`
+	Filters *Deepfencev13usersnetworkProtectionPolicyLogFilters `json:"filters,omitempty"`
 
-	// The numbers of vulnerabilities to return
+	// The numbers of policy logs to return
 	Size int32 `json:"size,omitempty"`
 
 	// The number of items to skip before starting to collect the result set

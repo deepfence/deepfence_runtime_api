@@ -16,7 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from deepfence_runtime_api.models.deepfencev13vulnerability_filters import Deepfencev13vulnerabilityFilters  # noqa: F401,E501
+from deepfence_runtime_api.models.deepfencev13usersnetwork_protection_policy_log_filters import Deepfencev13usersnetworkProtectionPolicyLogFilters  # noqa: F401,E501
 
 
 class Options7(object):
@@ -34,7 +34,7 @@ class Options7(object):
     """
     swagger_types = {
         'action': 'str',
-        'filters': 'Deepfencev13vulnerabilityFilters',
+        'filters': 'Deepfencev13usersnetworkProtectionPolicyLogFilters',
         'size': 'int',
         'start_index': 'int'
     }
@@ -99,7 +99,7 @@ class Options7(object):
 
 
         :return: The filters of this Options7.  # noqa: E501
-        :rtype: Deepfencev13vulnerabilityFilters
+        :rtype: Deepfencev13usersnetworkProtectionPolicyLogFilters
         """
         return self._filters
 
@@ -109,7 +109,7 @@ class Options7(object):
 
 
         :param filters: The filters of this Options7.  # noqa: E501
-        :type: Deepfencev13vulnerabilityFilters
+        :type: Deepfencev13usersnetworkProtectionPolicyLogFilters
         """
 
         self._filters = filters
@@ -118,7 +118,7 @@ class Options7(object):
     def size(self):
         """Gets the size of this Options7.  # noqa: E501
 
-        The numbers of vulnerabilities to return  # noqa: E501
+        The numbers of policy logs to return  # noqa: E501
 
         :return: The size of this Options7.  # noqa: E501
         :rtype: int
@@ -129,7 +129,7 @@ class Options7(object):
     def size(self, size):
         """Sets the size of this Options7.
 
-        The numbers of vulnerabilities to return  # noqa: E501
+        The numbers of policy logs to return  # noqa: E501
 
         :param size: The size of this Options7.  # noqa: E501
         :type: int

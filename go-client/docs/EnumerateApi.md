@@ -27,7 +27,7 @@ Optional parameters are passed through a map[string]interface{}.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options1**](Options1.md)| Options | 
+ **options** | [**Options2**](Options2.md)| Options | 
 
 ### Return type
 
@@ -62,7 +62,7 @@ Optional parameters are passed through a map[string]interface{}.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options2**](Options2.md)| Options to enumerate nodes | 
+ **options** | [**Options3**](Options3.md)| Options to enumerate nodes | 
 
 ### Return type
 
@@ -97,7 +97,7 @@ Optional parameters are passed through a map[string]interface{}.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **options** | [**Options4**](Options4.md)| Options | 
+ **options** | [**Options6**](Options6.md)| Options | 
 
 ### Return type
 

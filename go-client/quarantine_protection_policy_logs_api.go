@@ -100,7 +100,7 @@ func (a *QuarantineProtectionPolicyLogsApiService) DeleteQuarantineProtectionPol
  Get/Delete quarantine protection policy logs by filter
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "options" (Options6) Options to get or delete policy logs
+     @param "options" (Options8) Options to get or delete policy logs
  @return */
 func (a *QuarantineProtectionPolicyLogsApiService) FindQuarantineProtectionPolicyLogs(ctx context.Context, localVarOptionals map[string]interface{}) ( *http.Response, error) {
 	var (
@@ -138,7 +138,7 @@ func (a *QuarantineProtectionPolicyLogsApiService) FindQuarantineProtectionPolic
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options6); localVarOk {
+	if localVarTempParam, localVarOk := localVarOptionals["options"].(Options8); localVarOk {
 		localVarPostBody = &localVarTempParam
 	}
 	if ctx != nil {
