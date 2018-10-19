@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **action** | **str** | Action to perform - &#x60;get&#x60; or &#x60;delete&#x60; | [optional] [default to 'get']
-**filters** | [**Deepfencev13usersnetworkProtectionPolicyLogFilters**](Deepfencev13usersnetworkProtectionPolicyLogFilters.md) |  | [optional] 
+**filters** | [**Deepfencev15usersnetworkProtectionPolicyLogFilters**](Deepfencev15usersnetworkProtectionPolicyLogFilters.md) |  | [optional] 
 **size** | **int** | The numbers of policy logs to return | [optional] 
 **start_index** | **int** | The number of items to skip before starting to collect the result set | [optional] 
 

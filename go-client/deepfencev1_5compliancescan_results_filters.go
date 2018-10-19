@@ -9,16 +9,18 @@
 
 package deepfence_runtime_api
 
-type Options7 struct {
+// Filter compliance scan results by various fields (key value pairs)
+type Deepfencev15compliancescanResultsFilters struct {
 
-	// Action to perform - `get` or `delete`
-	Action string `json:"action,omitempty"`
+	// Compliance check type. Not all options are available. Check applicable compliance scans first.
+	ComplianceCheckType []string `json:"compliance_check_type,omitempty"`
 
-	Filters *Deepfencev15usersnetworkProtectionPolicyLogFilters `json:"filters,omitempty"`
+	// Host names
+	HostName []string `json:"host_name,omitempty"`
 
-	// The numbers of policy logs to return
-	Size int32 `json:"size,omitempty"`
+	// Node ID (refer enumerate api)
+	NodeId []string `json:"node_id,omitempty"`
 
-	// The number of items to skip before starting to collect the result set
-	StartIndex int32 `json:"start_index,omitempty"`
+	// Test status
+	Status []string `json:"status,omitempty"`
 }

@@ -4,10 +4,10 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_workload_protection_policy**](WorkloadProtectionPolicyApi.md#add_workload_protection_policy) | **POST** /deepfence/v1.3/users/node_network_protection_policy | Add a node network protection policy.
-[**bulk_delete_workload_protection_policy**](WorkloadProtectionPolicyApi.md#bulk_delete_workload_protection_policy) | **DELETE** /deepfence/v1.3/users/node_network_protection_policy | Delete multiple node network protection policies
-[**delete_workload_protection_policy**](WorkloadProtectionPolicyApi.md#delete_workload_protection_policy) | **DELETE** /deepfence/v1.3/users/node_network_protection_policy/{policy_id} | Delete a node network protection policy
-[**get_workload_protection_policy**](WorkloadProtectionPolicyApi.md#get_workload_protection_policy) | **GET** /deepfence/v1.3/users/node_network_protection_policy | Get all node network protection policies created by the user.
+[**add_workload_protection_policy**](WorkloadProtectionPolicyApi.md#add_workload_protection_policy) | **POST** /deepfence/v1.5/users/node_network_protection_policy | Add a node network protection policy.
+[**bulk_delete_workload_protection_policy**](WorkloadProtectionPolicyApi.md#bulk_delete_workload_protection_policy) | **DELETE** /deepfence/v1.5/users/node_network_protection_policy | Delete multiple node network protection policies
+[**delete_workload_protection_policy**](WorkloadProtectionPolicyApi.md#delete_workload_protection_policy) | **DELETE** /deepfence/v1.5/users/node_network_protection_policy/{policy_id} | Delete a node network protection policy
+[**get_workload_protection_policy**](WorkloadProtectionPolicyApi.md#get_workload_protection_policy) | **GET** /deepfence/v1.5/users/node_network_protection_policy | Get all node network protection policies created by the user.
 
 
 # **add_workload_protection_policy**

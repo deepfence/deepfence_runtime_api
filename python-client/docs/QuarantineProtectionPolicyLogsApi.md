@@ -4,9 +4,9 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_quarantine_protection_policy_log**](QuarantineProtectionPolicyLogsApi.md#delete_quarantine_protection_policy_log) | **DELETE** /deepfence/v1.3/users/quarantine_protection_policy_log/{policy_log_id} | Delete quarantine protection policy log by policy_log_id
-[**find_quarantine_protection_policy_logs**](QuarantineProtectionPolicyLogsApi.md#find_quarantine_protection_policy_logs) | **POST** /deepfence/v1.3/users/quarantine_protection_policy_log | Get/Delete quarantine protection policy logs by filter
-[**get_quarantine_protection_policy_log**](QuarantineProtectionPolicyLogsApi.md#get_quarantine_protection_policy_log) | **GET** /deepfence/v1.3/users/quarantine_protection_policy_log/{policy_log_id} | Get quarantine protection policy log by given policy_log_id
+[**delete_quarantine_protection_policy_log**](QuarantineProtectionPolicyLogsApi.md#delete_quarantine_protection_policy_log) | **DELETE** /deepfence/v1.5/users/quarantine_protection_policy_log/{policy_log_id} | Delete quarantine protection policy log by policy_log_id
+[**find_quarantine_protection_policy_logs**](QuarantineProtectionPolicyLogsApi.md#find_quarantine_protection_policy_logs) | **POST** /deepfence/v1.5/users/quarantine_protection_policy_log | Get/Delete quarantine protection policy logs by filter
+[**get_quarantine_protection_policy_log**](QuarantineProtectionPolicyLogsApi.md#get_quarantine_protection_policy_log) | **GET** /deepfence/v1.5/users/quarantine_protection_policy_log/{policy_log_id} | Get quarantine protection policy log by given policy_log_id
 
 
 # **delete_quarantine_protection_policy_log**

@@ -1,4 +1,4 @@
-# Deepfencev13usersnetworkProtectionPolicyLogFilters
+# Deepfencev15usersnetworkProtectionPolicyLogFilters
 
 ## Properties
 Name | Type | Description | Notes

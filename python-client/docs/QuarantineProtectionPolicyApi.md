@@ -4,9 +4,9 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_quarantine_protection_policy**](QuarantineProtectionPolicyApi.md#add_quarantine_protection_policy) | **POST** /deepfence/v1.3/users/quarantine_protection_policy | Add a quarantine protection policy.
-[**delete_quarantine_protection_policy**](QuarantineProtectionPolicyApi.md#delete_quarantine_protection_policy) | **DELETE** /deepfence/v1.3/users/quarantine_protection_policy/{policy_id} | Delete a quarantine policy
-[**get_quarantine_protection_policy**](QuarantineProtectionPolicyApi.md#get_quarantine_protection_policy) | **GET** /deepfence/v1.3/users/quarantine_protection_policy | Get all quarantine policies created by the user.
+[**add_quarantine_protection_policy**](QuarantineProtectionPolicyApi.md#add_quarantine_protection_policy) | **POST** /deepfence/v1.5/users/quarantine_protection_policy | Add a quarantine protection policy.
+[**delete_quarantine_protection_policy**](QuarantineProtectionPolicyApi.md#delete_quarantine_protection_policy) | **DELETE** /deepfence/v1.5/users/quarantine_protection_policy/{policy_id} | Delete a quarantine policy
+[**get_quarantine_protection_policy**](QuarantineProtectionPolicyApi.md#get_quarantine_protection_policy) | **GET** /deepfence/v1.5/users/quarantine_protection_policy | Get all quarantine policies created by the user.
 
 
 # **add_quarantine_protection_policy**

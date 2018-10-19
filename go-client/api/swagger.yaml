@@ -2,14 +2,14 @@
 swagger: "2.0"
 info:
   description: "Deepfence Runtime API provides programmatic control over Deepfence\
-    \ microservice securing your container and cloud deployments. The API abstracts\
-    \ away underlying infrastructure details like cloud provider, container distros,\
-    \ container orchestrator and type of deployment. This is one uniform API to manage\
-    \ and control security alerts, policies and response to alerts for microservices\
-    \ running anywhere i.e. managed pure greenfield container deployments or a mix\
-    \ of containers, VMs and serverless paradigms like AWS Fargate."
-  version: "1.3"
-  title: "Deepfence Runtime API v1.3"
+    \ microservice securing your container, kubernetes and cloud deployments. The\
+    \ API abstracts away underlying infrastructure details like cloud provider, container\
+    \ distros, container orchestrator and type of deployment. This is one uniform\
+    \ API to manage and control security alerts, policies and response to alerts for\
+    \ microservices running anywhere i.e. managed pure greenfield container deployments\
+    \ or a mix of containers, VMs and serverless paradigms like AWS Fargate."
+  version: "1.5"
+  title: "Deepfence Runtime API v1.5"
 tags:
 - name: "Authentication"
 - name: "Enumerate"
@@ -27,7 +27,7 @@ consumes:
 produces:
 - "application/json"
 paths:
-  /deepfence/v1.3/alerts:
+  /deepfence/v1.5/alerts:
     post:
       tags:
       - "Alert Management"
@@ -51,7 +51,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/alerts/{alert_id}:
+  /deepfence/v1.5/alerts/{alert_id}:
     get:
       tags:
       - "Alert Management"
@@ -93,7 +93,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/compliance/scan_results:
+  /deepfence/v1.5/compliance/scan_results:
     post:
       tags:
       - "Compliance"
@@ -118,7 +118,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/compliance/{node_id}/{compliance_check_type}/scan_status:
+  /deepfence/v1.5/compliance/{node_id}/{compliance_check_type}/scan_status:
     get:
       tags:
       - "Compliance"
@@ -155,7 +155,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/data:
+  /deepfence/v1.5/data:
     post:
       tags:
       - "Enumerate"
@@ -179,7 +179,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/enumerate:
+  /deepfence/v1.5/enumerate:
     post:
       tags:
       - "Enumerate"
@@ -204,7 +204,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node-severities:
+  /deepfence/v1.5/node-severities:
     get:
       tags:
       - "Alert Management"
@@ -220,7 +220,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}:
+  /deepfence/v1.5/node/{node_id}:
     get:
       tags:
       - "Node Control"
@@ -244,7 +244,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/applicable_compliance_scans:
+  /deepfence/v1.5/node/{node_id}/applicable_compliance_scans:
     get:
       tags:
       - "Compliance"
@@ -268,7 +268,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/cve_scan_start:
+  /deepfence/v1.5/node/{node_id}/cve_scan_start:
     post:
       tags:
       - "Vulnerability Management"
@@ -298,7 +298,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/cve_scan_status:
+  /deepfence/v1.5/node/{node_id}/cve_scan_status:
     get:
       tags:
       - "Vulnerability Management"
@@ -321,7 +321,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/cve_scan_stop:
+  /deepfence/v1.5/node/{node_id}/cve_scan_stop:
     post:
       tags:
       - "Vulnerability Management"
@@ -351,7 +351,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/kubernetes_scale_down:
+  /deepfence/v1.5/node/{node_id}/kubernetes_scale_down:
     post:
       tags:
       - "Node Control"
@@ -375,7 +375,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/kubernetes_scale_up:
+  /deepfence/v1.5/node/{node_id}/kubernetes_scale_up:
     post:
       tags:
       - "Node Control"
@@ -399,7 +399,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/packet_capture_start:
+  /deepfence/v1.5/node/{node_id}/packet_capture_start:
     post:
       tags:
       - "Node Control"
@@ -429,7 +429,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/packet_capture_status:
+  /deepfence/v1.5/node/{node_id}/packet_capture_status:
     get:
       tags:
       - "Node Control"
@@ -452,7 +452,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/packet_capture_stop:
+  /deepfence/v1.5/node/{node_id}/packet_capture_stop:
     post:
       tags:
       - "Node Control"
@@ -482,7 +482,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/pause:
+  /deepfence/v1.5/node/{node_id}/pause:
     post:
       tags:
       - "Node Control"
@@ -512,7 +512,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/restart:
+  /deepfence/v1.5/node/{node_id}/restart:
     post:
       tags:
       - "Node Control"
@@ -542,7 +542,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/start:
+  /deepfence/v1.5/node/{node_id}/start:
     post:
       tags:
       - "Node Control"
@@ -572,7 +572,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/start_compliance_scan:
+  /deepfence/v1.5/node/{node_id}/start_compliance_scan:
     post:
       tags:
       - "Compliance"
@@ -603,7 +603,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/stop:
+  /deepfence/v1.5/node/{node_id}/stop:
     post:
       tags:
       - "Node Control"
@@ -633,7 +633,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/node/{node_id}/unpause:
+  /deepfence/v1.5/node/{node_id}/unpause:
     post:
       tags:
       - "Node Control"
@@ -663,7 +663,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/status:
+  /deepfence/v1.5/status:
     post:
       tags:
       - "Enumerate"
@@ -687,7 +687,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/auth:
+  /deepfence/v1.5/users/auth:
     post:
       tags:
       - "Authentication"
@@ -721,7 +721,7 @@ paths:
             application/json: "{\n  \"data\": null,\n  \"error\": {\n    \"message\"\
               : \"user with api_key aaaaa not found\"\n  },\n  \"success\": false\n\
               }"
-  /deepfence/v1.3/users/me:
+  /deepfence/v1.5/users/me:
     get:
       tags:
       - "Authentication"
@@ -742,7 +742,7 @@ paths:
           description: "User not found."
       security:
       - Bearer: []
-  /deepfence/v1.3/users/network_protection_policy:
+  /deepfence/v1.5/users/network_protection_policy:
     get:
       tags:
       - "Network Protection Policy"
@@ -785,7 +785,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/network_protection_policy/{policy_id}:
+  /deepfence/v1.5/users/network_protection_policy/{policy_id}:
     delete:
       tags:
       - "Network Protection Policy"
@@ -807,7 +807,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/network_protection_policy_log:
+  /deepfence/v1.5/users/network_protection_policy_log:
     post:
       tags:
       - "Network Protection Policy Logs"
@@ -833,7 +833,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/network_protection_policy_log/{policy_log_id}:
+  /deepfence/v1.5/users/network_protection_policy_log/{policy_log_id}:
     get:
       tags:
       - "Network Protection Policy Logs"
@@ -877,7 +877,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/node_network_protection_policy:
+  /deepfence/v1.5/users/node_network_protection_policy:
     get:
       tags:
       - "Workload Protection Policy"
@@ -948,7 +948,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/node_network_protection_policy/{policy_id}:
+  /deepfence/v1.5/users/node_network_protection_policy/{policy_id}:
     delete:
       tags:
       - "Workload Protection Policy"
@@ -968,7 +968,7 @@ paths:
           description: "Bad request."
       security:
       - Bearer: []
-  /deepfence/v1.3/users/quarantine_protection_policy:
+  /deepfence/v1.5/users/quarantine_protection_policy:
     get:
       tags:
       - "Quarantine Protection Policy"
@@ -1012,7 +1012,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/quarantine_protection_policy/{policy_id}:
+  /deepfence/v1.5/users/quarantine_protection_policy/{policy_id}:
     delete:
       tags:
       - "Quarantine Protection Policy"
@@ -1034,7 +1034,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/quarantine_protection_policy_log:
+  /deepfence/v1.5/users/quarantine_protection_policy_log:
     post:
       tags:
       - "Quarantine Protection Policy Logs"
@@ -1060,7 +1060,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/quarantine_protection_policy_log/{policy_log_id}:
+  /deepfence/v1.5/users/quarantine_protection_policy_log/{policy_log_id}:
     get:
       tags:
       - "Quarantine Protection Policy Logs"
@@ -1104,7 +1104,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/refresh/token:
+  /deepfence/v1.5/users/refresh/token:
     post:
       tags:
       - "Authentication"
@@ -1127,7 +1127,7 @@ paths:
           description: "User not found"
       security:
       - Bearer: []
-  /deepfence/v1.3/users/reset-api-key:
+  /deepfence/v1.5/users/reset-api-key:
     post:
       tags:
       - "Authentication"
@@ -1146,7 +1146,7 @@ paths:
           description: "User not found."
       security:
       - Bearer: []
-  /deepfence/v1.3/vulnerability:
+  /deepfence/v1.5/vulnerability:
     post:
       tags:
       - "Vulnerability Management"
@@ -1170,7 +1170,7 @@ paths:
           description: "Unauthorized"
       security:
       - Bearer: []
-  /deepfence/v1.3/vulnerability/{vulnerability_id}:
+  /deepfence/v1.5/vulnerability/{vulnerability_id}:
     get:
       tags:
       - "Vulnerability Management"
@@ -1218,7 +1218,7 @@ securityDefinitions:
     name: "Authorization"
     in: "header"
 definitions:
-  deepfencev1.3alerts_filters:
+  deepfencev1.5alerts_filters:
     properties:
       alert_id:
         type: "array"
@@ -1329,7 +1329,7 @@ definitions:
         description: "Detailed alert (includes all fields) or simple alert"
         default: false
       filters:
-        $ref: "#/definitions/deepfencev1.3alerts_filters"
+        $ref: "#/definitions/deepfencev1.5alerts_filters"
       size:
         type: "integer"
         example: 10
@@ -1367,7 +1367,7 @@ definitions:
         host_name:
         - "dev-1"
         - "dev-2"
-  deepfencev1.3compliancescan_results_filters:
+  deepfencev1.5compliancescan_results_filters:
     properties:
       compliance_check_type:
         type: "array"
@@ -1433,7 +1433,7 @@ definitions:
         - "delete"
         default: "get"
       filters:
-        $ref: "#/definitions/deepfencev1.3compliancescan_results_filters"
+        $ref: "#/definitions/deepfencev1.5compliancescan_results_filters"
       size:
         type: "integer"
         example: 10
@@ -1474,7 +1474,7 @@ definitions:
           \ it will respond data url where data will be available."
     example:
       id: "qwkfjwqfkwqkf"
-  deepfencev1.3enumerate_filters:
+  deepfencev1.5enumerate_filters:
     properties:
       container_name:
         type: "array"
@@ -1658,7 +1658,7 @@ definitions:
     type: "object"
     properties:
       filters:
-        $ref: "#/definitions/deepfencev1.3enumerate_filters"
+        $ref: "#/definitions/deepfencev1.5enumerate_filters"
       size:
         type: "integer"
         example: 10
@@ -1846,7 +1846,7 @@ definitions:
         description: "Node type"
         enum:
         - "host"
-  deepfencev1.3usersnetwork_protection_policy_log_filters:
+  deepfencev1.5usersnetwork_protection_policy_log_filters:
     properties:
       action:
         type: "array"
@@ -1959,7 +1959,7 @@ definitions:
         - "delete"
         default: "get"
       filters:
-        $ref: "#/definitions/deepfencev1.3usersnetwork_protection_policy_log_filters"
+        $ref: "#/definitions/deepfencev1.5usersnetwork_protection_policy_log_filters"
       size:
         type: "integer"
         example: 10
@@ -2094,7 +2094,7 @@ definitions:
         - "container"
         - "host"
         - "pod"
-  deepfencev1.3usersquarantine_protection_policy_log_filters:
+  deepfencev1.5usersquarantine_protection_policy_log_filters:
     properties:
       action:
         type: "array"
@@ -2193,7 +2193,7 @@ definitions:
         - "delete"
         default: "get"
       filters:
-        $ref: "#/definitions/deepfencev1.3usersquarantine_protection_policy_log_filters"
+        $ref: "#/definitions/deepfencev1.5usersquarantine_protection_policy_log_filters"
       size:
         type: "integer"
         example: 10
@@ -2227,7 +2227,7 @@ definitions:
         host_name:
         - "dev-1"
         - "dev-2"
-  deepfencev1.3vulnerability_filters:
+  deepfencev1.5vulnerability_filters:
     properties:
       container_name:
         type: "array"
@@ -2325,7 +2325,7 @@ definitions:
         - "delete"
         default: "get"
       filters:
-        $ref: "#/definitions/deepfencev1.3vulnerability_filters"
+        $ref: "#/definitions/deepfencev1.5vulnerability_filters"
       size:
         type: "integer"
         example: 10

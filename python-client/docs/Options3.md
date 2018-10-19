@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**filters** | [**Deepfencev13enumerateFilters**](Deepfencev13enumerateFilters.md) |  | [optional] 
+**filters** | [**Deepfencev15enumerateFilters**](Deepfencev15enumerateFilters.md) |  | [optional] 
 **size** | **int** | The numbers of vulnerabilities to return | [optional] 
 **start_index** | **int** | The number of items to skip before starting to collect the result set | [optional] 
 

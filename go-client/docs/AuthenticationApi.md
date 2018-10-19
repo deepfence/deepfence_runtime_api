@@ -4,10 +4,10 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AuthenticateApi**](AuthenticationApi.md#AuthenticateApi) | **Post** /deepfence/v1.3/users/auth | Authentication for API access
-[**GetUserDetails**](AuthenticationApi.md#GetUserDetails) | **Get** /deepfence/v1.3/users/me | User details.
-[**RefreshJwtToken**](AuthenticationApi.md#RefreshJwtToken) | **Post** /deepfence/v1.3/users/refresh/token | Generate a new access token using refresh token
-[**ResetApiKey**](AuthenticationApi.md#ResetApiKey) | **Post** /deepfence/v1.3/users/reset-api-key | Reset API Key
+[**AuthenticateApi**](AuthenticationApi.md#AuthenticateApi) | **Post** /deepfence/v1.5/users/auth | Authentication for API access
+[**GetUserDetails**](AuthenticationApi.md#GetUserDetails) | **Get** /deepfence/v1.5/users/me | User details.
+[**RefreshJwtToken**](AuthenticationApi.md#RefreshJwtToken) | **Post** /deepfence/v1.5/users/refresh/token | Generate a new access token using refresh token
+[**ResetApiKey**](AuthenticationApi.md#ResetApiKey) | **Post** /deepfence/v1.5/users/reset-api-key | Reset API Key
 
 
 # **AuthenticateApi**

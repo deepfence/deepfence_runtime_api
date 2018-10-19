@@ -4,9 +4,9 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_network_protection_policy_log**](NetworkProtectionPolicyLogsApi.md#delete_network_protection_policy_log) | **DELETE** /deepfence/v1.3/users/network_protection_policy_log/{policy_log_id} | Delete network protection policy log by policy_log_id
-[**find_network_protection_policy_logs**](NetworkProtectionPolicyLogsApi.md#find_network_protection_policy_logs) | **POST** /deepfence/v1.3/users/network_protection_policy_log | Get/Delete network protection policy logs by filter
-[**get_network_protection_policy_log**](NetworkProtectionPolicyLogsApi.md#get_network_protection_policy_log) | **GET** /deepfence/v1.3/users/network_protection_policy_log/{policy_log_id} | Get network protection policy log by given policy_log_id
+[**delete_network_protection_policy_log**](NetworkProtectionPolicyLogsApi.md#delete_network_protection_policy_log) | **DELETE** /deepfence/v1.5/users/network_protection_policy_log/{policy_log_id} | Delete network protection policy log by policy_log_id
+[**find_network_protection_policy_logs**](NetworkProtectionPolicyLogsApi.md#find_network_protection_policy_logs) | **POST** /deepfence/v1.5/users/network_protection_policy_log | Get/Delete network protection policy logs by filter
+[**get_network_protection_policy_log**](NetworkProtectionPolicyLogsApi.md#get_network_protection_policy_log) | **GET** /deepfence/v1.5/users/network_protection_policy_log/{policy_log_id} | Get network protection policy log by given policy_log_id
 
 
 # **delete_network_protection_policy_log**

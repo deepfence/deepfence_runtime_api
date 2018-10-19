@@ -4,17 +4,17 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**NodeDetails**](NodeControlApi.md#NodeDetails) | **Get** /deepfence/v1.3/node/{node_id} | Node Details API
-[**PacketCaptureStatus**](NodeControlApi.md#PacketCaptureStatus) | **Get** /deepfence/v1.3/node/{node_id}/packet_capture_status | Node Control API - Packet Capture Status
-[**PauseNode**](NodeControlApi.md#PauseNode) | **Post** /deepfence/v1.3/node/{node_id}/pause | Node Control API - Pause Node
-[**RestartNode**](NodeControlApi.md#RestartNode) | **Post** /deepfence/v1.3/node/{node_id}/restart | Node Control API - Restart Node
-[**ScaleDown**](NodeControlApi.md#ScaleDown) | **Post** /deepfence/v1.3/node/{node_id}/kubernetes_scale_down | Node Control API - Scale Down
-[**ScaleUp**](NodeControlApi.md#ScaleUp) | **Post** /deepfence/v1.3/node/{node_id}/kubernetes_scale_up | Node Control API - Scale Up
-[**StartNode**](NodeControlApi.md#StartNode) | **Post** /deepfence/v1.3/node/{node_id}/start | Node Control API - Start Node
-[**StartPacketCapture**](NodeControlApi.md#StartPacketCapture) | **Post** /deepfence/v1.3/node/{node_id}/packet_capture_start | Node Control - Start Packet Capture
-[**StopNode**](NodeControlApi.md#StopNode) | **Post** /deepfence/v1.3/node/{node_id}/stop | Node Control API - Stop Node
-[**StopPacketCapture**](NodeControlApi.md#StopPacketCapture) | **Post** /deepfence/v1.3/node/{node_id}/packet_capture_stop | Node Control API - Stop Packet Capture
-[**UnpauseNode**](NodeControlApi.md#UnpauseNode) | **Post** /deepfence/v1.3/node/{node_id}/unpause | Node Control API - Unpause Node
+[**NodeDetails**](NodeControlApi.md#NodeDetails) | **Get** /deepfence/v1.5/node/{node_id} | Node Details API
+[**PacketCaptureStatus**](NodeControlApi.md#PacketCaptureStatus) | **Get** /deepfence/v1.5/node/{node_id}/packet_capture_status | Node Control API - Packet Capture Status
+[**PauseNode**](NodeControlApi.md#PauseNode) | **Post** /deepfence/v1.5/node/{node_id}/pause | Node Control API - Pause Node
+[**RestartNode**](NodeControlApi.md#RestartNode) | **Post** /deepfence/v1.5/node/{node_id}/restart | Node Control API - Restart Node
+[**ScaleDown**](NodeControlApi.md#ScaleDown) | **Post** /deepfence/v1.5/node/{node_id}/kubernetes_scale_down | Node Control API - Scale Down
+[**ScaleUp**](NodeControlApi.md#ScaleUp) | **Post** /deepfence/v1.5/node/{node_id}/kubernetes_scale_up | Node Control API - Scale Up
+[**StartNode**](NodeControlApi.md#StartNode) | **Post** /deepfence/v1.5/node/{node_id}/start | Node Control API - Start Node
+[**StartPacketCapture**](NodeControlApi.md#StartPacketCapture) | **Post** /deepfence/v1.5/node/{node_id}/packet_capture_start | Node Control - Start Packet Capture
+[**StopNode**](NodeControlApi.md#StopNode) | **Post** /deepfence/v1.5/node/{node_id}/stop | Node Control API - Stop Node
+[**StopPacketCapture**](NodeControlApi.md#StopPacketCapture) | **Post** /deepfence/v1.5/node/{node_id}/packet_capture_stop | Node Control API - Stop Packet Capture
+[**UnpauseNode**](NodeControlApi.md#UnpauseNode) | **Post** /deepfence/v1.5/node/{node_id}/unpause | Node Control API - Unpause Node
 
 
 # **NodeDetails**

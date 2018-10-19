@@ -4,10 +4,10 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**applicable_compliance_scans**](ComplianceApi.md#applicable_compliance_scans) | **GET** /deepfence/v1.3/node/{node_id}/applicable_compliance_scans | Compliance API - Get Applicable Compliance Scans
-[**check_compliance_scan_status**](ComplianceApi.md#check_compliance_scan_status) | **GET** /deepfence/v1.3/compliance/{node_id}/{compliance_check_type}/scan_status | Compliance API - Check Compliance Scan Status
-[**find_compliance_scan_results**](ComplianceApi.md#find_compliance_scan_results) | **POST** /deepfence/v1.3/compliance/scan_results | Compliance API - Get/Delete Compliance Scan Results with filters
-[**start_compliance_scan**](ComplianceApi.md#start_compliance_scan) | **POST** /deepfence/v1.3/node/{node_id}/start_compliance_scan | Compliance API - Start Compliance Scan
+[**applicable_compliance_scans**](ComplianceApi.md#applicable_compliance_scans) | **GET** /deepfence/v1.5/node/{node_id}/applicable_compliance_scans | Compliance API - Get Applicable Compliance Scans
+[**check_compliance_scan_status**](ComplianceApi.md#check_compliance_scan_status) | **GET** /deepfence/v1.5/compliance/{node_id}/{compliance_check_type}/scan_status | Compliance API - Check Compliance Scan Status
+[**find_compliance_scan_results**](ComplianceApi.md#find_compliance_scan_results) | **POST** /deepfence/v1.5/compliance/scan_results | Compliance API - Get/Delete Compliance Scan Results with filters
+[**start_compliance_scan**](ComplianceApi.md#start_compliance_scan) | **POST** /deepfence/v1.5/node/{node_id}/start_compliance_scan | Compliance API - Start Compliance Scan
 
 
 # **applicable_compliance_scans**

@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **action** | **str** | Action to perform - &#x60;get&#x60; or &#x60;delete&#x60; | [optional] [default to 'get']
 **detailed** | **bool** | Detailed alert (includes all fields) or simple alert | [optional] [default to False]
-**filters** | [**Deepfencev13alertsFilters**](Deepfencev13alertsFilters.md) |  | [optional] 
+**filters** | [**Deepfencev15alertsFilters**](Deepfencev15alertsFilters.md) |  | [optional] 
 **size** | **int** | The numbers of alerts to return | [optional] 
 **start_index** | **int** | The number of items to skip before starting to collect the result set | [optional] 
 

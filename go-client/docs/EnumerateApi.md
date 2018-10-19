@@ -4,9 +4,9 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DataApi**](EnumerateApi.md#DataApi) | **Post** /deepfence/v1.3/data | Data API
-[**EnumerateNodes**](EnumerateApi.md#EnumerateNodes) | **Post** /deepfence/v1.3/enumerate | Enumerate API
-[**StatusApi**](EnumerateApi.md#StatusApi) | **Post** /deepfence/v1.3/status | Status API
+[**DataApi**](EnumerateApi.md#DataApi) | **Post** /deepfence/v1.5/data | Data API
+[**EnumerateNodes**](EnumerateApi.md#EnumerateNodes) | **Post** /deepfence/v1.5/enumerate | Enumerate API
+[**StatusApi**](EnumerateApi.md#StatusApi) | **Post** /deepfence/v1.5/status | Status API
 
 
 # **DataApi**

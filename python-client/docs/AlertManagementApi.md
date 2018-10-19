@@ -4,10 +4,10 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_alert**](AlertManagementApi.md#delete_alert) | **DELETE** /deepfence/v1.3/alerts/{alert_id} | Delete an alert by alert_id
-[**find_alerts**](AlertManagementApi.md#find_alerts) | **POST** /deepfence/v1.3/alerts | Get/Delete alerts by filter
-[**get_alert**](AlertManagementApi.md#get_alert) | **GET** /deepfence/v1.3/alerts/{alert_id} | Get alert by given alert_id
-[**get_node_severity**](AlertManagementApi.md#get_node_severity) | **GET** /deepfence/v1.3/node-severities | Get the severity of all nodes
+[**delete_alert**](AlertManagementApi.md#delete_alert) | **DELETE** /deepfence/v1.5/alerts/{alert_id} | Delete an alert by alert_id
+[**find_alerts**](AlertManagementApi.md#find_alerts) | **POST** /deepfence/v1.5/alerts | Get/Delete alerts by filter
+[**get_alert**](AlertManagementApi.md#get_alert) | **GET** /deepfence/v1.5/alerts/{alert_id} | Get alert by given alert_id
+[**get_node_severity**](AlertManagementApi.md#get_node_severity) | **GET** /deepfence/v1.5/node-severities | Get the severity of all nodes
 
 
 # **delete_alert**

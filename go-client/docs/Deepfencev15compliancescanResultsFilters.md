@@ -1,4 +1,4 @@
-# Deepfencev13compliancescanResultsFilters
+# Deepfencev15compliancescanResultsFilters
 
 ## Properties
 Name | Type | Description | Notes

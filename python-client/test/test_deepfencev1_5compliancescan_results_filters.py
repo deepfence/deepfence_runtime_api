@@ -16,45 +16,23 @@ from __future__ import absolute_import
 import unittest
 
 import deepfence_runtime_api
-from deepfence_runtime_api.api.alert_management_api import AlertManagementApi  # noqa: E501
+from deepfence_runtime_api.models.deepfencev1_5compliancescan_results_filters import Deepfencev15compliancescanResultsFilters  # noqa: E501
 from deepfence_runtime_api.rest import ApiException
 
 
-class TestAlertManagementApi(unittest.TestCase):
-    """AlertManagementApi unit test stubs"""
+class TestDeepfencev15compliancescanResultsFilters(unittest.TestCase):
+    """Deepfencev15compliancescanResultsFilters unit test stubs"""
 
     def setUp(self):
-        self.api = deepfence_runtime_api.api.alert_management_api.AlertManagementApi()  # noqa: E501
+        pass
 
     def tearDown(self):
         pass
 
-    def test_delete_alert(self):
-        """Test case for delete_alert
-
-        Delete an alert by alert_id  # noqa: E501
-        """
-        pass
-
-    def test_find_alerts(self):
-        """Test case for find_alerts
-
-        Get/Delete alerts by filter  # noqa: E501
-        """
-        pass
-
-    def test_get_alert(self):
-        """Test case for get_alert
-
-        Get alert by given alert_id  # noqa: E501
-        """
-        pass
-
-    def test_get_node_severity(self):
-        """Test case for get_node_severity
-
-        Get the severity of all nodes  # noqa: E501
-        """
+    def testDeepfencev15compliancescanResultsFilters(self):
+        """Test Deepfencev15compliancescanResultsFilters"""
+        # FIXME: construct object with mandatory attributes with example values
+        # model = deepfence_runtime_api.models.deepfencev1_5compliancescan_results_filters.Deepfencev15compliancescanResultsFilters()  # noqa: E501
         pass
 
 

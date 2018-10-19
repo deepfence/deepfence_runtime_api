@@ -4,9 +4,9 @@ All URIs are relative to *https://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_network_protection_policy**](NetworkProtectionPolicyApi.md#add_network_protection_policy) | **POST** /deepfence/v1.3/users/network_protection_policy | Add a network protection policy.
-[**delete_network_protection_policy**](NetworkProtectionPolicyApi.md#delete_network_protection_policy) | **DELETE** /deepfence/v1.3/users/network_protection_policy/{policy_id} | Delete a network policy
-[**get_network_protection_policy**](NetworkProtectionPolicyApi.md#get_network_protection_policy) | **GET** /deepfence/v1.3/users/network_protection_policy | Get all network policies created by the user.
+[**add_network_protection_policy**](NetworkProtectionPolicyApi.md#add_network_protection_policy) | **POST** /deepfence/v1.5/users/network_protection_policy | Add a network protection policy.
+[**delete_network_protection_policy**](NetworkProtectionPolicyApi.md#delete_network_protection_policy) | **DELETE** /deepfence/v1.5/users/network_protection_policy/{policy_id} | Delete a network policy
+[**get_network_protection_policy**](NetworkProtectionPolicyApi.md#get_network_protection_policy) | **GET** /deepfence/v1.5/users/network_protection_policy | Get all network policies created by the user.
 
 
 # **add_network_protection_policy**

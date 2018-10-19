@@ -54,7 +54,7 @@ __Version__ : 1.5
 [[_authenticateapi]]
 ==== Authentication for API access
 ....
-POST /deepfence/v1.3/users/auth
+POST /deepfence/v1.5/users/auth
 ....
 
 
@@ -129,7 +129,7 @@ __optional__|JSON parameters.|<<_body,body>>
 [[_getuserdetails]]
 ==== User details.
 ....
-GET /deepfence/v1.3/users/me
+GET /deepfence/v1.5/users/me
 ....
 
 
@@ -178,7 +178,7 @@ Permission: ALL
 [[_refreshjwttoken]]
 ==== Generate a new access token using refresh token
 ....
-POST /deepfence/v1.3/users/refresh/token
+POST /deepfence/v1.5/users/refresh/token
 ....
 
 
@@ -229,7 +229,7 @@ Generate a new access token using refresh token. Usage (In header): Authorizatio
 [[_resetapikey]]
 ==== Reset API Key
 ....
-POST /deepfence/v1.3/users/reset-api-key
+POST /deepfence/v1.5/users/reset-api-key
 ....
 
 
@@ -268,7 +268,7 @@ Permission: ALL
 [[_dataapi]]
 ==== Data API
 ....
-POST /deepfence/v1.3/data
+POST /deepfence/v1.5/data
 ....
 
 
@@ -320,7 +320,7 @@ __optional__|Options|<<_options_2,Options_2>>
 [[_enumeratenodes]]
 ==== Enumerate API
 ....
-POST /deepfence/v1.3/enumerate
+POST /deepfence/v1.5/enumerate
 ....
 
 
@@ -390,7 +390,7 @@ __optional__|Options to enumerate nodes|<<_options_3,Options_3>>
 [[_statusapi]]
 ==== Status API
 ....
-POST /deepfence/v1.3/status
+POST /deepfence/v1.5/status
 ....
 
 
@@ -445,7 +445,7 @@ __optional__|Options|<<_options_6,Options_6>>
 [[_nodedetails]]
 ==== Node Details API
 ....
-GET /deepfence/v1.3/node/{node_id}
+GET /deepfence/v1.5/node/{node_id}
 ....
 
 
@@ -486,7 +486,7 @@ __required__|Node ID (refer enumerate api)|string
 [[_scaledown]]
 ==== Node Control API - Scale Down
 ....
-POST /deepfence/v1.3/node/{node_id}/kubernetes_scale_down
+POST /deepfence/v1.5/node/{node_id}/kubernetes_scale_down
 ....
 
 
@@ -527,7 +527,7 @@ __required__|Node ID (refer enumerate api)|string
 [[_scaleup]]
 ==== Node Control API - Scale Up
 ....
-POST /deepfence/v1.3/node/{node_id}/kubernetes_scale_up
+POST /deepfence/v1.5/node/{node_id}/kubernetes_scale_up
 ....
 
 
@@ -568,7 +568,7 @@ __required__|Node ID (refer enumerate api)|string
 [[_startpacketcapture]]
 ==== Node Control - Start Packet Capture
 ....
-POST /deepfence/v1.3/node/{node_id}/packet_capture_start
+POST /deepfence/v1.5/node/{node_id}/packet_capture_start
 ....
 
 
@@ -625,7 +625,7 @@ __optional__|Options to start packet capture|<<_options_4,Options_4>>
 [[_packetcapturestatus]]
 ==== Node Control API - Packet Capture Status
 ....
-GET /deepfence/v1.3/node/{node_id}/packet_capture_status
+GET /deepfence/v1.5/node/{node_id}/packet_capture_status
 ....
 
 
@@ -666,7 +666,7 @@ __required__|Node ID (refer enumerate api)|string
 [[_stoppacketcapture]]
 ==== Node Control API - Stop Packet Capture
 ....
-POST /deepfence/v1.3/node/{node_id}/packet_capture_stop
+POST /deepfence/v1.5/node/{node_id}/packet_capture_stop
 ....
 
 
@@ -709,7 +709,7 @@ __optional__|Options (if applicable)|object
 [[_pausenode]]
 ==== Node Control API - Pause Node
 ....
-POST /deepfence/v1.3/node/{node_id}/pause
+POST /deepfence/v1.5/node/{node_id}/pause
 ....
 
 
@@ -752,7 +752,7 @@ __optional__|Options (if applicable)|object
 [[_restartnode]]
 ==== Node Control API - Restart Node
 ....
-POST /deepfence/v1.3/node/{node_id}/restart
+POST /deepfence/v1.5/node/{node_id}/restart
 ....
 
 
@@ -795,7 +795,7 @@ __optional__|Options (if applicable)|object
 [[_startnode]]
 ==== Node Control API - Start Node
 ....
-POST /deepfence/v1.3/node/{node_id}/start
+POST /deepfence/v1.5/node/{node_id}/start
 ....
 
 
@@ -838,7 +838,7 @@ __optional__|Options (if applicable)|object
 [[_stopnode]]
 ==== Node Control API - Stop Node
 ....
-POST /deepfence/v1.3/node/{node_id}/stop
+POST /deepfence/v1.5/node/{node_id}/stop
 ....
 
 
@@ -881,7 +881,7 @@ __optional__|Options (if applicable)|object
 [[_unpausenode]]
 ==== Node Control API - Unpause Node
 ....
-POST /deepfence/v1.3/node/{node_id}/unpause
+POST /deepfence/v1.5/node/{node_id}/unpause
 ....
 
 
@@ -927,7 +927,7 @@ __optional__|Options (if applicable)|object
 [[_findalerts]]
 ==== Get/Delete alerts by filter
 ....
-POST /deepfence/v1.3/alerts
+POST /deepfence/v1.5/alerts
 ....
 
 
@@ -991,7 +991,7 @@ __optional__|Options to get or delete alerts|<<_options,Options>>
 [[_getalert]]
 ==== Get alert by given alert_id
 ....
-GET /deepfence/v1.3/alerts/{alert_id}
+GET /deepfence/v1.5/alerts/{alert_id}
 ....
 
 
@@ -1028,7 +1028,7 @@ __required__|Alert ID|string
 [[_deletealert]]
 ==== Delete an alert by alert_id
 ....
-DELETE /deepfence/v1.3/alerts/{alert_id}
+DELETE /deepfence/v1.5/alerts/{alert_id}
 ....
 
 
@@ -1065,7 +1065,7 @@ __required__|string
 [[_getnodeseverity]]
 ==== Get the severity of all nodes
 ....
-GET /deepfence/v1.3/node-severities
+GET /deepfence/v1.5/node-severities
 ....
 
 
@@ -1095,7 +1095,7 @@ GET /deepfence/v1.3/node-severities
 [[_startcve]]
 ==== Node Control API - Start CVE
 ....
-POST /deepfence/v1.3/node/{node_id}/cve_scan_start
+POST /deepfence/v1.5/node/{node_id}/cve_scan_start
 ....
 
 
@@ -1138,7 +1138,7 @@ __optional__|Options (If applicable)|object
 [[_cvestatus]]
 ==== Node Control API - CVE Status
 ....
-GET /deepfence/v1.3/node/{node_id}/cve_scan_status
+GET /deepfence/v1.5/node/{node_id}/cve_scan_status
 ....
 
 
@@ -1179,7 +1179,7 @@ __required__|Node ID (refer enumerate api)|string
 [[_stopcve]]
 ==== Node Control API - Stop CVE
 ....
-POST /deepfence/v1.3/node/{node_id}/cve_scan_stop
+POST /deepfence/v1.5/node/{node_id}/cve_scan_stop
 ....
 
 
@@ -1222,7 +1222,7 @@ __optional__|Options (If applicable)|object
 [[_findvulnerability]]
 ==== Get/Delete vulnerabilities by filter
 ....
-POST /deepfence/v1.3/vulnerability
+POST /deepfence/v1.5/vulnerability
 ....
 
 
@@ -1285,7 +1285,7 @@ __optional__|Options to get or delete vulnerabilities|<<_options_9,Options_9>>
 [[_getvulnerability]]
 ==== Get vulnerability by given vulnerability_id
 ....
-GET /deepfence/v1.3/vulnerability/{vulnerability_id}
+GET /deepfence/v1.5/vulnerability/{vulnerability_id}
 ....
 
 
@@ -1322,7 +1322,7 @@ __required__|Vulnerability ID|string
 [[_deletevulnerability]]
 ==== Delete a vulnerability doc by vulnerability_id
 ....
-DELETE /deepfence/v1.3/vulnerability/{vulnerability_id}
+DELETE /deepfence/v1.5/vulnerability/{vulnerability_id}
 ....
 
 
@@ -1362,7 +1362,7 @@ __required__|string
 [[_findcompliancescanresults]]
 ==== Compliance API - Get/Delete Compliance Scan Results with filters
 ....
-POST /deepfence/v1.3/compliance/scan_results
+POST /deepfence/v1.5/compliance/scan_results
 ....
 
 
@@ -1422,7 +1422,7 @@ __optional__|Options to get or delete compliance scan results|<<_options_1,Optio
 [[_checkcompliancescanstatus]]
 ==== Compliance API - Check Compliance Scan Status
 ....
-GET /deepfence/v1.3/compliance/{node_id}/{compliance_check_type}/scan_status
+GET /deepfence/v1.5/compliance/{node_id}/{compliance_check_type}/scan_status
 ....
 
 
@@ -1465,7 +1465,7 @@ __required__|Node ID (refer enumerate api)|string
 [[_applicablecompliancescans]]
 ==== Compliance API - Get Applicable Compliance Scans
 ....
-GET /deepfence/v1.3/node/{node_id}/applicable_compliance_scans
+GET /deepfence/v1.5/node/{node_id}/applicable_compliance_scans
 ....
 
 
@@ -1506,7 +1506,7 @@ __required__|Node ID (refer enumerate api)|string
 [[_startcompliancescan]]
 ==== Compliance API - Start Compliance Scan
 ....
-POST /deepfence/v1.3/node/{node_id}/start_compliance_scan
+POST /deepfence/v1.5/node/{node_id}/start_compliance_scan
 ....
 
 
@@ -1563,7 +1563,7 @@ __optional__|Options to start compliance scan|<<_options_5,Options_5>>
 [[_getnetworkprotectionpolicy]]
 ==== Get all network policies created by the user.
 ....
-GET /deepfence/v1.3/users/network_protection_policy
+GET /deepfence/v1.5/users/network_protection_policy
 ....
 
 
@@ -1595,7 +1595,7 @@ GET /deepfence/v1.3/users/network_protection_policy
 [[_addnetworkprotectionpolicy]]
 ==== Add a network protection policy.
 ....
-POST /deepfence/v1.3/users/network_protection_policy
+POST /deepfence/v1.5/users/network_protection_policy
 ....
 
 
@@ -1637,7 +1637,7 @@ __optional__|JSON parameters.|<<_body_1,body_1>>
 [[_deletenetworkprotectionpolicy]]
 ==== Delete a network policy
 ....
-DELETE /deepfence/v1.3/users/network_protection_policy/{policy_id}
+DELETE /deepfence/v1.5/users/network_protection_policy/{policy_id}
 ....
 
 
@@ -1677,7 +1677,7 @@ __required__|integer
 [[_findnetworkprotectionpolicylogs]]
 ==== Get/Delete network protection policy logs by filter
 ....
-POST /deepfence/v1.3/users/network_protection_policy_log
+POST /deepfence/v1.5/users/network_protection_policy_log
 ....
 
 
@@ -1747,7 +1747,7 @@ __optional__|Options to get or delete policy logs|<<_options_7,Options_7>>
 [[_getnetworkprotectionpolicylog]]
 ==== Get network protection policy log by given policy_log_id
 ....
-GET /deepfence/v1.3/users/network_protection_policy_log/{policy_log_id}
+GET /deepfence/v1.5/users/network_protection_policy_log/{policy_log_id}
 ....
 
 
@@ -1789,7 +1789,7 @@ __required__|Policy log ID|string
 [[_deletenetworkprotectionpolicylog]]
 ==== Delete network protection policy log by policy_log_id
 ....
-DELETE /deepfence/v1.3/users/network_protection_policy_log/{policy_log_id}
+DELETE /deepfence/v1.5/users/network_protection_policy_log/{policy_log_id}
 ....
 
 
@@ -1829,7 +1829,7 @@ __required__|string
 [[_getquarantineprotectionpolicy]]
 ==== Get all quarantine policies created by the user.
 ....
-GET /deepfence/v1.3/users/quarantine_protection_policy
+GET /deepfence/v1.5/users/quarantine_protection_policy
 ....
 
 
@@ -1861,7 +1861,7 @@ GET /deepfence/v1.3/users/quarantine_protection_policy
 [[_addquarantineprotectionpolicy]]
 ==== Add a quarantine protection policy.
 ....
-POST /deepfence/v1.3/users/quarantine_protection_policy
+POST /deepfence/v1.5/users/quarantine_protection_policy
 ....
 
 
@@ -1903,7 +1903,7 @@ __optional__|JSON parameters.|<<_body_4,body_4>>
 [[_deletequarantineprotectionpolicy]]
 ==== Delete a quarantine policy
 ....
-DELETE /deepfence/v1.3/users/quarantine_protection_policy/{policy_id}
+DELETE /deepfence/v1.5/users/quarantine_protection_policy/{policy_id}
 ....
 
 
@@ -1943,7 +1943,7 @@ __required__|integer
 [[_findquarantineprotectionpolicylogs]]
 ==== Get/Delete quarantine protection policy logs by filter
 ....
-POST /deepfence/v1.3/users/quarantine_protection_policy_log
+POST /deepfence/v1.5/users/quarantine_protection_policy_log
 ....
 
 
@@ -2011,7 +2011,7 @@ __optional__|Options to get or delete policy logs|<<_options_8,Options_8>>
 [[_getquarantineprotectionpolicylog]]
 ==== Get quarantine protection policy log by given policy_log_id
 ....
-GET /deepfence/v1.3/users/quarantine_protection_policy_log/{policy_log_id}
+GET /deepfence/v1.5/users/quarantine_protection_policy_log/{policy_log_id}
 ....
 
 
@@ -2053,7 +2053,7 @@ __required__|Policy log ID|string
 [[_deletequarantineprotectionpolicylog]]
 ==== Delete quarantine protection policy log by policy_log_id
 ....
-DELETE /deepfence/v1.3/users/quarantine_protection_policy_log/{policy_log_id}
+DELETE /deepfence/v1.5/users/quarantine_protection_policy_log/{policy_log_id}
 ....
 
 
@@ -2093,7 +2093,7 @@ __required__|string
 [[_getworkloadprotectionpolicy]]
 ==== Get all node network protection policies created by the user.
 ....
-GET /deepfence/v1.3/users/node_network_protection_policy
+GET /deepfence/v1.5/users/node_network_protection_policy
 ....
 
 
@@ -2135,7 +2135,7 @@ __required__|Policy type - whitelist or blacklist|enum (blacklist, whitelist)
 [[_addworkloadprotectionpolicy]]
 ==== Add a node network protection policy.
 ....
-POST /deepfence/v1.3/users/node_network_protection_policy
+POST /deepfence/v1.5/users/node_network_protection_policy
 ....
 
 
@@ -2172,7 +2172,7 @@ __optional__|JSON parameters.|<<_body_2,body_2>>
 [[_bulkdeleteworkloadprotectionpolicy]]
 ==== Delete multiple node network protection policies
 ....
-DELETE /deepfence/v1.3/users/node_network_protection_policy
+DELETE /deepfence/v1.5/users/node_network_protection_policy
 ....
 
 
@@ -2209,7 +2209,7 @@ __optional__|JSON parameters.|<<_body_3,body_3>>
 [[_deleteworkloadprotectionpolicy]]
 ==== Delete a node network protection policy
 ....
-DELETE /deepfence/v1.3/users/node_network_protection_policy/{policy_id}
+DELETE /deepfence/v1.5/users/node_network_protection_policy/{policy_id}
 ....
 
 
@@ -2260,7 +2260,7 @@ __optional__|Action to perform - `get` or `delete` +
 __optional__|Detailed alert (includes all fields) or simple alert +
 **Default** : `false`|boolean
 |**filters** +
-__optional__||<<_deepfencev1_3alerts_filters,deepfencev1.3alerts_filters>>
+__optional__||<<_deepfencev1_5alerts_filters,deepfencev1.5alerts_filters>>
 |**size** +
 __optional__|The numbers of alerts to return +
 **Minimum value** : `1` +
@@ -2284,7 +2284,7 @@ __optional__|The number of items to skip before starting to collect the result s
 __optional__|Action to perform - `get` or `delete` +
 **Default** : `"get"`|enum (get, delete)
 |**filters** +
-__optional__||<<_deepfencev1_3compliancescan_results_filters,deepfencev1.3compliancescan_results_filters>>
+__optional__||<<_deepfencev1_5compliancescan_results_filters,deepfencev1.5compliancescan_results_filters>>
 |**size** +
 __optional__|The numbers of scan results to return +
 **Minimum value** : `1` +
@@ -2317,7 +2317,7 @@ __optional__|Status ID which was sent in previous status api. If a particular re
 |===
 |Name|Description|Schema
 |**filters** +
-__optional__||<<_deepfencev1_3enumerate_filters,deepfencev1.3enumerate_filters>>
+__optional__||<<_deepfencev1_5enumerate_filters,deepfencev1.5enumerate_filters>>
 |**size** +
 __optional__|The numbers of vulnerabilities to return +
 **Minimum value** : `1` +
@@ -2391,7 +2391,7 @@ __optional__|Status ID which was sent in previous request. If a particular reque
 __optional__|Action to perform - `get` or `delete` +
 **Default** : `"get"`|enum (get, delete)
 |**filters** +
-__optional__||<<_deepfencev1_3usersnetwork_protection_policy_log_filters,deepfencev1.3usersnetwork_protection_policy_log_filters>>
+__optional__||<<_deepfencev1_5usersnetwork_protection_policy_log_filters,deepfencev1.5usersnetwork_protection_policy_log_filters>>
 |**size** +
 __optional__|The numbers of policy logs to return +
 **Minimum value** : `1` +
@@ -2415,7 +2415,7 @@ __optional__|The number of items to skip before starting to collect the result s
 __optional__|Action to perform - `get` or `delete` +
 **Default** : `"get"`|enum (get, delete)
 |**filters** +
-__optional__||<<_deepfencev1_3usersquarantine_protection_policy_log_filters,deepfencev1.3usersquarantine_protection_policy_log_filters>>
+__optional__||<<_deepfencev1_5usersquarantine_protection_policy_log_filters,deepfencev1.5usersquarantine_protection_policy_log_filters>>
 |**size** +
 __optional__|The numbers of policy logs to return +
 **Minimum value** : `1` +
@@ -2439,7 +2439,7 @@ __optional__|The number of items to skip before starting to collect the result s
 __optional__|Action to perform - `get` or `delete` +
 **Default** : `"get"`|enum (get, delete)
 |**filters** +
-__optional__||<<_deepfencev1_3vulnerability_filters,deepfencev1.3vulnerability_filters>>
+__optional__||<<_deepfencev1_5vulnerability_filters,deepfencev1.5vulnerability_filters>>
 |**size** +
 __optional__|The numbers of vulnerabilities to return +
 **Minimum value** : `1` +
@@ -2566,8 +2566,8 @@ __optional__|Node type +
 |===
 
 
-[[_deepfencev1_3alerts_filters]]
-=== deepfencev1.3alerts_filters
+[[_deepfencev1_5alerts_filters]]
+=== deepfencev1.5alerts_filters
 Filter alerts by various fields (key value pairs)
 
 
@@ -2598,8 +2598,8 @@ __optional__|Alert severity +
 |===
 
 
-[[_deepfencev1_3compliancescan_results_filters]]
-=== deepfencev1.3compliancescan_results_filters
+[[_deepfencev1_5compliancescan_results_filters]]
+=== deepfencev1.5compliancescan_results_filters
 Filter compliance scan results by various fields (key value pairs)
 
 
@@ -2621,8 +2621,8 @@ __optional__|Test status +
 |===
 
 
-[[_deepfencev1_3enumerate_filters]]
-=== deepfencev1.3enumerate_filters
+[[_deepfencev1_5enumerate_filters]]
+=== deepfencev1.5enumerate_filters
 Filter vulnerabilities by various fields (key value pairs)
 
 
@@ -2679,8 +2679,8 @@ __optional__|Types of node +
 |===
 
 
-[[_deepfencev1_3usersnetwork_protection_policy_log_filters]]
-=== deepfencev1.3usersnetwork_protection_policy_log_filters
+[[_deepfencev1_5usersnetwork_protection_policy_log_filters]]
+=== deepfencev1.5usersnetwork_protection_policy_log_filters
 Filter policy logs by various fields (key value pairs)
 
 
@@ -2721,8 +2721,8 @@ __optional__|Severity set in network protection policy +
 |===
 
 
-[[_deepfencev1_3usersquarantine_protection_policy_log_filters]]
-=== deepfencev1.3usersquarantine_protection_policy_log_filters
+[[_deepfencev1_5usersquarantine_protection_policy_log_filters]]
+=== deepfencev1.5usersquarantine_protection_policy_log_filters
 Filter policy logs by various fields (key value pairs)
 
 
@@ -2755,8 +2755,8 @@ __optional__|Severity set in quarantine protection policy +
 |===
 
 
-[[_deepfencev1_3vulnerability_filters]]
-=== deepfencev1.3vulnerability_filters
+[[_deepfencev1_5vulnerability_filters]]
+=== deepfencev1.5vulnerability_filters
 Filter vulnerabilities by various fields (key value pairs)
 
 
