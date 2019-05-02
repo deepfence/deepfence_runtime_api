@@ -1,3 +1,2 @@
-requests==2.18.4
-git+git://github.com/deepfence/engineio-client-deepfence#egg=engineio-client-deepfence
-git+git://github.com/deepfence/socketio-client-deepfence#egg=socketio-client-deepfence
+requests>=2.21.0
+pip>=19.0.1
