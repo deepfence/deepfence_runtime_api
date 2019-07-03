@@ -71,11 +71,10 @@ class DeepfenceAPITest(object):
     def __enumerate_helper(self, node_types):
         resp = requests.post("{0}/enumerate".format(self.api_url),
                              json={"filters": {"type": node_types, "pseudo": False}, "size": maxsize},
-                             headers=self.headers,
-                             verify=False).json()
+                             headers=self.headers, verify=False).json()
         if not resp["success"]:
             return "Error", False
-        if not "data" in resp.get("data", {}):
+        if "data" not in resp.get("data", {}):
             return "No " + ''.join(node_types) + " running", False
         return resp["data"]["data"], True
 
@@ -135,9 +134,9 @@ class DeepfenceAPITest(object):
                    "alert_from_time": params[2], "alert_count_threshold": params[3]}
         return payload
 
-    def __get_node_network_policy_params(self, host_name, node_policy_type):
+    def __get_node_network_policy_params(self, node_id, node_policy_type):
         print(
-            "Enter Node Type(Container,Host,Pod), Block Duration(seconds. Input 0 for permanent blocking), Packet Direction(Inbound,Outbound)")
+            "Block Duration(seconds. Input 0 for permanent blocking), Packet Direction(Inbound,Outbound)")
         params = input("-->").split(",")
         print("Enter IP Address List(2.2.2.2,55.65.76.87)")
         ip_address_list = input("-->").split(",")
@@ -146,8 +145,8 @@ class DeepfenceAPITest(object):
         for i in range(0, len(params)):
             params[i] = params[i].lower()
 
-        payload = {"action": "block", "host_name": host_name, "node_type": params[0], "block_duration": params[1],
-                   "node_policy_type": node_policy_type, "packet_direction": params[2],
+        payload = {"action": "block", "node_id": node_id, "block_duration": params[0],
+                   "node_policy_type": node_policy_type, "packet_direction": params[1],
                    "ip_address_list": ip_address_list, "port_list": port_list}
         return payload
 
@@ -163,7 +162,8 @@ class DeepfenceAPITest(object):
         print("Run following command:\n")
         url_parsed = urlparse.urlparse(self.api_url)
         print(
-            "docker run --rm -it --name=deepfence_test_api deepfenceio/deepfence_test_api go run /app/websocket_streaming.go -api_url \"{0}\" -api_key \"{1}\" -node_type \"host\"".format(url_parsed.netloc, self.api_key))
+            "docker run --rm -it --name=deepfence_test_api deepfenceio/deepfence_test_api go run /app/websocket_streaming.go -api_url \"{0}\" -api_key \"{1}\" -node_type \"host\"".format(
+                url_parsed.netloc, self.api_key))
 
     def node_control(self):
         '''
@@ -388,9 +388,18 @@ class DeepfenceAPITest(object):
         if user_policy_choice == "Add":
             user_choice_host = 0
             hosts_data = []
+            node_ids = []
             if node_policy_type:
-                hosts_data, success = self.__enumerate_helper(["host"])
-                hosts_data = [i["host_name"] for i in hosts_data]
+                hosts, success = self.__enumerate_helper(["host", "container", "kube_service"])
+                for i in hosts:
+                    if i["type"] == "host":
+                        hosts_data.append(i.get("host_name", "") + " (" + i["type"] + ")")
+                    elif i["type"] == "container":
+                        hosts_data.append(
+                            i.get("host_name", "") + " / " + i.get("container_name", "") + " (" + i["type"] + ")")
+                    elif i["type"] == "kube_service":
+                        hosts_data.append(i.get("name", "") + " (" + i["type"] + ")")
+                    node_ids.append(i["id"])
                 print("On which host to add the policy?")
                 user_choice_host = self.__get_user_input(hosts_data)
             # Add policy
@@ -398,12 +407,9 @@ class DeepfenceAPITest(object):
                 payload = self.__get_quarantine_policy_params()
             elif policy_type == "network_protection_policy":
                 payload = self.__get_network_policy_params()
-            elif node_policy_type == "blacklist":
-                host_name = hosts_data[user_choice_host]
-                payload = self.__get_node_network_policy_params(host_name, node_policy_type)
-            elif node_policy_type == "whitelist":
-                host_name = hosts_data[user_choice_host]
-                payload = self.__get_node_network_policy_params(host_name, node_policy_type)
+            elif node_policy_type == "blacklist" or node_policy_type == "whitelist":
+                node_id = node_ids[user_choice_host]
+                payload = self.__get_node_network_policy_params(node_id, node_policy_type)
             elif policy_type == "cloud_credentials":
                 payload, cloud_provider = self.__get_cloud_credentials()
                 if cloud_provider == "gce_cloud_credentials":
