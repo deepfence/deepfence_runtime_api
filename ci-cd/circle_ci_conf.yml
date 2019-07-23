@@ -1,0 +1,21 @@
+image_config: &image_config
+  IMAGE_REPO: customer_repo
+  IMAGE_NAME: customer_image_name
+  IMAGE_TAG: latest
+  LINUX_VERSION: UBUNTU_XENIAL
+version: 2
+jobs:
+  build:
+    machine: true
+    environment:
+      <<: *image_config
+    steps:
+      - checkout
+      - run: docker build -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .
+      # Save environment variables $DEEPFENCE_DOCKER_USERNAME, $DEEPFENCE_DOCKER_PASSWORD
+      - run: docker login -u $DEEPFENCE_DOCKER_USERNAME -p $DEEPFENCE_DOCKER_PASSWORD
+      - run: docker pull deepfenceio/deepfence_agent:latest
+      - run: docker run -dit --name=deepfence-agent --restart on-failure --pid=host --net=host --uts=host --privileged=true -v /sys/kernel/debug:/sys/kernel/debug:rw  -v /var/log/fenced -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/:/fenced/mnt/host/var/lib/docker/:rw -v /:/fenced/mnt/host/:ro -e DF_PKT_CAP="N" -e DF_CAPTURE_INTF="any" -e DF_TLS_ON="1" -e DF_BACKEND_IP=$DEEPFENCE_CONSOLE_IP -e DF_BACKEND_PORT=8010 -e DF_PACKET_CAPTURE=1 -e DF_KUBERNETES_ON="N" deepfenceio/deepfence_agent:latest -a $DEEPFENCE_CONSOLE_IP -f appsec -s 1 -c 1 && sleep 15
+      # Env FAIL_CVE_COUNT=3 : fail the build if number of vulnerabilities >= 3
+      # Env FAIL_CVE_COUNT=-1 : don't consider number of vulnerabilities
+      - run: docker exec -it deepfence-agent /home/deepfence/audit.sh "start" "$IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG" "all" $FAIL_CVE_COUNT
