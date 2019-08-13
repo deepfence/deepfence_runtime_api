@@ -3,15 +3,6 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-hosts_to_tag = {
-    "prod1": ["prod"],
-    "prod2": ["prod"],
-    "prod3": ["prod"],
-    "prod4": ["prod"],
-    "prod5": ["prod"],
-}
-maxsize = 100
-
 
 def add_tags(api_url, api_key):
     # Auth
@@ -25,18 +16,36 @@ def add_tags(api_url, api_key):
         return
     default_headers["Authorization"] = "Bearer " + auth_response["data"]["access_token"]
 
+    print("Enter tag to add to selected nodes. Eg: prod")
+    tags_to_add = input("-->").split(",")
     # Enumerate nodes
-    counter = 1
     enumerate_response = requests.post("{0}/enumerate".format(api_url),
                                        json={"filters": {"type": ["host", "container"], "pseudo": False},
-                                             "size": maxsize}, headers=default_headers, verify=False).json()
+                                             "size": 200}, headers=default_headers, verify=False).json()
+    nodes_list = []
+    counter = 1
+    print("\nDeepfence Vulnerability Scan")
     for node in enumerate_response["data"]["data"]:
-        if node.get("host_name", "") not in hosts_to_tag:
-            continue
-        tags_to_add = hosts_to_tag[node.get("host_name", "")]
         node_name = "{0} (host)".format(node.get("host_name", "")) if node["type"] == "host" \
-            else "{0}/{1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
-        print("\n{0}: Add tag {1} to {2}".format(counter, tags_to_add, node_name))
+            else "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
+        print("{0}: {1}".format(counter, node_name))
+        nodes_list.append({"id": node["id"], "node_name": node_name})
+        counter += 1
+    print("\nEnter comma separated list of node numbers to add tag {0}. Eg: 1,3,4".format(tags_to_add))
+    print("Enter \"all\" (without quotes) to add tag {0} to all nodes\n".format(tags_to_add))
+    user_input = input("-->").split(",")
+    if "all" in user_input:
+        nodes_selected = nodes_list
+    else:
+        nodes_selected = []
+        for user_input_no in user_input:
+            try:
+                nodes_selected.append(nodes_list[int(user_input_no) - 1])
+            except:
+                pass
+    counter = 1
+    for node in nodes_selected:
+        print("\n{0}: Add tag {1} to {2}".format(counter, tags_to_add, node["node_name"]))
         print(requests.post("{0}/node/{1}/add_tags".format(api_url, node["id"]),
                             json={"tags": tags_to_add}, headers=default_headers, verify=False).json())
         counter += 1
