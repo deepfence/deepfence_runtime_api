@@ -4,7 +4,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-def run_vulnerability_scan(api_url, api_key, tag):
+def run_compliance_scan(api_url, api_key, tag, compliance_check_type):
     default_headers = {"Content-Type": "application/json", "Authorization": ""}
     api_response = requests.post("{0}/users/auth".format(api_url),
                                  json={"api_key": api_key}, headers=default_headers,
@@ -31,9 +31,10 @@ def run_vulnerability_scan(api_url, api_key, tag):
         counter += 1
     counter = 1
     for node in nodes_list:
-        print("\n{0}: Starting vulnerability scan on {1}".format(counter, node["node_name"]))
-        print(requests.post("{0}/node/{1}/cve_scan_start".format(api_url, node["id"]),
-                            headers=default_headers, verify=False, json={}).json())
+        print("\n{0}: Starting compliance scan on {1}".format(counter, node["node_name"]))
+        print(requests.post("{0}/node/{1}/start_compliance_scan".format(api_url, node["id"]),
+                            headers=default_headers, verify=False,
+                            json={"compliance_check_type": compliance_check_type}).json())
         counter += 1
 
 
@@ -41,6 +42,8 @@ if __name__ == '__main__':
     import sys
 
     if len(sys.argv) != 3:
-        print("Usage: python3 start_vulnerability_scan_for_tag.py <mgmt_console_ip_address> <api_key> <tag>")
+        print(
+            "Usage: python3 start_compliance_scan_for_tag.py <mgmt_console_ip_address> <api_key> <tag> <compliance_check_type>")
+        print("Options for compliance_check_type: cis, nist_master, nist_slave, pcidss, hipaa, standard")
         exit(1)
-    run_vulnerability_scan("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2], sys.argv[3])
+    run_compliance_scan("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2], sys.argv[3], sys.argv[4])
