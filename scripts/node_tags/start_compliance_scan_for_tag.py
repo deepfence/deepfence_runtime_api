@@ -16,7 +16,7 @@ def run_compliance_scan(api_url, api_key, tag, compliance_check_type):
         return
     default_headers["Authorization"] = "Bearer " + api_response["data"]["access_token"]
 
-    enumerate_filters = {"type": ["host", "container"], "tags": [tag], "pseudo": False}
+    enumerate_filters = {"type": ["host", "container", "container_image"], "user_defined_tags": [tag], "pseudo": False}
     api_response = requests.post("{0}/enumerate".format(api_url),
                                  json={"filters": enumerate_filters, "size": 1000},
                                  headers=default_headers, verify=False).json()
@@ -24,8 +24,12 @@ def run_compliance_scan(api_url, api_key, tag, compliance_check_type):
     counter = 1
     print("\nNodes with tag \"{0}\"".format(tag))
     for node in api_response["data"]["data"]:
-        node_name = "{0} (host)".format(node.get("host_name", "")) if node["type"] == "host" \
-            else "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
+        if node["type"] == "container":
+            node_name = "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
+        elif node["type"] == "container_image":
+            node_name = "{0} (container_image)".format(node.get("image_name_with_tag", ""))
+        else:
+            node_name = "{0} (host)".format(node.get("host_name", ""))
         print("{0}: {1}".format(counter, node_name))
         nodes_list.append({"id": node["id"], "node_name": node_name})
         counter += 1

@@ -19,15 +19,20 @@ def add_tags(api_url, api_key):
     print("Enter tag to add to selected nodes. Eg: prod")
     tags_to_add = input("-->").split(",")
     # Enumerate nodes
-    enumerate_response = requests.post("{0}/enumerate".format(api_url),
-                                       json={"filters": {"type": ["host", "container"], "pseudo": False},
-                                             "size": 200}, headers=default_headers, verify=False).json()
+    enumerate_response = requests.post(
+        "{0}/enumerate".format(api_url),
+        json={"filters": {"type": ["host", "container", "container_image"], "pseudo": False}, "size": 500},
+        headers=default_headers, verify=False).json()
     nodes_list = []
     counter = 1
     print("\nDeepfence Vulnerability Scan")
     for node in enumerate_response["data"]["data"]:
-        node_name = "{0} (host)".format(node.get("host_name", "")) if node["type"] == "host" \
-            else "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
+        if node["type"] == "container":
+            node_name = "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
+        elif node["type"] == "container_image":
+            node_name = "{0} (container_image)".format(node.get("image_name_with_tag", ""))
+        else:
+            node_name = "{0} (host)".format(node.get("host_name", ""))
         print("{0}: {1}".format(counter, node_name))
         nodes_list.append({"id": node["id"], "node_name": node_name})
         counter += 1
@@ -47,7 +52,7 @@ def add_tags(api_url, api_key):
     for node in nodes_selected:
         print("\n{0}: Add tag {1} to {2}".format(counter, tags_to_add, node["node_name"]))
         print(requests.post("{0}/node/{1}/add_tags".format(api_url, node["id"]),
-                            json={"tags": tags_to_add}, headers=default_headers, verify=False).json())
+                            json={"user_defined_tags": tags_to_add}, headers=default_headers, verify=False).json())
         counter += 1
 
 
