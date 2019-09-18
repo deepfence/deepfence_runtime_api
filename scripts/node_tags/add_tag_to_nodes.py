@@ -25,7 +25,6 @@ def add_tags(api_url, api_key):
         headers=default_headers, verify=False).json()
     nodes_list = []
     counter = 1
-    print("\nDeepfence Vulnerability Scan")
     for node in enumerate_response["data"]["data"]:
         if node["type"] == "container":
             node_name = "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
