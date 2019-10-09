@@ -25,7 +25,10 @@ def add_tags(api_url, api_key):
         headers=default_headers, verify=False).json()
     nodes_list = []
     counter = 1
-    for node in enumerate_response["data"]["data"]:
+    enumerate_response_nodes = enumerate_response.get("data", {}).get("data", [])
+    if not enumerate_response_nodes:
+        print("No nodes found")
+    for node in enumerate_response_nodes:
         if node["type"] == "container":
             node_name = "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
         elif node["type"] == "container_image":

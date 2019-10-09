@@ -23,8 +23,11 @@ def apply_network_policy(api_url, api_key, tag, node_policy_type, packet_directi
                                  headers=default_headers, verify=False).json()
     nodes_list = []
     counter = 1
+    api_response_nodes = api_response.get("data", {}).get("data", [])
+    if not api_response_nodes:
+        print("No nodes found with tag {0}".format(tag))
     print("\nNodes with tag \"{0}\"".format(tag))
-    for node in api_response["data"]["data"]:
+    for node in api_response_nodes:
         node_name = "{0} (host)".format(node.get("host_name", "")) if node["type"] == "host" \
             else "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
         print("{0}: {1}".format(counter, node_name))

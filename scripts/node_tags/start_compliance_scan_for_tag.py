@@ -22,8 +22,11 @@ def run_compliance_scan(api_url, api_key, tag, compliance_check_type):
                                  headers=default_headers, verify=False).json()
     nodes_list = []
     counter = 1
+    api_response_nodes = api_response.get("data", {}).get("data", [])
+    if not api_response_nodes:
+        print("No nodes found with tag {0}".format(tag))
     print("\nNodes with tag \"{0}\"".format(tag))
-    for node in api_response["data"]["data"]:
+    for node in api_response_nodes:
         if node["type"] == "container":
             node_name = "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
         elif node["type"] == "container_image":
