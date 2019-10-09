@@ -45,7 +45,7 @@ def run_compliance_scan(api_url, api_key, tag, compliance_check_type):
 if __name__ == '__main__':
     import sys
 
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 5:
         print(
             "Usage: python3 start_compliance_scan_for_tag.py <mgmt_console_ip_address> <api_key> <tag> <compliance_check_type>")
         print("Options for compliance_check_type: cis, nist_master, nist_slave, pcidss, hipaa, standard")
