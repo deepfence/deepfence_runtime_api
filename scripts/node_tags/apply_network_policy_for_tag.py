@@ -44,7 +44,7 @@ def apply_network_policy(api_url, api_key, tag, node_policy_type, packet_directi
 if __name__ == '__main__':
     import sys
 
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 9:
         print(
             "Usage: python3 apply_network_policy_for_tag.py <mgmt_console_ip_address> <api_key> <tag> <node_policy_type>"
             " <packet_direction> <ip_address_to_block> <port> <block_duration>")
