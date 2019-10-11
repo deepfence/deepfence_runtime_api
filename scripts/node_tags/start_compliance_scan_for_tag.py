@@ -2,6 +2,7 @@ import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+compliance_check_types = ["cis", "nist_master", "nist_slave", "pcidss", "hipaa", "standard"]
 
 
 def run_compliance_scan(api_url, api_key, tag, compliance_check_type):
@@ -52,6 +53,9 @@ if __name__ == '__main__':
     if len(sys.argv) != 5:
         print(
             "Usage: python3 start_compliance_scan_for_tag.py <mgmt_console_ip_address> <api_key> <tag> <compliance_check_type>")
-        print("Options for compliance_check_type: cis, nist_master, nist_slave, pcidss, hipaa, standard")
+        print("Options for compliance_check_type: {0}".format(", ".join(compliance_check_types)))
         exit(1)
+    print("Options for compliance_check_type: {0}".format(", ".join(compliance_check_types)))
+    if sys.argv[4] not in compliance_check_types:
+        print("Invalid compliance_check_type {0}".format(sys.argv[4]))
     run_compliance_scan("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2], sys.argv[3], sys.argv[4])
