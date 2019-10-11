@@ -25,6 +25,7 @@ def run_compliance_scan(api_url, api_key, tag, compliance_check_type):
     api_response_nodes = api_response.get("data", {}).get("data", [])
     if not api_response_nodes:
         print("No nodes found with tag {0}".format(tag))
+        return
     print("\nNodes with tag \"{0}\"".format(tag))
     for node in api_response_nodes:
         if node["type"] == "container":

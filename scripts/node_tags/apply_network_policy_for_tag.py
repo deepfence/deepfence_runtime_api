@@ -17,7 +17,7 @@ def apply_network_policy(api_url, api_key, tag, node_policy_type, packet_directi
         return
     default_headers["Authorization"] = "Bearer " + api_response["data"]["access_token"]
 
-    enumerate_filters = {"type": ["host", "container"], "tags": [tag], "pseudo": False}
+    enumerate_filters = {"type": ["host", "container"], "user_defined_tags": [tag], "pseudo": False}
     api_response = requests.post("{0}/enumerate".format(api_url),
                                  json={"filters": enumerate_filters, "size": 1000},
                                  headers=default_headers, verify=False).json()
@@ -26,6 +26,7 @@ def apply_network_policy(api_url, api_key, tag, node_policy_type, packet_directi
     api_response_nodes = api_response.get("data", {}).get("data", [])
     if not api_response_nodes:
         print("No nodes found with tag {0}".format(tag))
+        return
     print("\nNodes with tag \"{0}\"".format(tag))
     for node in api_response_nodes:
         node_name = "{0} (host)".format(node.get("host_name", "")) if node["type"] == "host" \
