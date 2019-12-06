@@ -28,6 +28,7 @@ def add_tags(api_url, api_key):
     enumerate_response_nodes = enumerate_response.get("data", {}).get("data", [])
     if not enumerate_response_nodes:
         print("No nodes found")
+        return
     for node in enumerate_response_nodes:
         if node["type"] == "container":
             node_name = "{0} / {1} (container)".format(node.get("container_name", ""), node.get("host_name", ""))
