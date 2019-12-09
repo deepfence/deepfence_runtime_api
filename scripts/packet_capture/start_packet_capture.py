@@ -1,5 +1,4 @@
 import requests
-from threading import Thread
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -50,21 +49,15 @@ def start_packet_capture(api_url, api_key):
                 pass
     print("\nEncrypted packet capture? Enter Y or N:")
     is_encrypted_capture = str(input("-->"))
-    for node in nodes_selected:
-        process = Thread(args=["{0}/node/{1}/packet_capture_start".format(api_url, node["id"]), default_headers,
-                               node["node_name"], is_encrypted_capture], target=call_api)
-        process.start()
-
-
-def call_api(url, headers, node_name, is_encrypted_capture):
     try:
-        resp = requests.post(url, headers=headers, verify=False,
-                             json={"port_list": [], "interface_name": "All", "snap_length": 65535,
-                                   "percent_capture": 100, "is_encrypted_capture": is_encrypted_capture}).json()
-        print("\n{0}:\n{1}".format(node_name, resp))
+        requests.post(
+            "{0}/node/packet_capture_start_multiple".format(api_url), headers=default_headers, verify=False,
+            json={"port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100,
+                  "is_encrypted_capture": is_encrypted_capture,
+                  "node_id_list": [n["id"] for n in nodes_selected]}).json()
+        print("Packet capture started")
     except:
-        print(node_name + ": Error in api call")
-    return True
+        print("Error in api call")
 
 
 if __name__ == '__main__':
