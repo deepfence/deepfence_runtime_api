@@ -1,16 +1,35 @@
 = Deepfence Runtime API v1.5
 
-
 [[_overview]]
 == Overview
-Deepfence Runtime API provides programmatic control over Deepfence microservice securing your container, kubernetes and cloud deployments. The API abstracts away underlying infrastructure details like cloud provider, container distros, container orchestrator and type of deployment. This is one uniform API to manage and control security alerts, policies and response to alerts for microservices running anywhere i.e. managed pure greenfield container deployments or a mix of containers, VMs and serverless paradigms like AWS Fargate.
+
+Deepfence Runtime API provides programmatic control over Deepfence microservice securing your container, kubernetes and cloud deployments.
+The API abstracts away underlying infrastructure details like cloud provider, container distros, container orchestrator and type of deployment.
+This is one uniform API to manage and control security alerts, policies and response to alerts for microservices running anywhere i.e. managed pure greenfield container deployments or a mix of containers, VMs and serverless paradigms like AWS Fargate.
 
 [[_documentation]]
 == Documentation
+
 https://deepfence.github.io/deepfence_runtime_api/
+
+=== Contents
+
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Authentication[Authentication]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Enumerate[Enumerate]
+* link:scripts/test_api/websocket_streaming.go[Streaming API]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Node-Control[Node Control]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Alert-Management[Alert Management]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Vulnerability-Management[Vulnerability Management]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Compliance[Compliance]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Network-Protection-Policy[Network Protection Policy]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Network-Protection-Policy-Logs[Network Protection Policy Logs]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Rate-Limit-Policy[Rate Limit Policy]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Quarantine-Protection-Policy[Quarantine Protection Policy]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Quarantine-Protection-Policy-Logs[Quarantine Protection Policy Logs]
+* https://deepfence.github.io/deepfence_runtime_api/#tag-Workload-Protection-Policy[Workload Protection Policy]
 
 [[_api_clients]]
 == API Clients
+
 - link:python-client/[Python]
 - link:go-client/[Go]
-- link:scripts/test_api/websocket_streaming.go[Streaming API]
