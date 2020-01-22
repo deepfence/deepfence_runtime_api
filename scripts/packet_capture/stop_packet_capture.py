@@ -29,6 +29,8 @@ def stop_packet_capture(api_url, api_key):
         print("No nodes found")
         return
     for node in api_response_nodes:
+        if node.get("is_ui_vm", False):
+            continue
         print("{0}: {1} (host)".format(counter, node.get("host_name", "")))
         nodes_list.append({"id": node["id"], "node_name": node.get("host_name", "")})
         counter += 1
@@ -44,6 +46,9 @@ def stop_packet_capture(api_url, api_key):
                 nodes_selected.append(nodes_list[int(user_input_no) - 1])
             except:
                 pass
+    if not nodes_selected:
+        print("No nodes selected. Select at least one node.")
+        exit(0)
     for node in nodes_selected:
         process = Thread(args=["{0}/node/{1}/packet_capture_stop".format(api_url, node["id"]), default_headers,
                                node["node_name"]], target=call_api)

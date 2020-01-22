@@ -28,18 +28,23 @@ def start_packet_capture(api_url, api_key):
         print("No nodes found")
         return
     for node in api_response_nodes:
+        if node.get("is_ui_vm", False):
+            continue
         if node["type"] == "kube_service":
             node_name = "{0} (kubernetes service)".format(node.get("name", ""))
         else:
             node_name = "{0} (host)".format(node.get("host_name", ""))
         print("{0}: {1}".format(counter, node_name))
-        nodes_list.append({"id": node["id"], "node_name": node_name})
+        nodes_list.append({"id": node["id"], "node_name": node_name, "node_type": node["type"]})
         counter += 1
     print("\nEnter comma separated list of node numbers to start packet capture. Eg: 1,3,4")
     print("Enter \"all\" (without quotes) to start packet capture on all nodes\n")
+    print("Enter \"all hosts\" (without quotes) to start packet capture on all hosts\n")
     user_input = input("-->").split(",")
     if "all" in user_input:
         nodes_selected = nodes_list
+    elif "all hosts" in user_input:
+        nodes_selected = [n for n in nodes_list if n["node_type"] == "host"]
     else:
         nodes_selected = []
         for user_input_no in user_input:
@@ -47,14 +52,18 @@ def start_packet_capture(api_url, api_key):
                 nodes_selected.append(nodes_list[int(user_input_no) - 1])
             except:
                 pass
+    if not nodes_selected:
+        print("No nodes selected. Select at least one node.")
+        exit(0)
     print("\nEncrypted packet capture? Enter Y or N:")
     is_encrypted_capture = str(input("-->"))
     try:
-        requests.post(
+        print("Starting packet capture ...")
+        response = requests.post(
             "{0}/node/packet_capture_start_multiple".format(api_url), headers=default_headers, verify=False,
             json={"port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100,
-                  "is_encrypted_capture": is_encrypted_capture,
-                  "node_id_list": [n["id"] for n in nodes_selected]}).json()
+                  "is_encrypted_capture": is_encrypted_capture, "node_id_list": [n["id"] for n in nodes_selected]})
+        print(response.text)
         print("Packet capture started")
     except:
         print("Error in api call")
