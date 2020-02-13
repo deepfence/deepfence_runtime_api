@@ -37,7 +37,7 @@ def start_packet_capture(api_url, api_key):
         print("{0}: {1}".format(counter, node_name))
         nodes_list.append({"id": node["id"], "node_name": node_name, "node_type": node["type"]})
         counter += 1
-    print("\nEnter comma separated list of node numbers to start packet capture. Eg: 1,3,4")
+    print("\nEnter comma separated list of node numbers to start packet capture. Eg: 1,3,4\n")
     print("Enter \"all\" (without quotes) to start packet capture on all nodes\n")
     print("Enter \"all hosts\" (without quotes) to start packet capture on all hosts\n")
     user_input = input("-->").split(",")
