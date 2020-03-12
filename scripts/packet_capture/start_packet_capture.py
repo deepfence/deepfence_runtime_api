@@ -59,11 +59,18 @@ def start_packet_capture(api_url, api_key):
     is_encrypted_capture = str(input("-->"))
     try:
         print("Starting packet capture ...")
-        response = requests.post(
-            "{0}/node/packet_capture_start_multiple".format(api_url), headers=default_headers, verify=False,
-            json={"port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100,
-                  "is_encrypted_capture": is_encrypted_capture, "node_id_list": [n["id"] for n in nodes_selected]})
-        print(response.text)
+        if is_encrypted_capture == "Y":
+            response = requests.post(
+                "{0}/node/packet_capture_start_multiple".format(api_url), headers=default_headers, verify=False,
+                json={"port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100,
+                      "is_encrypted_capture": is_encrypted_capture, "node_id_list": [n["id"] for n in nodes_selected]})
+            print(response.text)
+        else:
+            for n in nodes_selected:
+                response = requests.post(
+                    "{0}/node/{1}/packet_capture_start".format(api_url, n["id"]), headers=default_headers, verify=False,
+                    json={"port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100})
+                print(response.text)
         print("Packet capture started")
     except:
         print("Error in api call")
