@@ -8,7 +8,7 @@ The API abstracts away underlying infrastructure details like cloud provider, co
 This is one uniform API to manage and control security alerts, policies and response to alerts for microservices running anywhere i.e. managed pure greenfield container deployments or a mix of containers, VMs and serverless paradigms like AWS Fargate.
 
 [[_documentation]]
-== Documentation
+== API Reference
 
 https://deepfence.github.io/deepfence_runtime_api/
 
@@ -28,8 +28,8 @@ https://deepfence.github.io/deepfence_runtime_api/
 * https://deepfence.github.io/deepfence_runtime_api/#tag-Quarantine-Protection-Policy-Logs[Quarantine Protection Policy Logs]
 * https://deepfence.github.io/deepfence_runtime_api/#tag-Workload-Protection-Policy[Workload Protection Policy]
 
-[[_api_clients]]
-== API Clients
+[[_examples]]
+== API Usage Examples
 
-- link:python-client/[Python]
-- link:go-client/[Go]
+* link:scripts/packet_capture/start_packet_capture.py[Start packet capture]
+* link:scripts/vulnerability_scan/start_vulnerability_scan.py[Start vulnerability scan]
