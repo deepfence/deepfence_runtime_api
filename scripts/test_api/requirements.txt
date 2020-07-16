@@ -1,2 +1,2 @@
-requests>=2.21.0
-pip>=19.0.1
+requests>=2.24.0
+pip>=20.1.1
