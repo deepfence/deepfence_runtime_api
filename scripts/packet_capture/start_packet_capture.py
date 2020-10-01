@@ -16,7 +16,7 @@ def start_packet_capture(api_url, api_key):
         return
     default_headers["Authorization"] = "Bearer " + api_response["data"]["access_token"]
 
-    enumerate_filters = {"type": ["host", "kube_service"], "pseudo": False}
+    enumerate_filters = {"type": ["host"], "pseudo": False}
     api_response = requests.post("{0}/enumerate".format(api_url),
                                  json={"filters": enumerate_filters, "size": 1000},
                                  headers=default_headers, verify=False).json()
@@ -55,23 +55,25 @@ def start_packet_capture(api_url, api_key):
     if not nodes_selected:
         print("No nodes selected. Select at least one node.")
         exit(0)
-    print("\nEncrypted packet capture? Enter Y or N:")
-    is_encrypted_capture = str(input("-->"))
+    # print("\nEncrypted packet capture? Enter Y or N:")
+    # is_encrypted_capture = str(input("-->"))
+    is_encrypted_capture = "N"
+    post_data = {
+        "action": "packet_capture_start",
+        "node_type": "host",
+        "node_id_list": [n["id"] for n in nodes_selected],
+        "action_args": {
+            "packet_capture": {
+                "port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100,
+                "is_encrypted_capture": is_encrypted_capture
+            }
+        }
+    }
     try:
-        print("Starting packet capture ...")
-        if is_encrypted_capture == "Y":
-            response = requests.post(
-                "{0}/node/packet_capture_start_multiple".format(api_url), headers=default_headers, verify=False,
-                json={"port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100,
-                      "is_encrypted_capture": is_encrypted_capture, "node_id_list": [n["id"] for n in nodes_selected]})
-            print(response.text)
-        else:
-            for n in nodes_selected:
-                response = requests.post(
-                    "{0}/node/{1}/packet_capture_start".format(api_url, n["id"]), headers=default_headers, verify=False,
-                    json={"port_list": [], "interface_name": "All", "snap_length": 65535, "percent_capture": 100})
-                print(response.text)
-        print("Packet capture started")
+        response = requests.post("{0}/node_action".format(api_url), headers=default_headers,
+                                 verify=False, json=post_data)
+        print(response.text)
+        print("Packet capture will be started in selected nodes")
     except:
         print("Error in api call")
 

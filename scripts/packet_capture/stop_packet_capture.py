@@ -49,19 +49,18 @@ def stop_packet_capture(api_url, api_key):
     if not nodes_selected:
         print("No nodes selected. Select at least one node.")
         exit(0)
-    for node in nodes_selected:
-        process = Thread(args=["{0}/node/{1}/packet_capture_stop".format(api_url, node["id"]), default_headers,
-                               node["node_name"]], target=call_api)
-        process.start()
-
-
-def call_api(url, headers, node_name):
+    post_data = {
+        "action": "packet_capture_stop",
+        "node_type": "host",
+        "node_id_list": [n["id"] for n in nodes_selected]
+    }
     try:
-        resp = requests.post(url, headers=headers, verify=False, json={}).json()
-        print("\n{0}:\n{1}".format(node_name, resp))
+        response = requests.post("{0}/node_action".format(api_url), headers=default_headers,
+                                 verify=False, json=post_data)
+        print(response.text)
+        print("Packet capture will be stopped in selected nodes")
     except:
-        print(node_name + ": Error in api call")
-    return True
+        print("Error in api call")
 
 
 if __name__ == '__main__':
