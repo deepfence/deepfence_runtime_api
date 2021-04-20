@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+
+  "title" : "Match anything",
+  "description" : "This is a schema that matches anything.",
+  "type": "object",
+  "properties": {
+    "monitoredfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+	"properties": {
+	  "name" : { "type": "string" },
+	  "accesstype" :  {	  
+            "type": "array",
+            "items": {
+              "type": "string",
+              "anyOf": [
+                { "title": "Create", "pattern": "[Cc][Rr][Ee][Aa][Te][Ee]" },
+                { "title": "Modify", "pattern": "[Mm][Oo][Dd][Ii][Ff][Yy]" },
+                { "title": "Remove", "pattern": "[Rr][Ee][Mm][Oo][Vv][Ee]" },
+                { "title": "Chmod", "pattern": "[Cc][Hh][Mm][Oo][Dd]" },
+                { "title": "Rename", "pattern": "[Rr][Ee][Nn][Aa][Mm][Ee]" },
+                { "title": "Access", "pattern": "[Aa][Cc][Cc][Ee][Ss][Ss]" }
+              ]
+	    }
+	  },
+	  "weight" : {
+	    "type": "string",
+	    "anyOf": [
+              { "title": "Critical", "pattern": "[Cc][Rr][Ii][Tt][Ii][Cc][Aa][Ll]" },
+              { "title": "High", "pattern": "[Hh][Ii][Gg][Hh]" },
+              { "title": "Medium", "pattern": "[Mm][Ee][Dd][Ii][Uu][Mm]" },
+              { "title": "Low", "pattern": "[Ll][Oo][Ww]" }
+            ]
+          }
+	}
+      }
+    },
+    "monitoredprocessevents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+	"properties": {
+	  "name" : { "type": "string" },
+	  "weight" : {
+	    "type": "string",
+	    "anyOf": [
+              { "title": "Critical", "pattern": "[Cc][Rr][Ii][Tt][Ii][Cc][Aa][Ll]" },
+              { "title": "High", "pattern": "[Hh][Ii][Gg][Hh]" },
+              { "title": "Medium", "pattern": "[Mm][Ee][Dd][Ii][Uu][Mm]" },
+              { "title": "Low", "pattern": "[Ll][Oo][Ww]" }
+            ]
+          }
+	}
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["monitoredfiles"]
+}
