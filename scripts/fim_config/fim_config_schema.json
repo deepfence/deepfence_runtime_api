@@ -19,10 +19,9 @@
                 { "title": "Create", "pattern": "[Cc][Rr][Ee][Aa][Te][Ee]" },
                 { "title": "Modify", "pattern": "[Mm][Oo][Dd][Ii][Ff][Yy]" },
                 { "title": "Remove", "pattern": "[Rr][Ee][Mm][Oo][Vv][Ee]" },
-                { "title": "Chmod", "pattern": "[Cc][Hh][Mm][Oo][Dd]" },
+                { "title": "Chmod",  "pattern": "[Cc][Hh][Mm][Oo][Dd]" },
                 { "title": "Rename", "pattern": "[Rr][Ee][Nn][Aa][Mm][Ee]" },
-                { "title": "Access", "pattern": "[Aa][Cc][Cc][Ee][Ss][Ss]" }
-              ]
+                { "title": "Access", "pattern": "[Aa][Cc][Cc][Ee][Ss][Ss]" }              ]
 	    }
 	  },
 	  "weight" : {
@@ -31,7 +30,8 @@
               { "title": "Critical", "pattern": "[Cc][Rr][Ii][Tt][Ii][Cc][Aa][Ll]" },
               { "title": "High", "pattern": "[Hh][Ii][Gg][Hh]" },
               { "title": "Medium", "pattern": "[Mm][Ee][Dd][Ii][Uu][Mm]" },
-              { "title": "Low", "pattern": "[Ll][Oo][Ww]" }
+              { "title": "Low", "pattern": "[Ll][Oo][Ww]" },
+              { "title": "Info", "pattern": "[Ii][Nn][Ff][Oo]" }
             ]
           }
 	}
@@ -49,7 +49,8 @@
               { "title": "Critical", "pattern": "[Cc][Rr][Ii][Tt][Ii][Cc][Aa][Ll]" },
               { "title": "High", "pattern": "[Hh][Ii][Gg][Hh]" },
               { "title": "Medium", "pattern": "[Mm][Ee][Dd][Ii][Uu][Mm]" },
-              { "title": "Low", "pattern": "[Ll][Oo][Ww]" }
+              { "title": "Low", "pattern": "[Ll][Oo][Ww]" },
+              { "title": "Info", "pattern": "[Ii][Nn][Ff][Oo]" }
             ]
           }
 	}

@@ -73,10 +73,13 @@ def update_fim_config(api_url, api_key):
         validate(yaml.load(fim_config), json.loads(fim_schema))
     except ValidationError as ex:
         print("Fim Config is not valid: \n", ex)
+        exit(1)
     except SchemaError as ex:
         print("Fim Schema is not valid: \n", ex)
+        exit(1)
     except Exception as ex:
         print("Error: ". ex)
+        exit(1)
 
     post_data = {
         "action": "update_fim_config",

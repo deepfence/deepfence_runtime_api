@@ -2,10 +2,8 @@ monitoredfiles:
   - name: "/etc"
     accesstype:
       - modify
-    weight: Critical
   - name: "/bin"
-    accesstype:
-      - modIfy
+    accesstype: []
     weight: critical
   - name: "/lib"
     accesstype:
@@ -46,6 +44,7 @@ monitoredfiles:
   - name: "/deepfence"
     accesstype:
       - rename
+      - chmod
     weight: lOw
   - name: "/bulk-api-testing"
     accesstype:
