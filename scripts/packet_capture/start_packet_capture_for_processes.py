@@ -63,9 +63,34 @@ def start_packet_capture(api_url, api_key, process_list, pcap_mode):
         print("Error in api call")
 
     time.sleep(60)
+    print("\nDeleting the saved packet capture config.")
+    post_data = {
+        "host_name_list": ["all"]        
+    }
+    try:
+        response = requests.delete("{0}/packet_capture_config".format(api_url), headers=default_headers,
+                                    verify=False, json=post_data)
+        print(response.text)
+    except:
+        print("Error in API to delete existing packet capture config")
+
+    is_encrypted_capture = "N"
+    print("\nSaving selected packet capture config")
+    post_data = {
+        "config_list": [{"config":{"process_list":process_list, 
+                                   "snap_length":65535, 
+                                   "capture_percentage":100, 
+                                   "is_encrypted_capture":is_encrypted_capture, 
+                                   "pcap_mode":pcap_mode}, "host_name":"all"}]        
+    }
+    try:
+        response = requests.post("{0}/packet_capture_config".format(api_url), headers=default_headers,
+                                    verify=False, json=post_data)
+        print(response.text)
+    except:
+        print("Error in API while saving packet capture config.")
 
     print("\nStarting Packet Capture")
-    is_encrypted_capture = "N"
     for node in nodes_selected:
         post_data = {
             "process_list": process_list, "snap_length": 65535,

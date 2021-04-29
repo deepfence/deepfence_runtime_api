@@ -62,6 +62,19 @@ def stop_packet_capture(api_url, api_key):
     except:
         print("Error in api call")
 
+    # delete the config from db if packet capture is stopped on all nodes
+    if "all" in user_input:
+        print("\nDeleting the saved packet capture config.")
+        post_data = {
+            "host_name_list": ["all"]
+        }
+        try:
+            response = requests.delete("{0}/packet_capture_config".format(api_url), headers=default_headers,
+                                        verify=False, json=post_data)
+            print(response.text)
+        except:
+            print("Error in API to delete existing packet capture config")
+
 
 if __name__ == '__main__':
     import sys
