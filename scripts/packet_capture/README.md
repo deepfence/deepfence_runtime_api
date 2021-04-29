@@ -3,7 +3,7 @@ Packet Capture API
 * Get the list of processes running across all agents.
 
 ```
-python3 get_connected_processes.py <management console IP address> <API key>
+python3 get_process_list.py <management_console_IP_address> <API_key>
 
 Output: ['nginx', 'java']
 
