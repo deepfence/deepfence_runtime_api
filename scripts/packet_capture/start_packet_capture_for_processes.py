@@ -108,9 +108,17 @@ def start_packet_capture(api_url, api_key, process_list, pcap_mode):
 if __name__ == '__main__':
     import sys
 
-    if len(sys.argv) != 3:
-        print("Usage: python3 packet_capture.py <mgmt_console_ip_address> <api_key>")
+    if len(sys.argv) != 5:
+        print("Usage: python3 packet_capture.py <mgmt_console_ip_address> <api_key> <comma_separated_process_list> <pcap_mode>")
         exit(1)
-    process_list = ['java']
-    pcap_mode = "allow"     #should either be 'allow', 'deny' or 'all'
+    if type(sys.argv[3]) != str:
+        print("The process list must be a comma separated string.")
+        exit(1)
+        
+    process_list = sys.argv[3].split(",")
+    # process_list = ['java']
+    pcap_mode = sys.argv[4] #should either be 'allow', 'deny' or 'all'
+    if pcap_mode not in ['allow', 'deny', 'all']:
+        print("pcap_mode should either be 'allow', 'deny' or 'all'")
+        exit(1)
     start_packet_capture("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2], process_list, pcap_mode)
