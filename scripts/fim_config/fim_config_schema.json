@@ -16,7 +16,7 @@
             "items": {
               "type": "string",
               "anyOf": [
-                { "title": "Create", "pattern": "[Cc][Rr][Ee][Aa][Te][Ee]" },
+                { "title": "Create", "pattern": "[Cc][Rr][Ee][Aa][Tt][Ee]" },
                 { "title": "Modify", "pattern": "[Mm][Oo][Dd][Ii][Ff][Yy]" },
                 { "title": "Remove", "pattern": "[Rr][Ee][Mm][Oo][Vv][Ee]" },
                 { "title": "Chmod",  "pattern": "[Cc][Hh][Mm][Oo][Dd]" },
@@ -25,7 +25,7 @@
 	    }
 	  },
 	  "weight" : {
-	    "type": "string",
+	    "type": [ "string", "null"],
 	    "anyOf": [
               { "title": "Critical", "pattern": "[Cc][Rr][Ii][Tt][Ii][Cc][Aa][Ll]" },
               { "title": "High", "pattern": "[Hh][Ii][Gg][Hh]" },
@@ -44,7 +44,7 @@
 	"properties": {
 	  "name" : { "type": "string" },
 	  "weight" : {
-	    "type": "string",
+	    "type": [ "string", "null"],
 	    "anyOf": [
               { "title": "Critical", "pattern": "[Cc][Rr][Ii][Tt][Ii][Cc][Aa][Ll]" },
               { "title": "High", "pattern": "[Hh][Ii][Gg][Hh]" },

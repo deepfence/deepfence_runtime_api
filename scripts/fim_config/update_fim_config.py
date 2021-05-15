@@ -61,7 +61,7 @@ def update_fim_config(api_url, api_key):
     # print("\nEncrypted packet capture? Enter Y or N:")
     # is_encrypted_capture = str(input("-->"))
     is_encrypted_capture = "N"
-    with open ("sysmon-config.yaml", "r") as configfile:
+    with open ("test-sysmon-config.yaml", "r") as configfile:
         fim_config=configfile.read()
     with open ("fim_config_schema.json", "r") as schemafile:
         fim_schema=schemafile.read()    
