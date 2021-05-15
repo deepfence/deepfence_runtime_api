@@ -1,0 +1,70 @@
+monitoredfiles:
+  - name: /etc
+    accesstype:
+      - modify
+
+  - name: /bin
+    accesstype: []
+    weight: critical
+  - name: /lib
+    accesstype:
+      - cReaTe
+    weight: null
+  - name: /boot
+    accesstype:
+      - chMOd
+    weight: loW
+  - name: /lib64
+    accesstype:
+      - rENAme
+    weight: meDIUm
+  - name: /var
+    accesstype:
+      - ReMOvE
+    weight: crITiCaL
+  - name: /opt
+    accesstype:
+      - cReaTe
+    weight: HigH
+  - name: /media
+    accesstype:
+      - modify
+    weight: MedIUM
+  - name: /home
+    accesstype:
+      - modify
+    weight: LOW
+  - name: /tmp
+    accesstype:
+      - modify
+    weight: cRIticAl
+  - name: /root
+    accesstype:
+      - modify
+    weight: higH
+  - name: /deepfence
+    accesstype:
+      - rename
+      - chmod
+    weight: lOw
+  - name: /bulk-api-testing
+    accesstype:
+      - remove
+    weight: mediuM
+  - name: /test
+    accesstype:
+      - creatE
+    weight: critical
+monitoredprocessevents:
+  - name: exec
+    weight: Critical
+  - name: coredump
+    weight: MediuM
+  - name: exit
+    weight: Critical
+  - name: ptrace
+    weight: CrITICAL
+  - name: uid
+    weight: CRITICAL
+  - name: gid
+    weight: critical
