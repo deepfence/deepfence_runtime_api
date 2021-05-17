@@ -70,7 +70,7 @@ def update_fim_config(api_url, api_key):
     # print("config yaml: ", yaml.load(fim_config))
     # print("schema json: ", json.loads(fim_schema))
     try:
-        validate(yaml.load(fim_config), json.loads(fim_schema))
+        validate(yaml.safe_load(fim_config), json.loads(fim_schema))
     except ValidationError as ex:
         print("Fim Config is not valid: \n", ex)
         exit(1)
