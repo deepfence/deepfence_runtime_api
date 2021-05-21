@@ -7,7 +7,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-def update_fim_config(api_url, api_key):
+def update_fim_config(api_url, api_key, config_filename):
     default_headers = {"Content-Type": "application/json", "Authorization": ""}
     api_response = requests.post("{0}/users/auth".format(api_url),
                                  json={"api_key": api_key}, headers=default_headers,
@@ -61,7 +61,7 @@ def update_fim_config(api_url, api_key):
     # print("\nEncrypted packet capture? Enter Y or N:")
     # is_encrypted_capture = str(input("-->"))
     is_encrypted_capture = "N"
-    with open ("test-sysmon-config.yaml", "r") as configfile:
+    with open (config_filename, "r") as configfile:
         fim_config=configfile.read()
     with open ("fim_config_schema.json", "r") as schemafile:
         fim_schema=schemafile.read()    
@@ -101,7 +101,7 @@ def update_fim_config(api_url, api_key):
 if __name__ == '__main__':
     import sys
 
-    if len(sys.argv) != 3:
-        print("Usage: python3 update_fim_config.py <mgmt_console_ip_address> <api_key>")
+    if len(sys.argv) != 4:
+        print("Usage: python3 update_fim_config.py <mgmt_console_ip_address> <api_key> <config_filename>")
         exit(1)
-    update_fim_config("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2])
+    update_fim_config("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2], sys.argv[3])

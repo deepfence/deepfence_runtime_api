@@ -2,6 +2,11 @@ monitoredfiles:
   - name: /etc
     accesstype:
       - modify
+      - create
+      - access
+      - chmod
+      - rename
+      - remove
 
   - name: /bin
     accesstype: []
