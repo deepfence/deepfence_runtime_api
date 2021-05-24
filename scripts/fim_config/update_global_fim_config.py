@@ -38,7 +38,7 @@ def update_fim_config(api_url, api_key, config_filename):
         print("Fim Schema is not valid: \n", ex)
         exit(1)
     except Exception as ex:
-        print("Error: ". ex)
+        print("Error: ", ex)
         exit(1)
 
     post_data = {
