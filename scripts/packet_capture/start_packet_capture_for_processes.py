@@ -1,9 +1,16 @@
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import time
+from threading import Thread
+from queue import Queue
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+q = Queue(maxsize=0)
+thread_batch_size = 50
+retries = 15
+seconds_between_retries = 3
+capture_in_progress = "packet capture is already in progress"
 
 def start_packet_capture(api_url, api_key, process_list, pcap_mode):
     default_headers = {"Content-Type": "application/json", "Authorization": ""}
@@ -91,19 +98,51 @@ def start_packet_capture(api_url, api_key, process_list, pcap_mode):
         print("Error in API while saving packet capture config.")
 
     print("\nStarting Packet Capture")
+    post_data = {
+        "process_list": process_list, "snap_length": 65535,
+        "capture_percentage": 100, "is_encrypted_capture": is_encrypted_capture, "pcap_mode": pcap_mode
+    }
     for node in nodes_selected:
-        post_data = {
-            "process_list": process_list, "snap_length": 65535,
-            "capture_percentage": 100, "is_encrypted_capture": is_encrypted_capture, "pcap_mode": pcap_mode
-        }
-        try:
-            response = requests.post("{0}/node/{1}/packet_capture_start".format(api_url, node["id"]),
-                                     headers=default_headers, verify=False, json=post_data)
-            print(response.text)
-        except:
-            print("Error in api call")
+        q.put(node)
+    num_threads = min(thread_batch_size, len(nodes_selected))
+    for i in range(num_threads):
+        print("Starting thread {i}".format(i=i))
+        worker = Thread(target=process_requests_from_queue, args=[q, api_url, post_data, default_headers])
+        worker.start()
+    q.join()
     print("Packet capture started")
 
+def process_requests_from_queue(q, api_url, post_data, default_headers):
+    while not q.empty():
+        node = q.get()
+        packet_capture_start_request_with_retry(api_url, node, post_data, default_headers)
+        q.task_done()
+    return True
+
+def packet_capture_start_request_with_retry(api_url, node, post_data, default_headers):
+    for i in range(retries):
+        try:
+            response = requests.post("{0}/node/{1}/packet_capture_start".format(api_url, node["id"]),
+                                        headers=default_headers, verify=False, json=post_data)
+            print(response.text)
+            if(response.status_code != 200):
+                json_response = response.json()
+                if(json_response['success'] == False and json_response['error'].get('message',"") != capture_in_progress):
+                    if(i < retries - 1):
+                        print("Error in api call for node {node_name}. Retrying...".format(node_name=node["node_name"]))
+                        time.sleep(seconds_between_retries)
+                        continue
+                    else:
+                        print("Api call for node {node_name} unsuccessful after retries".format(node_name=node["node_name"]))
+        except:
+            if(i < retries - 1):
+                print("Error in api call for node {node_name}. Retrying...".format(node_name=node["node_name"]))
+                time.sleep(seconds_between_retries)
+                continue
+            else:
+                print("Api call for node {node_name} unsuccessful after retries".format(node_name=node["node_name"]))
+        else:
+            break
 
 if __name__ == '__main__':
     import sys
