@@ -9,7 +9,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 q = Queue(maxsize=0)
 thread_batch_size = 50
 retries = 15
-seconds_between_retries = 1
+seconds_between_retries = 3
 capture_in_progress = "packet capture is already in progress"
 
 def start_packet_capture(api_url, api_key, process_list, pcap_mode):
