@@ -31,5 +31,5 @@ https://deepfence.github.io/deepfence_runtime_api/
 [[_examples]]
 == API Usage Examples
 
-* link:scripts/packet_capture/start_packet_capture.py[Start packet capture]
+* link:scripts/packet_capture/start_packet_capture_for_processes.py[Start packet capture]
 * link:scripts/vulnerability_scan/start_vulnerability_scan.py[Start vulnerability scan]
