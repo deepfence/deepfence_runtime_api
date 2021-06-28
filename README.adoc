@@ -16,7 +16,7 @@ https://deepfence.github.io/deepfence_runtime_api/
 
 * https://deepfence.github.io/deepfence_runtime_api/#tag-Authentication[Authentication]
 * https://deepfence.github.io/deepfence_runtime_api/#tag-Enumerate[Enumerate]
-* link:scripts/test_api/websocket_streaming.go[Streaming API]
+* link:scripts/streaming_api/[Streaming API]
 * https://deepfence.github.io/deepfence_runtime_api/#tag-Node-Control[Node Control]
 * https://deepfence.github.io/deepfence_runtime_api/#tag-Alert-Management[Alert Management]
 * https://deepfence.github.io/deepfence_runtime_api/#tag-Vulnerability-Management[Vulnerability Management]
