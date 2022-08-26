@@ -22,15 +22,26 @@ go build -o streaming-api .
 
 - Streaming hosts
 ```shell
-./streaming-api --management-console-url=deepfence.customer.com --node-type=hosts --deepfence-key=xxxxxx
+./streaming-api \
+  --management-console-url=deepfence.customer.com \
+  --node-type=hosts \
+  --deepfence-key=xxxxxx
 ```
 
 - Stream hosts, run vulnerability scan on every new host
 ```shell
-./streaming-api --management-console-url=deepfence.customer.com --node-type=hosts --deepfence-key=xxxxxx --vulnerability-scan=true
+./streaming-api \
+  --management-console-url=deepfence.customer.com \
+  --node-type=hosts \
+  --deepfence-key=xxxxxx \
+  --vulnerability-scan=true
 ```
 
 - Stream container images, run vulnerability scan on every new container image
 ```shell
-./streaming-api --management-console-url=deepfence.customer.com --node-type=containers-by-image --deepfence-key=xxxxxx --vulnerability-scan=true
+./streaming-api \
+  --management-console-url=deepfence.customer.com \
+  --node-type=containers-by-image \
+  --deepfence-key=xxxxxx \
+  --vulnerability-scan=true
 ```
