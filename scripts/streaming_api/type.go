@@ -20,10 +20,10 @@ type TopologyDiff struct {
 			Label             string `json:"label"`
 			LabelMinor        string `json:"labelMinor"`
 			Metadata          []struct {
-				ID       string `json:"id"`
-				Label    string `json:"label"`
-				Priority int64  `json:"priority"`
-				Value    string `json:"value"`
+				ID       string  `json:"id"`
+				Label    string  `json:"label"`
+				Priority float64 `json:"priority"`
+				Value    string  `json:"value"`
 			} `json:"metadata"`
 			Rank  string `json:"rank"`
 			Shape string `json:"shape"`
@@ -35,20 +35,20 @@ type TopologyDiff struct {
 			Label             string `json:"label"`
 			LabelMinor        string `json:"labelMinor"`
 			Metadata          []struct {
-				DataType string `json:"dataType"`
-				ID       string `json:"id"`
-				Label    string `json:"label"`
-				Priority int64  `json:"priority"`
-				Value    string `json:"value"`
+				DataType string  `json:"dataType"`
+				ID       string  `json:"id"`
+				Label    string  `json:"label"`
+				Priority float64 `json:"priority"`
+				Value    string  `json:"value"`
 			} `json:"metadata"`
 			Metrics []struct {
 				Format   string      `json:"format"`
 				Group    string      `json:"group"`
 				ID       string      `json:"id"`
 				Label    string      `json:"label"`
-				Max      int64       `json:"max"`
+				Max      float64     `json:"max"`
 				Min      float64     `json:"min"`
-				Priority int64       `json:"priority"`
+				Priority float64     `json:"priority"`
 				Samples  interface{} `json:"samples"`
 				URL      string      `json:"url"`
 				Value    float64     `json:"value"`

@@ -8,20 +8,22 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gorilla/websocket"
 )
 
-var nodeID = flag.String("node_type", "hosts", "Node type to run websocket client for. Ex: hosts, containers, containers-by-image, kubernetes-clusters, cloud-providers, cloud-regions, processes")
-var apiUrl = flag.String("api_url", "", "Enter api url. Example: 22.33.44.55 / abc.com")
-var apiKey = flag.String("api_key", "", "Enter api key. (Get it from user management page)")
-var ignoreConnections = flag.Bool("ignore_connections", true, "Weather to ignore connections data")
-var vulnerabilityScan = flag.Bool("vulnerability_scan", true, "Start vulnerability scan on new nodes")
+var nodeIDs = []string{"hosts", "containers", "containers-by-image", "kubernetes-clusters", "cloud-providers", "cloud-regions", "processes"}
+var nodeID = flag.String("node-type", "hosts", fmt.Sprintf("Node type to run websocket client for. Ex: %s", strings.Join(nodeIDs, ", ")))
+var managementConsoleUrl = flag.String("management-console-url", "", "Enter api url. Example: 22.33.44.55 / abc.com")
+var deepfenceKey = flag.String("deepfence-key", "", "Enter api key. (Get it from user management page)")
+var ignoreConnections = flag.Bool("ignore-connections", true, "Weather to ignore connections data")
+var vulnerabilityScan = flag.Bool("vulnerability-scan", false, "Start vulnerability scan on new nodes")
 
 func connectWS() (*websocket.Conn, error) {
 	wsUrl := fmt.Sprintf("wss://%s/topology-api/topology-connection-ws?t=5s&ignore_connections=%s&api_key=%s",
-		*apiUrl, strconv.FormatBool(*ignoreConnections), *apiKey)
+		*managementConsoleUrl, strconv.FormatBool(*ignoreConnections), *deepfenceKey)
 	fmt.Printf("Connecting to %s\n", wsUrl)
 	dialer := &websocket.Dialer{
 		Proxy:            http.ProxyFromEnvironment,
@@ -40,6 +42,17 @@ func main() {
 	var accessToken string
 	var nodeType string
 	flag.Parse()
+	if *managementConsoleUrl == "" {
+		fmt.Println("management-console-url is required")
+		os.Exit(1)
+	} else if *deepfenceKey == "" {
+		fmt.Println("deepfence-key is required")
+		os.Exit(1)
+	}
+	if !inSlice(nodeIDs, *nodeID) {
+		fmt.Printf("node-type must be one of %s", strings.Join(nodeIDs, ", "))
+		os.Exit(1)
+	}
 	ws, err := connectWS()
 	if err != nil {
 		fmt.Println(err)
@@ -68,7 +81,7 @@ func main() {
 	}()
 
 	if *vulnerabilityScan {
-		accessToken = getAccessToken(*apiUrl, *apiKey)
+		accessToken = getAccessToken(*managementConsoleUrl, *deepfenceKey)
 	}
 
 	for {
@@ -80,10 +93,11 @@ func main() {
 		if *vulnerabilityScan {
 			err := json.Unmarshal(resp, &topologyDiff)
 			if err != nil {
+				fmt.Println(err)
 				return
 			}
 			for _, nodeInfo := range topologyDiff.Nodes.Add {
-				fmt.Printf("found new node %#v, starting scan for  \n", nodeInfo.ID)
+				fmt.Printf("Starting vulnerability scan on new node %s\n", nodeInfo.Label)
 				if *nodeID == "hosts" {
 					nodeType = "host"
 				} else if *nodeID == "containers" {
@@ -91,12 +105,12 @@ func main() {
 				} else if *nodeID == "containers-by-image" {
 					nodeType = "container_image"
 				} else {
-					fmt.Println("vulnerability scan not applicable for node: " + nodeInfo.Label)
+					fmt.Printf("vulnerability scan not applicable for node: %s\n", nodeInfo.Label)
 					continue
 				}
 				nodeInfo := nodeInfo
 				go func() {
-					err := startVulnerabilityScan(nodeInfo.ID, accessToken, nodeType, *apiUrl)
+					err := startVulnerabilityScan(nodeInfo.ID, accessToken, nodeType, *managementConsoleUrl)
 					if err != nil {
 						fmt.Println(err)
 					}
@@ -106,4 +120,13 @@ func main() {
 			fmt.Println("\nGot data:\n", string(resp))
 		}
 	}
+}
+
+func inSlice(slice []string, val string) bool {
+	for _, item := range slice {
+		if item == val {
+			return true
+		}
+	}
+	return false
 }

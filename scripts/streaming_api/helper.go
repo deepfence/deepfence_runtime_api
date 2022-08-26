@@ -82,6 +82,6 @@ func startVulnerabilityScan(nodeId string, accessToken string, nodeType string, 
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(body))
+	fmt.Println(nodeId + ": " + string(body))
 	return nil
 }
