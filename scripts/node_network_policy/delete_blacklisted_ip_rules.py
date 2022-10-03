@@ -8,12 +8,14 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
 
+
 def validate(Ip):
-    if(re.search(regex, Ip)):
+    if re.search(regex, Ip):
         return True
     else:
         return False
-    
+
+
 def delete_blacklist_ips_inbound_rule(api_url, api_key):
     # Auth
     default_headers = {"Content-Type": "application/json"}
@@ -26,8 +28,6 @@ def delete_blacklist_ips_inbound_rule(api_url, api_key):
         return
     default_headers["Authorization"] = "Bearer " + auth_response["data"]["access_token"]
 
-    
-    
     my_file = Path("./ip_addresses.txt")
     if my_file.is_file():
         blacklist_ips_file = open("ip_addresses.txt")
@@ -39,10 +39,10 @@ def delete_blacklist_ips_inbound_rule(api_url, api_key):
     else:
         print("ip_addresses.txt file missing")
         return
-            
+
     blacklist_ips_file.close()
     id_list = []
-    
+
     url = f"{api_url}/users/node_network_protection_policy?node_policy_type=blacklist&"
     response = requests.request("GET", url, headers=default_headers, data={}, verify=False)
     if response.status_code == 200:
@@ -52,21 +52,20 @@ def delete_blacklist_ips_inbound_rule(api_url, api_key):
                 if row.get('ip_address') in final_ips:
                     id_list.append(row.get('id'))
     else:
-        print("There is an error while receiving the response please contact deepfence support")
-        
+        print(response.text)
+
     if id_list:
         payload = json.dumps({
-                            "policy_id_list": [str(id) for id in id_list]
-                            })
+            "policy_id_list": [str(id) for id in id_list]
+        })
         delete_url = f"{api_url}/users/node_network_protection_policy"
         del_response = requests.request("DELETE", delete_url, headers=default_headers, data=payload, verify=False)
-        
+
         if del_response.status_code != 200:
-            print("There was issue while deleting the rules, Please contact deepfecen support")
+            print(del_response.text)
+        print("Node network policies deleted successfully")
     else:
-        print("there are no rules to be deleted")
-    
-    
+        print("There are no rules to be deleted")
 
 
 if __name__ == '__main__':

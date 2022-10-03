@@ -8,12 +8,14 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
 
+
 def validate(Ip):
-    if(re.search(regex, Ip)):
+    if re.search(regex, Ip):
         return True
     else:
         return False
-    
+
+
 def blacklist_ips_inbound(api_url, api_key):
     # Auth
     default_headers = {"Content-Type": "application/json"}
@@ -29,7 +31,7 @@ def blacklist_ips_inbound(api_url, api_key):
     # Enumerate nodes
     enumerate_response = requests.post(
         "{0}/enumerate".format(api_url),
-        json={"filters": {"type": ["host", "container_image"], "pseudo": False}, "size": 1000},
+        json={"filters": {"type": ["host"], "pseudo": False}, "size": 10000},
         headers=default_headers, verify=False).json()
     nodes_list = []
     counter = 1
@@ -38,10 +40,13 @@ def blacklist_ips_inbound(api_url, api_key):
         print("No nodes found")
         return
     for node in enumerate_response_nodes:
-        if node["type"] == "host":
+        if node.get("type") == "host":
+            if node.get("is_ui_vm", False):
+                continue
             node_name = "{0} (host)".format(node.get("host_name", ""))
             print("{0}: {1}".format(counter, node_name))
-            nodes_list.append({"id": node["id"], "node_name": node_name, "scope_id" : node["scope_id"], "type" : node["type"]})
+            nodes_list.append(
+                {"id": node["id"], "node_name": node_name, "scope_id": node["scope_id"], "type": node["type"]})
             counter += 1
     print("\nEnter comma separated list of host serial numbers to blacklist IP addresses. Eg: 1,3,4")
     print("Enter \"all\" (without quotes) to blacklist on all hosts\n")
@@ -56,40 +61,44 @@ def blacklist_ips_inbound(api_url, api_key):
             except:
                 pass
     counter = 1
-    
+    ip_address_to_blacklist = []
     my_file = Path("./ip_addresses.txt")
     if my_file.is_file():
         blacklist_ips_file = open("ip_addresses.txt")
-        Ips = blacklist_ips_file.read().split('\n')
-        final_ips = []
-        for ip in Ips:
+        ip_addresses = blacklist_ips_file.read().split('\n')
+        for ip in ip_addresses:
             if validate(ip):
-                final_ips.append(ip)
+                ip_address_to_blacklist.append(ip)
     else:
         print("ip_addresses.txt file missing")
         return
-            
+
     blacklist_ips_file.close()
-    
+    if not ip_address_to_blacklist:
+        print("ip_addresses.txt file is empty")
+        return
+
     for node in nodes_selected:
-        print("\n{0}: Blacklisting IP addresses {1} on node {2}".format(counter,final_ips, node["node_name"]))
+        print("\n{0}: Blacklisting IP addresses {1} on node {2}".format(
+            counter, ip_address_to_blacklist, node["node_name"]))
         payload = json.dumps({
-                            "packet_direction": "inbound",
-                            "node_policy_type": "blacklist",
-                            "ip_address_list": final_ips,
-                            "block_duration": 4294967,
-                            "port_list": [],
-                            "scope_id": node['scope_id'],
-                            "node_type": node['type']
-                            })
-        try:
-            res = requests.post("{0}/users/node_network_protection_policy".format(api_url),data=payload,headers=default_headers, verify=False).json()
-            if res.status_code != 200:
-                raise Exception("There was an issue while processing the request")
-        except Exception as e:
-            print("There is some issue while blocking the IP please contact deepfence support")
-            continue
+            "packet_direction": "inbound",
+            "node_policy_type": "blacklist",
+            "ip_address_list": ip_address_to_blacklist,
+            "block_duration": 0,
+            "port_list": [],
+            "scope_id": node['scope_id'],
+            "node_type": node['type']
+        })
         counter += 1
+        try:
+            res = requests.post("{0}/users/node_network_protection_policy".format(api_url), data=payload,
+                                headers=default_headers, verify=False)
+            if res.status_code != 200:
+                raise Exception(res.text)
+        except Exception as e:
+            print(e)
+            continue
 
 
 if __name__ == '__main__':
