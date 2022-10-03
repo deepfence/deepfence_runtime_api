@@ -38,15 +38,13 @@ def blacklist_ips_inbound(api_url, api_key):
         print("No nodes found")
         return
     for node in enumerate_response_nodes:
-        if node["type"] == "container_image":
-            node_name = "{0} (container_image)".format(node.get("image_name_with_tag", ""))
-        else:
+        if node["type"] == "host":
             node_name = "{0} (host)".format(node.get("host_name", ""))
-        print("{0}: {1}".format(counter, node_name))
-        nodes_list.append({"id": node["id"], "node_name": node_name, "scope_id" : node["scope_id"], "type" : node["type"]})
-        counter += 1
-    print("\nEnter comma separated list of node numbers to start vulnerability scan. Eg: 1,3,4")
-    print("Enter \"all\" (without quotes) to start vulnerability scan on all nodes\n")
+            print("{0}: {1}".format(counter, node_name))
+            nodes_list.append({"id": node["id"], "node_name": node_name, "scope_id" : node["scope_id"], "type" : node["type"]})
+            counter += 1
+    print("\nEnter comma separated list of host serial numbers to blacklist IP addresses. Eg: 1,3,4")
+    print("Enter \"all\" (without quotes) to blacklist on all hosts\n")
     user_input = input("-->").split(",")
     if "all" in user_input:
         nodes_selected = nodes_list
@@ -98,6 +96,6 @@ if __name__ == '__main__':
     import sys
 
     if len(sys.argv) != 3:
-        print("Usage: python3 start_vulnerability_scan.py <mgmt_console_ip_address> <api_key>")
+        print("Usage: python3 blacklist_ips.py <mgmt_console_ip_address> <api_key>")
         exit(1)
     blacklist_ips_inbound("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2])
