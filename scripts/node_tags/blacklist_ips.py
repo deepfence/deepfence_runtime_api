@@ -86,7 +86,8 @@ def blacklist_ips_inbound(api_url, api_key):
                             })
         try:
             res = requests.post("{0}/users/node_network_protection_policy".format(api_url),data=payload,headers=default_headers, verify=False).json()
-            print(res)
+            if res.status_code != 200:
+                raise Exception("There was an issue while processing the request")
         except Exception as e:
             print("There is some issue while blocking the IP please contact deepfence support")
             continue
