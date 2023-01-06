@@ -30,6 +30,8 @@ def get_blocked_ips(api_url, api_key):
     classtypes = defaultdict(int)
     masked_classtypes = defaultdict(int)
     while True:
+        if es_from + page_size >= 50000:
+            break
         alerts_summary = requests.post(
             "{0}/search?from={1}&size={2}&lucene_query=&number=365&time_unit=day".format(api_url, es_from, page_size),
             json={"_type": "alert", "_source": ["_id", "classtype", "masked"],
