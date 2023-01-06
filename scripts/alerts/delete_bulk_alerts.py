@@ -57,6 +57,7 @@ def delete_threshold_alerts(api_url, api_key):
                 continue
 
 
+
 if __name__ == '__main__':
     import sys
 
