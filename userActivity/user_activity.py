@@ -19,8 +19,7 @@ def user_activity_log(api_url, api_key,from_time,to_time):
         return
     default_headers["Authorization"] = "Bearer " + api_response["data"]["access_token"]
 
-    # "2023-01-31T00:00:00+05:30", 
-    # "2023-02-06T00:00:00+05:30"},
+    
     api_response = requests.post("{0}/user-activity-log".format(api_url),
                                  json={"from_time" : from_time ,"to_time" : to_time},
                                  headers=default_headers, verify=False).json()
