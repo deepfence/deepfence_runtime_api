@@ -21,7 +21,7 @@ def update_fim_config(api_url, api_key, config_filename):
 
     enumerate_filters = {"type": ["host"], "pseudo": False}
     api_response = requests.post("{0}/enumerate".format(api_url),
-                                 json={"filters": enumerate_filters, "size": 1000},
+                                 json={"filters": enumerate_filters, "size": 10000},
                                  headers=default_headers, verify=False).json()
     nodes_list = []
     counter = 1
@@ -42,12 +42,9 @@ def update_fim_config(api_url, api_key, config_filename):
         counter += 1
     print("\nEnter comma separated list of node numbers to update fim config. Eg: 1,3,4\n")
     print("Enter \"all\" (without quotes) to update fim config on all nodes\n")
-    print("Enter \"all hosts\" (without quotes) to update fim config on all hosts\n")
     user_input = input("-->").split(",")
     if "all" in user_input:
         nodes_selected = nodes_list
-    elif "all hosts" in user_input:
-        nodes_selected = [n for n in nodes_list if n["node_type"] == "host"]
     else:
         nodes_selected = []
         for user_input_no in user_input:
@@ -82,20 +79,16 @@ def update_fim_config(api_url, api_key, config_filename):
         exit(1)
 
     post_data = {
-        "action": "update_fim_config",
-        "node_type": "host",
-        "node_id_list": [n["id"] for n in nodes_selected],
-        "action_args": {
-            "fim_config": str(fim_config)
-        }
+        "fim_config": str(fim_config)
     }
-    try:
-        response = requests.post("{0}/node_action".format(api_url), headers=default_headers,
-                                 verify=False, json=post_data)
-        print(response.text)
-        print("FIM config will be updated in selected nodes")
-    except:
-        print("Error in api call")
+    for node in nodes_selected:
+        try:
+            response = requests.post("{0}/node/{1}/update_fim_config?os=linux".format(api_url, node["id"]), headers=default_headers,
+                                     verify=False, json=post_data)
+            print(response.text)
+            print("FIM config will be updated in selected nodes")
+        except:
+            print("Error in api call")
 
 
 if __name__ == '__main__':

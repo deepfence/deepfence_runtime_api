@@ -21,10 +21,10 @@ def update_fim_config(api_url, api_key, config_filename):
 
     print("\nupdate global fim config")
 
-    with open (config_filename, "r") as configfile:
-        fim_config=configfile.read()
-    with open ("fim_config_schema.json", "r") as schemafile:
-        fim_schema=schemafile.read()    
+    with open(config_filename, "r") as configfile:
+        fim_config = configfile.read()
+    with open("fim_config_schema.json", "r") as schemafile:
+        fim_schema = schemafile.read()
     # print("Fim Config: ", fim_config)
     # print("Fim Schema: ", fim_schema)
     # print("config yaml: ", yaml.load(fim_config))
@@ -45,10 +45,10 @@ def update_fim_config(api_url, api_key, config_filename):
         "fim_config": str(fim_config)
     }
     try:
-        response = requests.post("{0}/node/df_global_default_fim/update_fim_config".format(api_url), headers=default_headers,
-                                 verify=False, json=post_data)
+        response = requests.post("{0}/node/df_global_default_fim/update_fim_config?os=linux".format(api_url),
+                                 headers=default_headers, verify=False, json=post_data)
         print(response.text)
-        print("FIM config will be updated in selected nodes")
+        print("Global FIM config updated")
     except:
         print("Error in api call")
 
