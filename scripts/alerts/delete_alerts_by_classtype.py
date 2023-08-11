@@ -13,7 +13,7 @@ def split_list_into_chunks(my_list: list, size: int) -> list:
     return list(divide_chunks(my_list, size))
 
 
-def get_blocked_ips(api_url, api_key):
+def delete_alerts(api_url, api_key):
     # Auth
     default_headers = {"Content-Type": "application/json"}
     auth_response = requests.post("{0}/users/auth".format(api_url), json={"api_key": api_key}, headers=default_headers,
@@ -102,6 +102,6 @@ if __name__ == '__main__':
     import sys
 
     if len(sys.argv) != 3:
-        print("Usage: python3 delete_alerts.py <mgmt_console_ip_address> <api_key>")
+        print("Usage: python3 delete_alerts_by_classtype.py <mgmt_console_ip_address> <api_key>")
         exit(1)
-    get_blocked_ips("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2])
+    delete_alerts("https://{0}/deepfence/v1.5".format(sys.argv[1]), sys.argv[2])
